@@ -1,0 +1,21 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2578
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0  the/DET cat/N is/V cute/ADJ\
+ but/CNJ i/PRO guess/V good/ADJ for/P you/PRO\
+\
+ and/CNJ good/ADJ for/P you,/VG it's/PRO like/CNJ you/PRO never/ADV even/ADV met/VD me/PRO\
+ or/CNJ maybe/ADV you/PRO never/ADV cared/VN at/P all/DET\
+\
+\
+The first two sentences are tagged as expected. The first sentence is a common sentence structure where the probability of a verb after a noun is high. An adjective after a verb also has a high probability. Even the second sentence where it\'92s a fragment, the code still tagged \'93but\'94 as a conjunction and not a tag like.a determiner (a common first tag of a sentence) because the probability of a pronoun after a conjunction is high from the training sentences and \'93but\'94 being a conjunction was most likely seen many times in the training sentences. \
+\
+The last two sentences are not tagged as expected. These are difficult because they are not full sentences. You is tagged as a present participle, most likely because the probability of going from a present participle to a pronoun and then to a conjunction is high. For the last sentence, \'93at\'94 should not be a preposition but the training sentences must have had \'93at\'94 as a preposition quite a bit, and the way that \'93at\'94 is used before \'93all\'94 is unusual. \
+\
+My overall testing performance was perfect testing the same sentences that I built my model on (which is expected since the model is based on those sentences). For the simple training sentences, I got 5 wrong tags and 32 correct ones with an unobserved score of -100. Even putting the unobserved score to -10000 still kept the ratio of correct/wrong tags the same, but for the brown test sentences, I would expect the larger negative unobserved score to decrease the number of wrong tags. This is because there is more data and words that would be seen in the brown-training-model so those words that are unobserved are safer to assign a lower probability to it. Putting the unobserved score close to 0 increased the number of wrong tags for the simple test sentences by more than 5. \
+\
+}
