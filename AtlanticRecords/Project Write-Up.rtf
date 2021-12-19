@@ -8,14 +8,12 @@
 \f0\fs24 \cf0 Project Write-Up:\
 \
 \
-1. The final deliverable is a CSV that contains the top 5 most important songs for the day. (I didn\'92t have time to automate the scripts, but I intended the scripts to run and update the CSV file daily/send a daily email with a new CSV file attached). \
+1. The final deliverable is called \'93Deliverable - Top5ImportantSongs\'94, a CSV file that contains the top 5 most important songs for the day (I didn\'92t have time to automate the scripts, but I intended the scripts to run and update the CSV file daily/send a daily email with a new CSV file attached). \
 \
 2. The most important songs are those that have broken into multiple cities\'92 Top20 Shazam Charts with high rankings but have not broken into Shazam\'92s US Top 20 Chart. \
 \
-3. The idea behind this definition of Importance is that it\'92s crucial for Atlantic Records to know which songs/artists people are listening to in each city that has not caught onto national attention yet. If one of Atlantic Records\'92 artists has a song of high importance per this definition, Atlantic Records can invest in more resources to boost this song to more radio channels/streaming playlists. Atlantic Records can also use this data to sign new artists before they become bigger hits: this program will help them identify up and coming talent. \
+3. The idea behind this definition of Importance is that it\'92s crucial for Atlantic Records to know which songs/artists people are listening to in each city that has not caught onto national attention yet. If one of Atlantic Records\'92 artists has a song of high importance per this definition, Atlantic Records can invest in more resources to boost this song to more radio channels/streaming playlists for greater revenue. Atlantic Records can also use this data to sign new artists before they become bigger hits: this program will help them identify up and coming talent. \
 \
-4. The Importance Score is calculated by adding up all the rankings for each city (every city that the song isn\'92t ranked is counted as 21 rank) and dividing the total sum by 20 (the number of cities). Therefore, the more important songs have the lower Importance Score. \
+4. The Importance Score is calculated by adding up all the rankings for each city (every city that the song isn\'92t ranked is counted as a 21 rank) and dividing the total sum by 20 (the number of cities). Therefore, the most important songs have the lowest Importance Score. \
 \
-5. I only used 20 cities and the charts\'92 top 20 songs to limit the number of API calls so I don\'92t have to pay too much, but the program can be expanded to include all US cities and all Top200 songs. \
-\
-}
+5. I only used 20 cities and the charts\'92 top 20 songs to limit the number of API calls so I don\'92t have to pay too much, but the program can be expanded to include all US cities and all Top 200 songs. }
