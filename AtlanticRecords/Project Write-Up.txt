@@ -9,4 +9,4 @@ Project Write-Up:
 
 4. The Importance Score is calculated by adding up all the rankings for each city (every city that the song isn’t ranked is counted as a 21 rank) and dividing the total sum by 20 (the number of cities). Therefore, the most important songs have the lowest Importance Score. 
 
-5. I only used 20 cities and the charts’ top 20 songs to limit the number of API calls for this assignment so I don’t have to pay too much, but the program can be expanded to include all US cities and all Top 200 songs. 
+5. I only used 20 cities and the charts’ top 20 songs to limit the number of API calls for this assignment so I don’t have to pay too much for the API, but the program can be expanded to include all US cities and all Top 200 songs. 
