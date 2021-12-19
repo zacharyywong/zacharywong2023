@@ -1,7 +1,7 @@
 Project Write-Up:
 
 
-1. The final deliverable is called “Deliverable - Top5ImportantSongs”, a CSV file that contains the top 5 most important songs for the day, the Importance Score, the rankings for each song in each city, etc. (I didn’t have time to automate the scripts, but I intended the scripts to run and update the CSV file daily/send a daily email with a new CSV file attached). 
+1. The final deliverable is called “Deliverable - Top5ImportantSongs”, a CSV file that contains the top 5 most important songs for the day, the Importance Score, the rankings for each song in each city, etc. (I ran out of time to fully learn how to automate the scripts, but I intended the scripts to run and update the CSV file daily/send a daily email with a new CSV file attached). 
 
 2. The most important songs are those that have broken into multiple cities’ Top20 Shazam Charts with high rankings but have not broken into Shazam’s US Top 20 Chart yet. 
 
