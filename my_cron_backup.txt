@@ -1,0 +1,1 @@
+* * * * * /Users/zacharywong/opt/anaconda3/bin/python3 /Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py >> /Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/log.txt 2>&1 
