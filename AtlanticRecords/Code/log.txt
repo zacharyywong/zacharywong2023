@@ -1,0 +1,216 @@
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Code/AtlanticRecordsAutomateEmail.py", line 55, in <module>
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1050, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 1056, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 823, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Users/zacharywong/opt/anaconda3/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
