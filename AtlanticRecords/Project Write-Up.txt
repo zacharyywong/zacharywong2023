@@ -2,7 +2,7 @@
 
 Project Write-Up:
 
-1. Deliverables: This project's deliverables come in 2 forms and are updated/sent daily a little past 2:00am EST with the top 5 most important songs:
+1. Deliverables: This project's deliverables come in 2 forms and are updated/sent daily a little past 2:30am EST with the top 5 most important songs:
 
 "Top 5 Important Songs of the Day" Google Spreadsheet: An auto-generated spreadsheet that includes user input options to customize the Importance Score calculation and pause daily emails 
 
@@ -12,7 +12,7 @@ Daily Email: an email sent daily with the Top5ImportantSongs.csv file attached a
 
 Number of Top Songs: The n top songs the user wants to capture for each city for this program. The maximum is 50.  
  
-Unranked Song Score: The lower in rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. 
+Unranked Song Score: The score that lowers the rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. 
 
 Pause Emails (Y/N): Type in Y to pause emails and N to send emails (case-sensitive)
 
