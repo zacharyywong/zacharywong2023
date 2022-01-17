@@ -1,12 +1,33 @@
+
+
 Project Write-Up:
 
+1. Deliverables: This project's deliverables come in 2 forms and are updated/sent with the top 5 most important songs daily:
 
-1. The final deliverable is called “Deliverable - Top5ImportantSongs”, a CSV file that contains the top 5 most important songs for the day, the Importance Score, the rankings for each song in each city, etc. (I ran out of time to fully learn how to automate the scripts, but I intended the scripts to run and update the CSV file daily/send a daily email with a new CSV file attached). 
+"Top 5 Important Songs of the Day" Google Spreadsheet: An auto-generated spreadsheet included with user input options to customize the Importance Score calculation and pause daily emails 
 
-2. The most important songs are those that have broken into multiple cities’ Top20 Shazam Charts with high rankings but have not broken into Shazam’s US Top 20 Chart yet. 
+Daily Email: a daily email with the Top5ImportantSongs.csv file attached 
 
-3. The idea behind this definition of Importance is that it’s crucial for Atlantic Records to know which songs/artists people are listening to in each city that has not caught onto national attention yet. If one of Atlantic Records’ artists has a song of high importance as per this definition, Atlantic Records can invest in more resources to boost this song to more radio channels/streaming playlists for greater revenue. Atlantic Records can also use this data to sign new artists before they become bigger hits: this program will help them identify up and coming talent. 
+2. Input Options: Users have 3 input options to customize the script via the Google Spreadsheet
 
-4. The Importance Score is calculated by adding up all the rankings for each city (every city that the song isn’t ranked is counted as a 21 rank) and dividing the total sum by 20 (the number of cities). Therefore, the most important songs have the lowest Importance Score. 
+Number of Top Songs: The n top songs the user wants to capture for each city for this program. The maximum is 50.  
+ 
+Unranked Song Score: The lower in rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. 
 
-5. I only used 20 cities and the charts’ top 20 songs to limit the number of API calls for this assignment so I don’t have to pay too much for the API, but the program can be expanded to include all US cities and all Top 200 songs. 
+Pause Emails (Y/N): Type in Y to pause emails and N to send emails
+
+3. How To Read the Importance Scores: 
+
+The most important songs are those that have broken into multiple cities’ Top Shazam Charts with high rankings but have not broken into Shazam’s national, US Top Chart yet. 
+
+The idea behind this definition of Importance is that it’s crucial for Atlantic Records to know which songs/artists people are listening to in each city that has not caught onto national attention yet. If one of Atlantic Records’ artists has a song of high importance as per this definition, Atlantic Records can invest in more resources to boost this song to more radio channels/streaming playlists for greater revenue. Atlantic Records can also use this data to sign new artists before they become bigger hits: this program will help them identify up and coming talent. 
+
+The Importance Score is calculated by adding up all the rankings for each city (every city that the song isn’t ranked is counted as the lowest rank + the user inputted additional rank) and dividing the total sum by 202 (the number of cities). Therefore, the most important songs have the lowest Importance Score. 
+
+4. Data Collection Method: Data/rankings are collected using Selenium/webscraping 
+
+5. FrontEnd Interactives/Graphics: Dynamic tables/graphs are located in the Google Sheet 
+
+6. Automation: The code is automated using cronjobs. 
+
+
