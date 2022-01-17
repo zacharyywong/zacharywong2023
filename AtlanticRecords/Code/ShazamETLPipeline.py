@@ -447,7 +447,7 @@ if (EmailPause == 'N'):
     subject = 'Top 5 Most Important Songs of the Day'
     text = "Hi Jake and the team, \n\nAttached is today's CSV attachment with the Top 5 Most Important Songs of the Day you should look out for! \nFor your convenience, here is the link to the auto-generated Google Spreadsheet with dynamic tables/graphs: \nhttps://docs.google.com/spreadsheets/d/1WYvfPFW6n2hOCZ-2_pTT0hjJOj5vGHbwjLnjzDqXhSM/edit?usp=sharing \n\nBest Regards, \nZachary Wong"
     sender_email = "zacharywongdatascience"
-    receiver_email = 'zachary.j.wong.23@dartmouth.edu'
+    receiver_email = 'Jake.Stern@atlanticrecords.com'
     password = ''
     pathtoPassword = '/Users/zacharywong/Documents/ApplicationPassword-Secret/ApplicationPassword.txt'
     with open (pathtoPassword, 'r') as file:
