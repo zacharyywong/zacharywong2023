@@ -88,7 +88,7 @@ def changeCellValue(spreadsheet_id, cellLocation, value):
 
 # Grab and store variables for the rest of the code 
 # SongLimit: top n number of songs to be read from both national and city charts
-# Max Song Limit is 45: Shazam only has data for 45 songs for the WoonSocket, Rhode Island Top50 chart eventhough Shazam has data for all 50 songs for all other cities
+# Max Song Limit is 50 because each city has a Top 50 song chart. 
 # UnrankedSongChangedWeight: the increase/decrease in weight given to songs with rankings greater than SongLimit  
 
 spreadsheet_id = '1WYvfPFW6n2hOCZ-2_pTT0hjJOj5vGHbwjLnjzDqXhSM'
