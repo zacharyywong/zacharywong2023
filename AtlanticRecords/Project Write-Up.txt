@@ -16,9 +16,10 @@ The Importance Score is calculated by first adding up all the rankings from each
 
 3. User Input Options: Through the Google Spreadsheet, users have 3 input options to customize the Number of Top Songs and Unranked Song Score (these parameters are important for calculating the song's Importance Score) and whether to receive daily emails: 
 
-Number of Top Songs: The "n" top songs the user wants to capture for each city. The maximum is 50.  
+Number of Top Songs: The "n" top songs the user wants to capture for each city. The maximum is 50.  The script will change any input greater than 50 to 50. 
  
-Unranked Song Score: The user-inputted value that increases the Importance Score for songs that do not rank in the top chart for a city. The minimum value for this input is 1 because the unranked song cannot be ranked equal or higher than the lowest ranked song in the city's top song chart.
+Unranked Song Score: The user-inputted value that increases the Importance Score for songs that do not rank in the top chart for a city. The minimum value for this input is 1 because the unranked song cannot be ranked equal or higher than the lowest ranked song in the city's top song chart. The script will change any input lower than 1 to 1. 
+
 Pause Emails (Y/N): Type in Y to pause automated emails and N to send emails (case-sensitive). 
 
 4. Data Collection Method: Data/rankings are collected using Selenium/webscraping. 
