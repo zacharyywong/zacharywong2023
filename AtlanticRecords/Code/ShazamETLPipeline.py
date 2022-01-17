@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[23]:
+# In[1]:
 
 
 # This program surfaces the most important songs of the day for Atlantic Records. 
@@ -54,7 +54,7 @@ est = pytz.timezone('US/Eastern')
 fmt = '%d/%m/%Y %H:%M:%S'
 now = datetime.now()
 now = now.astimezone(est).strftime(fmt)
-print(now)
+print("day/time: " + now)
 
 
 # In[2]:
@@ -111,7 +111,7 @@ if UnrankedSongChangedWeight < minSongWeight:
     UnrankedSongChangedWeight = minSongWeight
     changeCellValue(spreadsheet_id, cellLocationWeight, minSongWeight)
     
-print(SongLimit, UnrankedSongChangedWeight)
+print("SongLimit: "+ str(SongLimit) + ' ' + "UnrankedSongChangedWeight: " + str(UnrankedSongChangedWeight))
 
 
 # In[5]:
