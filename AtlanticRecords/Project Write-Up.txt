@@ -7,9 +7,10 @@ Project Write-Up:
 Daily Email: an email sent daily with the Top5ImportantSongs.csv file attached and the link to the Google Spreadsheet updated for that day (the sender email: zacharywongdatascience@gmail.com)
 
 2. Input Options: Users have 3 input options to customize, via the Google Spreadsheet, the Number of Top Songs and Unranked Song Score (these parameters are important for calculating the song's Importance Score - explained in the below sections) and whether to receive daily emails. 
+
 Number of Top Songs: The n top songs the user wants to capture for each city for this program. The maximum is 50.  
  
-Unranked Song Score: The score that lowers the rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. 
+Unranked Song Score: The score that lowers the rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. The minimum value is 1 because this score will is added to the Number of Top Songs value to determine the ranking of those songs left out of the city's top charts (more explanation of Importance Scores below). 
 
 Pause Emails (Y/N): Type in Y to pause emails and N to send emails (case-sensitive)
 
