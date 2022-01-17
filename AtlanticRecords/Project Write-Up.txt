@@ -26,4 +26,4 @@ Pause Emails (Y/N): Type in Y to pause automated emails and N to send emails (c
 
 5. Front-End Interactives/Graphics: Dynamic tables and graphs are located in the auto-generated Google Sheet. 
 
-6. Automation: The script is automated using cronjobs. 
+6. Automation: The script is automated using cron jobs. 
