@@ -14,7 +14,7 @@ Number of Top Songs: The n top songs the user wants to capture for each city for
  
 Unranked Song Score: The lower in rankings given to songs that are not in the top chart for the city. A higher unranked song score more greatly "punishes" songs left out of the city's top chart. 
 
-Pause Emails (Y/N): Type in Y to pause emails and N to send emails
+Pause Emails (Y/N): Type in Y to pause emails and N to send emails (case-sensitive)
 
 3. How To Read the Importance Scores: 
 
