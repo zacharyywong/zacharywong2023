@@ -8,7 +8,7 @@ Project Write-Up:
 
 Daily Email: an email sent daily with the Top5ImportantSongs.csv file attached and the link to the Google Spreadsheet updated for that day (the sender email: zacharywongdatascience@gmail.com)
 
-2. Input Options: Users have 3 input options to customize the Number of Top Songs and Unranked Song Score (parameters important for calculating the song's Importance Score) and whether to receive daily emails via the Google Spreadsheet. 
+2. Input Options: Users have 3 input options to customize the Number of Top Songs and Unranked Song Score (these parameters are important for calculating the song's Importance Score) and whether to receive daily emails via the Google Spreadsheet. 
 
 Number of Top Songs: The n top songs the user wants to capture for each city for this program. The maximum is 50.  
  
