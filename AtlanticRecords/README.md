@@ -24,6 +24,6 @@ User Input Options: Through the Google Spreadsheet, users have 3 input options t
 
 Data Collection Method: Data/rankings are collected using Selenium/webscraping. 
 
-Front-End Interactives/Graphics: Dynamic tables and graphs are located in the auto-generated Google Sheet. 
+Front-End Interactives/Graphics: Dynamic tables and graphs are located in the auto-generated Google Sheet (if the charts display no data, it is due to a change in the most important songs for the day from the previous day. Use the table's drop-down menu to select a song from the updated list). 
 
 Automation: The script is automated using cron jobs. 
