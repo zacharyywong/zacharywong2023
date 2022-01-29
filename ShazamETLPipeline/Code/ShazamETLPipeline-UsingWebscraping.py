@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[2]:
+
+
+#!/usr/bin/env python
+# coding: utf-8
+
 # In[1]:
 
 
@@ -35,7 +41,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 scope = [
    'https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-google_key_file = '/Users/zacharywong/Documents/ServiceAccountKey-Secret/pelagic-tracker-338302-42be4f3c9805.json'
+google_key_file = '/Users/zacharywong/Documents/ServiceAccountKey-Secret/pelagic-tracker-338302-eaf0e0e671cb.json'
 credentials = ServiceAccountCredentials.from_json_keyfile_name(google_key_file, scope)
 gc = gspread.authorize(credentials)
 
@@ -47,7 +53,7 @@ from email.mime.application import MIMEApplication
 from email.mime.base import MIMEBase
 
 # relative path to dataframe folder
-pathtoDFolder = '/Users/zacharywong/github/zacharywong2023/AtlanticRecords/IntermediateDataFrames/'
+pathtoDFolder = '/Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/IntermediateDataFrames/'
 
 # keep track of day/time 
 est = pytz.timezone('US/Eastern')
@@ -413,7 +419,7 @@ df
 
 
 # CSV deliverable exported to CSV 
-path = '/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Top5ImportantSongs.csv'
+path = '/Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Top5ImportantSongs.csv'
 df = df.reset_index()
 df.to_csv(path, index = False)
 
@@ -445,15 +451,15 @@ if (EmailPause == 'N'):
     
     # assign emails, passwords, and csv file to variables
     subject = 'Top 5 Most Important Songs of the Day'
-    text = "Hi Jake and the team, \n\nAttached is today's CSV attachment with the Top 5 Most Important Songs of the Day you should look out for! \nFor your convenience, here is the link to the auto-generated Google Spreadsheet with dynamic tables/graphs: \nhttps://docs.google.com/spreadsheets/d/1WYvfPFW6n2hOCZ-2_pTT0hjJOj5vGHbwjLnjzDqXhSM/edit?usp=sharing \n\nBest Regards, \nZachary Wong"
+    text = "Hi, \n\nAttached is today's CSV attachment with the Top 5 Most Important Songs of the Day you should look out for! \nFor your convenience, here is the link to the auto-generated Google Spreadsheet with dynamic tables/graphs: \nhttps://docs.google.com/spreadsheets/d/1WYvfPFW6n2hOCZ-2_pTT0hjJOj5vGHbwjLnjzDqXhSM/edit?usp=sharing \n\nBest Regards, \nZachary Wong"
     sender_email = "zacharywongdatascience"
-    receiver_email = 'jake.stern@atlanticrecords.com'
+    receiver_email = 'FILL IN'
     password = ''
     pathtoPassword = '/Users/zacharywong/Documents/ApplicationPassword-Secret/ApplicationPassword.txt'
     with open (pathtoPassword, 'r') as file:
         password = file.read()
     filename = 'Top5ImportantSongs-' + str(date.today()) +'.csv'
-    filepath = '/Users/zacharywong/github/zacharywong2023/AtlanticRecords/Top5ImportantSongs.csv'
+    filepath = '/Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Top5ImportantSongs.csv'
 
     # Attach each component with respective MIMEMultipart 
     msg = MIMEMultipart()
@@ -473,6 +479,9 @@ if (EmailPause == 'N'):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, content)
+
+
+# In[ ]:
 
 
 # In[ ]:

@@ -1,0 +1,3 @@
+0 0 * * * /Users/zacharywong/opt/anaconda3/bin/python3 /Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Code/ShazamETLPipeline-Jake.py >> /Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Code/log.txt 2>&1
+
+50 23 * * * /Users/zacharywong/opt/anaconda3/bin/python3 /Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Code/ShazamETLPipeline-Zach.py >> /Users/zacharywong/github/zacharywong2023/ShazamETLPipeline/Code/log.txt 2>&1
