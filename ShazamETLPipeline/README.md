@@ -1,4 +1,6 @@
-Project Write-Up:
+Note: For a more detailed discussion of the project's approach and specifications, please refer to "Detailed_Project_Write_up" just above. 
+
+Project Write-Up: 
 
 Purpose: 
 
