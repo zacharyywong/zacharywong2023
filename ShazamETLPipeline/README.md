@@ -1,7 +1,5 @@
 Note: For a more detailed discussion of the project's approach and specifications, please refer to "Detailed_Project_Write_up" just above. 
 
-Project Write-Up: 
-
 Purpose: Build an ETL pipeline to increase revenue/optimize resources for recording labels by surfacing important songs with Shazam's data to predict tomorrow's biggest artists
 
 Deliverables: This project's deliverables come in 2 forms and are updated/sent daily (when activated) at a little past 12:00am EST with the top 5 most important songs of the day:
