@@ -1,4 +1,7 @@
-,Probability,Title,Link,About,DetectedWords
-0,0.4,About Us | Babylon Health,https://www.babylonhealth.com/en-us/about,We're creating a better model of healthcare ... Shifting the focus of healthcare ...,"['AI', '24/7']"
-1,0.2,Predictive Patient | ConcertAI,https://www.concertai.com/predictivepatient/,"Predictive Patient transforms millions of health and behavioral records, and applies advanced AI models to improve the patient experience from therapy ...",['AI']
-2,0.6,Kaia Health | Democratizing Healthcare,https://kaiahealth.com/,Kaia Health is the largest MSK platform worldwide · 4M lives covered worldwide · +33k. Kaia users worldwide · ~7. US employers offer Kaia today ...,"['AI', 'personalized', 'democratize']"
+,Probability,Title,Link,About,Detected Words
+0,0.6,Kaia Health | Democratizing Healthcare,https://kaiahealth.com/,Kaia Health is the largest MSK platform worldwide · 4M lives covered worldwide · +33k. Kaia users worldwide · ~7. US employers offer Kaia today ...,"['AI', 'personalized', 'democratize']"
+1,0.4,About Us | Babylon Health,https://www.babylonhealth.com/en-us/about,We're creating a better model of healthcare ... Shifting the focus of healthcare ...,"['AI', '24/7']"
+2,0.2,Predictive Patient | ConcertAI,https://www.concertai.com/predictivepatient/,"Predictive Patient transforms millions of health and behavioral records, and applies advanced AI models to improve the patient experience from therapy ...",['AI']
+3,0.6,Spring Health: Mental Healthcare That's Right For You,https://springhealth.com/,"We put our members first by providing fast, simplified access to a variety of mental health solutions - all from one spot. Spring Health integrates with your ...","['personalized', 'personalization', 'machine-learning']"
+4,0.0,SWORD Health | A better way to treat MSK pain,https://swordhealth.com/,"SWORD brings clinical-grade musculoskeletal care home. We pair licensed PTs with medical-grade tech to make care more convenient, accessible and affordable.",[]
+5,0.2,Health. Powered by Ada.,https://ada.com/,"Hi. We're Ada. Our app helps people manage their health, and our enterprise solutions help our partners improve health and care.",['AI']
