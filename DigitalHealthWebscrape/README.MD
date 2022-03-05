@@ -12,4 +12,4 @@ Given a list of user-inputted company names, the tool will extract each company�
 
 **Results:**
 
-The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Refer to "Company Web Scrape Tool Introduction/Write Up" for more information. 
+The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Additional columns can be added according to activation of bonus features. Refer to "Company Web Scrape Tool Introduction/Write Up" for more information. 
