@@ -1,4 +1,4 @@
-**Please read "Company Web Scrape Tool Introduction/Write Up" for complete instructions on how to use the Company Web Scrape Tool**
+**Please read "Company Web Scrape Tool Introduction" for complete instructions on how to use the Company Web Scrape Tool**
 
 **Access the Company Web Scrape Tool**: 
 
