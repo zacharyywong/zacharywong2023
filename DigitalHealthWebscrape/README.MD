@@ -1,3 +1,5 @@
+**Please read "Company Web Scrape Tool Introduction/Write Up" for complete instructions on how to use the Company Web Scrape Tool**
+
 **Access the Company Web Scrape Tool**: 
 
 The tool is a Google Spreadsheet called “Company Web Scrape Tool”: https://docs.google.com/spreadsheets/d/1vFXonFCyUlEKa1f0s5tvHCKeTek_sAv7rUPYfYss0Qo/edit?usp=sharing
@@ -6,7 +8,7 @@ The tool is a Google Spreadsheet called “Company Web Scrape Tool”: https://d
 
 Given a list of user-inputted company names, the tool will extract each company’s and generate a short description for each company. 
 
-**“LinkedIn Company Mining” and “Keywords Detection” bonus features:**
+**“LinkedIn Company Mining” and “Keywords Detection” Bonus Features:**
 
 Refer to "Company Web Scrape Tool Introduction/Write Up" for more information on how to use these features.
 
