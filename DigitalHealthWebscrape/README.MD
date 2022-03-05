@@ -10,6 +10,6 @@ Given a list of user-inputted company names, the tool will extract each company�
 
 “LinkedIn Company Mining” Feature and “Keywords Detection” feature. Refer to "Company Web Scrape Tool Introduction/Write Up" for more information on how to use these features.
 
-**Results: **
+**Results:**
 
 The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Refer to "Company Web Scrape Tool Introduction/Write Up" for more information. 
