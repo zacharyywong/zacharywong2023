@@ -14,4 +14,4 @@ Refer to "Tool Features/Project Write Up" in the "Project Write Up" folder for m
 
 **Results:**
 
-The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Additional columns are added according to activation of bonus features. Refer to "Tool Features/Project Write Up" in the "Project Write Up" folder for more information. 
+The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Additional columns are added according to the activation of bonus features. Refer to "Tool Features/Project Write Up" in the "Project Write Up" folder for more information. 
