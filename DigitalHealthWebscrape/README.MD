@@ -1,4 +1,4 @@
-**Please read "Tool Features/Project Write Up" in the 'Project Write-Up' folder for a complete overview on how to use this Company Web Scrape Tool**
+**Please read "Tool Features/Project Write Up" in the "Project Write-Up" folder for a complete overview on how to use this Company Web Scrape Tool**
 
 **Access the Company Web Scrape Tool**: 
 
@@ -10,8 +10,8 @@ Given a list of user-inputted company names, the tool will extract each company�
 
 **“LinkedIn Company Mining” and “Keywords Detection” Bonus Features:**
 
-Refer to "Tool Features/Project Write Up" in the 'Project Write-Up' folder for more information on how to use these features.
+Refer to "Tool Features/Project Write Up" in the "Project Write-Up" folder for more information on how to use these features.
 
 **Results:**
 
-The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Additional columns are added according to activation of bonus features. Refer to "Company Web Scrape Tool Introduction/Write Up" for more information. 
+The “Results” tab on the Google spreadsheet contains the company name, link to their website, and a short description for each company. Additional columns are added according to activation of bonus features. Refer to "Tool Features/Project Write Up" in the "Project Write-Up" folder for more information. 
