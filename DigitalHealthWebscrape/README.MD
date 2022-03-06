@@ -6,7 +6,7 @@ The tool is a Google Spreadsheet called “Company Web Scrape Tool”: https://d
 
 **Basic Feature of the Web Scraping Tool**:
 
-Given a list of user-inputted company names, the tool will extract each company’s and generate a short description for each company. 
+Given a list of user-inputted company names, the tool will extract each company’s website link and generate a short description for each company. 
 
 **“LinkedIn Company Mining” and “Keywords Detection” Bonus Features:**
 
