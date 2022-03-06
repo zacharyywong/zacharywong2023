@@ -1,4 +1,4 @@
-**Please read "Company Web Scrape Tool Introduction" for complete instructions on how to use this Company Web Scrape Tool**
+**Please read "Tool Features/Project Write Up" in the 'Project Write-Up' folder for a complete overview on how to use this Company Web Scrape Tool**
 
 **Access the Company Web Scrape Tool**: 
 
@@ -10,7 +10,7 @@ Given a list of user-inputted company names, the tool will extract each company�
 
 **“LinkedIn Company Mining” and “Keywords Detection” Bonus Features:**
 
-Refer to "Company Web Scrape Tool Introduction/Write Up" for more information on how to use these features.
+Refer to "Tool Features/Project Write Up" in the 'Project Write-Up' folder for more information on how to use these features.
 
 **Results:**
 
