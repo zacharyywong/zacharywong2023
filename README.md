@@ -1,8 +1,8 @@
 # zacharywong2023
 
-A personal portfolio of code-related projects I have completed either in class or in my spare time.
+A personal portfolio of data projects I have completed in my spare time.
 
-Atlantic Records: Increase revenue/optimize resources for recording labels by predicting tomorrow's biggest artists using Shazam data to surface important songs
+ShazamETLPipeline: Given 72 hours, predict tomorrow's biggest artists to increase revenue/optimize resources for recording labels by using Shazam data to surface important songs
 
+DigitalHealthWebScrape: Help automate company research, screening, and competitive landscaping for investment bankers or businesses in any industry 
 
-Pattern Recognition (Java): Built a model based on training data that tags parts of speech of every word in new sentences. The Deliverable: A Java Program supporting both user and text file input
