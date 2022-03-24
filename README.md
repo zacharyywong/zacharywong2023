@@ -2,7 +2,7 @@
 
 A personal portfolio of data projects I have completed in my spare time.
 
-ShazamETLPipeline: Given 72 hours, predict tomorrow's biggest artists to increase revenue/optimize resources for recording labels by using Shazam data to surface important songs
+ETL Pipeline (Python): Built/automated an end-to-end ETL pipeline to increase revenue/optimize resources for recording labels by surfacing important songs/artists
 
-DigitalHealthWebScrape: Help automate company research, screening, and competitive landscaping for investment bankers or businesses in any industry 
+Statistical/Causal Analysis (Python/SQL/STATA): Performed/visualized causal analysis using 3 public time series datasets to identify high-return investments that effectively increased the number of bicyclists in San Francisco
 
