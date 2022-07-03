@@ -1,53 +1,6 @@
-Failed Burn Multiple
-Failed CAC Payback Period
-Passed Net Retention Rate
-Failed T2D3
-Passed Rule of 40
-
-
-Report: 
-
-Overall Product Retention
-
-Your Net Retention Rate is 110, which is 9.52% higher than 100, the benchmark of excellent Overall Product Retention.
-This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.
-
-Profitability
-
-Your Rule of 40 is 46, which is 13.95% higher than 40, the benchmark of excellent Profitability.
-This means that you are either at least somewhat profitable or growing at an extremely high pace to compensate for low or negative gross margins.
-However, if you're at early stages, check the growth rate of your company. If you're near a 20 / 20 split, you have passed the Rule of 40 but still be stuck in sub-scale growth mode.
-Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, and hinder opportunities to lower your Customer Acquisition Costs. 
-
-
-Overall Company Efficiency
-
-Your Burn Multiple is 1.1x, which is 9.52% worse than 1x, the benchmark of excellent overall company efficiency.
-
-Since your CAC Payback Period is also high, the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers.
-1. Check if the company can narrow its target market to reduce burn
-2. See if there are more effective marketing techniques for each target segment to lower the CAC
-3. Check whether the company is targeting the wrong audience
-4. Check to see if company is focusing on least-cost customer acquisition channels
-5. Loss of business champion / executive sponsor
-
-Your low growth rate may be indicative that you need to go back to the drawing board to ensure that your product or service is what the market truly needs.
-1. Check if there is a high enough willingness to pay for the product.
-2. Check whether the problem is actually tackling a necessary problem in the market.
-3. Check whether the product is useful. 
-4. Check whether there is low barrier to entry into the product -> can introduce usage-based pricing or free trials.
-
-
-Overall Sales Efficiency
-
-Your CAC Payback Multiple is 1.48, which is 38.71% worse than 1, the benchmark of excellent company sales efficiency.
-Since your growth rates are lower than ideal, the problem is most likely due to low returns, specifically a low average MRR per customer
-
-Refer to the previous sections above for potential solutions on how to improve your Growth Rate.
-
-
-Growth Rate
-
-Your growth rate after 3 years is 20, which is -57.14% worse than 36, the benchmark of excellent Growth Rate at your company stage.
-Refer to the report above for further information on T2D3.
-
+Welcome to this tool! We're so glad to have you join us.
+I hope this program will help you gain a clearer view of your company and help improve your business.
+All you have to do is put in some of your business accounts and the program will do the rest!
+Don't worry - this won't take long. You only need 11 numbers at hand.
+If you ever want to quit the program, just write and enter the word: 'quit'. If you want to restart the program, enter the word: 'restart'. Lastly, if you ever want to access the Input Help Guide, enter the word 'help'!
+To begin, enter how many years your company has been in operation: 3

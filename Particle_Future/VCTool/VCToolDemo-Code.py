@@ -1,18 +1,142 @@
 from math import *
 from time import sleep
+import sys
+
+T2D3Dict = {0: 2, 1: 6, 2: 18, 3: 36, 4: 72, 5: 144}
+numMetric = 5
+userInputSleep = 2.5
+metricCalculateSleep = 0.5
+restart = True
 
 # path
+path = '/Users/zacharywong/github/zacharywong2023/Particle_Future/VCTool'
 
-path = '/Users/zacharywong/github/zacharywong2023/Particle_Future'
-
-# basic info
-totalYears = 3
-startingYear = 3
-ARR = 20
-growthBench = 36
-numMetric = 5
+helpGlossary = """
+    MRR = Monthly Recurring Revenue
+    ARR = Annual Recurring Revenue
+    CAC = Customer Acquisition Cost
+    Upsells/Expansions = The amount of revenue gained either due to customers upgrading to a more expensive subscription or purchasing expanded features
+    Churn/Contractions = The amount of revenue lost either due to customers cancelling their subscriptions or downgrading to a less expensive version
+    % Gross Margin = ((Revenue - the cost of goods sold) / revenue) * 100 
+    % Growth Rate = ((Ending ARR last month- Ending ARR two months ago)  / Ending ARR two months ago) * 100
+"""
 def write(text):
     print(text)
+
+def calculate_diff(Input, Benchmark):
+    metricDiff = ((abs(Input - Benchmark)) / ((Input + Benchmark) / 2)) * 100
+    if Benchmark > Input:
+        return -round(metricDiff, 2)
+    else:
+        return round(metricDiff, 2)
+
+#Inputs:
+
+netARR = None
+netBurn = None
+growthRate = None
+MRRperCustomer = None
+totalMRR = None
+upsellRevenue = None
+grossMargin = None
+numberofCustomersAcquired= None
+salesMarketingCosts = None
+churnContractionCosts = None
+
+
+# Results
+totalYears = None
+burnMultiple = None
+CACPayback = None
+NRRPercent = None
+growthDiffPercent = None
+rule40 = None
+
+# metric benchmarks
+burnMultipleBench = 1
+CACPaybackBench = 1
+NRRBench = 100
+growthBench = None
+rule40Bench = 40
+
+def calculateMetrics():
+    global burnMultiple, CACPayback, NRRPercent, growthBench, growthDiffPercent, rule40
+
+    burnMultiple = netBurn / netARR
+    CACPayback = (salesMarketingCosts / numberofCustomersAcquired) * (1/(MRRperCustomer * grossMargin))
+    NRRPercent = ((totalMRR + upsellRevenue - churnContractionCosts) / totalMRR) * 100
+    growthBench = T2D3Dict[totalYears]
+    growthDiffPercent = calculate_diff(netARR, growthBench)
+    rule40 = growthRate + grossMargin
+
+def checkRestart(input):
+    if input == 'restart':
+        global restart
+        write("\nThe program has restarted!")
+        userInput()
+
+def userInputandCheck(directions):
+    userInput = input(directions)
+    while userInput == 'help':
+        write(helpGlossary)
+        userInput = input(directions)
+
+    if userInput == 'quit':
+        quit()
+    elif userInput == 'restart':
+        checkRestart(userInput)
+    else:
+        return float(userInput)
+
+
+def introDirections():
+
+    write("Welcome to this tool! We're so glad to have you join us.")
+    sleep(userInputSleep)
+    write("I hope this program will help you gain a clearer view of your company and help improve your business.")
+    sleep(userInputSleep)
+    write("All you have to do is put in some of your business accounts and the program will do the rest!")
+    sleep(userInputSleep)
+
+    # Basic info
+    write("Don't worry - this won't take long. You only need 11 numbers at hand.")
+    sleep(userInputSleep)
+    write("If you ever want to quit the program, just write and enter the word: 'quit'. If you want to restart, enter the word: 'restart'.")
+    sleep(userInputSleep)
+    write("Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'!")
+    sleep(userInputSleep)
+
+def userInput():
+    global restart, totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts
+
+    # basic info
+    totalYears = userInputandCheck("\nTo begin, enter how many years your company has been in operation: ")
+    #yearly info
+
+    while restart == True:
+        write("\nGreat! Now let's fill in some data from the last full 12 months")
+        sleep(userInputSleep/2)
+        netARR = userInputandCheck("Enter your Net ARR from the last full 12 months: ")
+        netBurn = userInputandCheck("Enter your Net Burn from the last full 12 months: ")
+        #monthly info
+        write("\nGreat! Now let's fill in the bulk of the data. Please make sure these numbers are only from the last full month (not year).")
+        sleep(userInputSleep)
+        growthRate = userInputandCheck("Enter your MRR Growth Rate (%): ")
+        MRRperCustomer = userInputandCheck("Enter your Average MRR per customer ($): ")
+        totalMRR = userInputandCheck("Enter your total MRR at the start of the last month ($): ")
+        upsellRevenue = userInputandCheck("Enter your revenue in expansions and upsells ($): ")
+        grossMargin = userInputandCheck("Enter your Gross Margin (%): ")
+        numberofCustomersAcquired = userInputandCheck("Enter the number of new customers or subscribers acquired (#): ")
+        salesMarketingCosts = userInputandCheck("Enter your sales and marketing costs ($): ")
+        churnContractionCosts = userInputandCheck("Enter your revenue lost in churns and contractions ($): ")
+        restart = False
+        write("\nGreat thank you! The report should be ready in a few seconds...\n")
+        sleep(userInputSleep/2)
+## Output
+
+# basic info
+
+
 
 def calculate_diff(Input, Benchmark):
     metricDiff = ((abs(Input - Benchmark)) / ((Input + Benchmark) / 2)) * 100
@@ -63,28 +187,21 @@ NRRResult = None
 growthDiffResult = None
 rule40Result = None
 
-# calculate % diff between ARR and benchmark
-# make growth diff negative if failing benchmark
-# metric
-burnMultiple = 1.1
-CACPayback = 1.48
-NRRPercent = 110
-growthDiffPercent = calculate_diff(ARR, growthBench)
-rule40 = 46
-
-# metric benchmarks
-burnMultipleBench = 1
-CACPaybackBench = 1
-NRRBench = 100
-rule40Bench = 40
 
 # Metric Success Desc
 
-burnSuccessDesc = 'burnSuccessDesc\n'
-CACSuccessDesc = 'CACSuccessDesc\n'
+burnSuccessDesc = 'This means that the amount of revenue that you are earning is greater than the amount of cash you are spending to achieve this growth. ' \
+                  'However, check the growth rate of your company. A company with a great burn multiple but low growth means it is not spending enough to achieve its highest potential growth rate. \n'
+
+CACSuccessDesc = "This means that either the costs to acquire your customer is low and/or the amount of revenue you are gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.' \
+                 'However, mcheck the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. \n"
+
 NRRSuccessDesc = 'This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. ' \
                  'However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.\n'
-growthSuccessDesc = 'growthSuccessDesc\n'
+
+growthSuccessDesc = 'This means that the you are on the way to becoming a high exit company at IPO. However, check the overall efficiency of your spending and the retention' \
+                    'of your product to ensure that your burn or churn rates are not negating each sale that you make. \n'
+
 rule40SuccessDesc = "This means that you are either at least somewhat profitable or growing at an extremely high pace to compensate for low or negative gross margins.\n" \
                     "However, if you're at early stages, check the growth rate of your company. If you're near a 20 / 20 split, you have passed the Rule of 40 but still be stuck in sub-scale growth mode.\n" \
                     "Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, and hinder opportunities to lower your Customer Acquisition Costs. \n"
@@ -164,15 +281,15 @@ def updateHelperDicts():
 def passFailMetric():
     global burnMultipleResult, CACPaybackResult, NRRResult, growthDiffResult, rule40Result
     burnMultipleResult = check_metric(burnMultiple, burnMultipleBench, 0, burnMultipleName)
-    sleep(0.5)
+    sleep(metricCalculateSleep)
     CACPaybackResult = check_metric(CACPayback, CACPaybackBench, 0, CACPaybackName)
-    sleep(0.5)
+    sleep(metricCalculateSleep)
     NRRResult = check_metric(NRRPercent, NRRBench, 1, NRRName)
-    sleep(0.5)
+    sleep(metricCalculateSleep)
     growthDiffResult = check_metric(growthDiffPercent, 0, 1, growthName)
-    sleep(0.5)
+    sleep(metricCalculateSleep)
     rule40Result = check_metric(rule40, rule40Bench, 1, rule40Name)
-    sleep(0.5)
+    sleep(metricCalculateSleep)
 
     updateHelperDicts()
 
@@ -208,7 +325,7 @@ def setUpBurnDict():
     dictBurn = {}
     burnDiff = calculate_diff(burnMultiple, burnMultipleBench)
 
-    burnBaseDesc = 'Your Burn Multiple is {burnMultiple}x, which is {burnDiff}% worse than {burnMultipleBench}x, ' \
+    burnBaseDesc = 'Your Burn Multiple is {burnMultiple:.2f}x, which is {burnDiff:.2f}% worse than {burnMultipleBench}x, ' \
                    'the benchmark of excellent overall company efficiency.\n'.format(burnMultiple = burnMultiple, burnDiff = burnDiff, burnMultipleBench = burnMultipleBench)
 
     # update metric name -> base desc dictionary
@@ -231,15 +348,15 @@ def setUpCACDict():
     dictCAC = {}
     CACDiff = calculate_diff(CACPayback, CACPaybackBench)
 
-    CACBaseDesc = 'Your CAC Payback Multiple is {CACPayBack}, which is {cacDiff:.2f}% worse than {CACPaybackBench}, ' \
-                   'the benchmark of excellent company sales efficiency.'.format(CACPayBack = CACPayback, cacDiff = CACDiff, CACPaybackBench = CACPaybackBench)
+    CACBaseDesc = 'Your CAC Payback Multiple is {CACPayBack:.2f}, which is {cacDiff:.2f}% worse than {CACPaybackBench}, ' \
+                   'the benchmark of excellent company sales efficiency.\n'.format(CACPayBack = CACPayback, cacDiff = CACDiff, CACPaybackBench = CACPaybackBench)
 
     metricNameBaseDescDict[CACPaybackName] = CACBaseDesc
 
-    CACBurnDesc = 'High CAC'
-    CACNRRDesc = 'CACNRRDesc'
+    CACBurnDesc = 'Since your burn multiple is high, the problem is most likely due to high spending on sales and marketing to acquire customers, specifically a high customer acquisition costs'
+    CACNRRDesc = 'Since your net retention rates are low, the problem may lie in low average MRR per customer, to specifically due to high churn and contractions before you have recovered their acquisition costs '
     CACGrowthDesc = "Since your growth rates are lower than ideal, the problem is most likely due to low returns, specifically a low average MRR per customer"
-    CACRule40Desc = 'Bad CAC Payback -> low gross margin% -> high COGS spending-> low profitability'
+    CACRule40Desc = 'Since you have not passed the Rule of 40, the problem is most likely due to low gross margins, specifically because of high COGS spending.'
 
     descCACList = [CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc]
 
@@ -251,10 +368,18 @@ def setUpNRRDict():
     #print("starting index: " + str(startingIndex))
     dictNRR = {}
 
-    NRRBurnDesc = 'Low overall company efficiency: Bad NRR -> high churn -> low net new MRR -> bad burn multiple -> low company efficiency'
-    NRRCACDesc = 'Bad NRR ->  high churn / contractions -> high CAC -> low # of new customers acquired / high marketing/sales spend-> low sales efficiency'
-    NRRGrowthDesc = 'Bad NRR -> high churn / contractions -> lower revenue -> unsustainable / low growth'
-    NRRRule40Desc = 'NRRRule40Desc'
+    # update nrr base description
+    NRRDiff = calculate_diff(NRRPercent, NRRBench)
+    NRRBaseDesc = 'Your Net Retention Rate is {NRRPercent:.2f}, which is {NRRDiff:.2f}% worse than {NRRBench}, ' \
+                   'the benchmark of excellent product retention.\n'.format(NRRPercent = NRRPercent, NRRDiff = NRRDiff, NRRBench = NRRBench)
+
+    # update metric name -> base desc dictionary
+    metricNameBaseDescDict[NRRName] = NRRBaseDesc
+
+    NRRBurnDesc = 'Since your burn multiple is high, the problem most likely lies in low net new MRR, specifically due to low rates of expansions and upsells'
+    NRRCACDesc = 'Since your CAC Payback Ratio is high, the problem most likely lies in high churn and contractions, specifically due to a high, restrictive Customer Acquisition Cost'
+    NRRGrowthDesc = 'Since your growth rates are lower than ideal, the problem lies in low returns, specifically due to the combination of low expansion and upsells and high churn and contractions'
+    NRRRule40Desc = "While the Rule of 40 can't sufficiently pinpoint why your NRR is low, failing the Rule of 40 may be indicative that you are not growing fast enough. Check your growth rates."
 
     descNRRList = [NRRBurnDesc, NRRCACDesc, NRRGrowthDesc, NRRRule40Desc]
 
@@ -266,14 +391,14 @@ def setUpGrowthDict():
     #print("starting index: " + str(startingIndex))
     dictGrowth = {}
     growthBaseDesc = 'Your growth rate after {totalYears} years is {ARR}, which is {growthDiff:.2f}% worse than {growthBench}, ' \
-                   'the benchmark of excellent {growthCategory} at your company stage.'.format(totalYears = totalYears, ARR = ARR, growthDiff = growthDiffPercent, growthBench = growthBench, growthCategory = metricNameCategoryDict['T2D3'])
+                   'the benchmark of excellent {growthCategory} at your company stage.\n'.format(totalYears = totalYears, ARR = netARR, growthDiff = growthDiffPercent, growthBench = growthBench, growthCategory = metricNameCategoryDict['T2D3'])
 
     metricNameBaseDescDict[growthName] = growthBaseDesc
 
-    growthBurnDesc = 'Bad growth -> low net new ARR -> bad burn multiple -> low company efficiency'
-    growthCACDesc = 'Bad Growth -> low # of new customers acquired or low avg MRR -> high CAC Payback Period -> low sales efficiency'
-    growthNRRDesc = 'Bad Growth -> low expansions / high churn -> bad NRR -> low product stickiness '
-    growthRule40Desc = 'growthRule40Desc'
+    growthBurnDesc = "The low burn multiple is only further evidence that your growth rates are lower than ideal, It may also indicate that you aren't spending your cash as efficienctly as possible to achieve your low growth rates"
+    growthCACDesc = "Your high CAC Payback ratio further substantiates the fact that you're acquiring a low number of customers and/or generating low average returns per acquired customer"
+    growthNRRDesc = 'The low NRR is indicative of a combination of high churn rates and/or low expansions and upsells of your products.'
+    growthRule40Desc = "Your failure of the Rule of 40 means that your gross margins aren't high enough to compensate for low growth. Please check the Profitability aspects of the report to see what are some potential ways to increase your gross margins."
 
     descGrowthList = [growthBurnDesc, growthCACDesc, growthNRRDesc, growthRule40Desc]
 
@@ -283,22 +408,23 @@ def setUpGrowthDict():
 def setUpProfitDict():
     startingIndex = metricNameList.index(rule40Name)
     #print("starting index: " + str(startingIndex))
-    dictProfit = {}
+    dictRule40 = {}
+    # update nrr base description
+    rule40Diff = calculate_diff(rule40, rule40Bench)
+    rule40BaseDesc = 'Your Rule of 40 is {rule40}, which is {rule40Diff:.2f}% worse than {rule40Bench}, ' \
+                  'the benchmark of excellent foundation for sustainable company success.\n'.format(rule40=rule40, rule40Diff=rule40Diff,
+                                                                                rule40Bench=rule40Bench)
 
-    profitBurnDesc = 'Bad Rule of 40 ->  low %Gross Margin-> high COGS spending-> high burn -> bad Burn multiple -> low overall company efficiency'
-    profitCACDesc = 'Bad Rule of 40 -> low %gross margin -> high Sales/marketing spending -> Bad CAC Payback time -> low sales efficiency'
-    profitNRRDesc = 'Bad Rule of 40 -> low % MRR growth -> high churn -> low product stickiness'
-    profitGrowthDesc = 'Bad Rule of 40 -> low % MRR growth -> unsustainable growth'
+    # update metric name -> base desc dictionary
+    metricNameBaseDescDict[rule40Name] = rule40BaseDesc
 
-    descProfitList = [profitBurnDesc, profitCACDesc, profitNRRDesc, profitGrowthDesc]
+    rule40BurnDesc = 'Since your burn multiple is also high, the problem most likely lies in a combination of low growth and low % gross margins, specifically due to low growth with a high cash burn.'
+    rule40CACDesc = 'Since your CAC Pauback Ratio is also high, the problem most likely lies in the low % gross margin, specifically due to high sales and marketing spending.'
+    rule40NRRDesc = 'Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product'
+    rule40GrowthDesc = "Your low growth rates means that your groth rates aren't high enough to compensate for low gross margins. Please check the growth aspects of the report to see what are some potential ways to increase your growth."
+    descRule40List = [rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc]
 
-    addDict(startingIndex, dictProfit, descProfitList)
-
-# def printDesc(metricFailList):
-#     for metricFail in metricFailList:
-#         baseDesc = metricNameBaseDescDict[metricFail]
-#         print(baseDesc)
-#         print(finalDescList)
+    addDict(startingIndex, dictRule40, descRule40List)
 
 def operateSuccessMetrics():
     metricSuccessList = []
@@ -316,9 +442,9 @@ def operateSuccessMetrics():
         metricSuccess = metricSuccessList[index]
         metricDiff = calculate_diff(metricNameInputDict[metricSuccess], metricNameBenchDict[metricSuccess])
         if metricNameComparableDict[metricSuccess] == 1:
-            write("Your {metricSuccess} is {metricInput}, which is {metricDiff}% higher than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
+            write("Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% higher than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
         else:
-            write("Your {metricSuccess} is {metricInput}, which is {metricDiff}% lower than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
+            write("Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% lower than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
         write(metricNameSuccessDescDict[metricSuccess])
         index += 1
 
@@ -326,33 +452,41 @@ def operateSuccessMetrics():
 # go through fail list, get metric name, go to diag, push from queue as key, get value and print
 def operateFailMetrics():
     metricFailList = []
+    # put all failed metrics in a list
     for metric in metricNameList:
         if metricNameResultDict[metric] == 0:
             metricFailList.append(metric)
     #print("metric fail list: " + str(metricFailList))
+
+    # get the base desc for each failed metric
     index1stLevel = 0
     while index1stLevel < len(metricFailList):
         metricFail1stLevel = metricFailList[index1stLevel]
         baseDesc = metricNameBaseDescDict[metricFail1stLevel]
         write('\n' + metricNameCategoryDict[metricFail1stLevel] + '\n')
         write(baseDesc)
+
+
         index2ndLevel = index1stLevel + 1
+        # if there's no other 2nd level metric, then the 1st level metric must have already been addressed in the previous sections
         if index2ndLevel >= len(metricFailList):
             write("Refer to the report above for further information on " + str(metricFailList[index1stLevel]) + ".\n")
             index1stLevel += 1
             break
+
+        # print the corresponding 2nd level metric description for the 1st level metric
         while index2ndLevel < len(metricFailList):
             metricFail2ndLevel = metricFailList[index2ndLevel]
             desc = diagMetricDict[metricFail1stLevel][metricFail2ndLevel]
 
             # try to print the action steps if there - then pop it out
+            # if no action steps there, that means already printed in earlier section
             try:
-                #print(metricNameActionStepsDict)
                 write(desc)
                 write(metricNameActionStepsDict[metricFail2ndLevel])
                 metricNameActionStepsDict.pop(metricFail2ndLevel)
             except Exception:
-                write("\nRefer to the previous sections above for potential solutions on how to improve your " + metricNameCategoryDict[metricFail2ndLevel] + ".\n")
+                write("Refer to the previous sections above for potential solutions on how to improve your " + metricNameCategoryDict[metricFail2ndLevel] + ".\n")
                 index2ndLevel += 1
             else:
                 index2ndLevel += 1
@@ -370,6 +504,9 @@ def setUpDiagMetricDict():
     #print(diagMetricDict)
 
 def run():
+    #introDirections()
+    userInput()
+    calculateMetrics()
     passFailMetric()
     setUpDiagMetricDict()
     operateSuccessMetrics()
