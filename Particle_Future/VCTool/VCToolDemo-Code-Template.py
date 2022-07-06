@@ -2,6 +2,8 @@ from math import *
 from time import sleep
 import sys
 
+
+
 T2D3Dict = {0: 2, 1: 6, 2: 18, 3: 36, 4: 72, 5: 144}
 numMetric = 5
 userInputSleep = 2.5
@@ -20,6 +22,7 @@ helpGlossary = """
     % Gross Margin = ((Revenue - the cost of goods sold) / revenue) * 100 
     % Growth Rate = ((Ending ARR last month- Ending ARR two months ago)  / Ending ARR two months ago) * 100
 """
+
 def write(text):
     print(text)
 
@@ -30,7 +33,7 @@ def calculate_diff(Input, Benchmark):
     else:
         return round(metricDiff, 2)
 
-#Inputs:
+# Inputs:
 
 netARR = None
 netBurn = None
@@ -39,13 +42,19 @@ MRRperCustomer = None
 totalMRR = None
 upsellRevenue = None
 grossMargin = None
-numberofCustomersAcquired= None
+numberofCustomersAcquired = None
 salesMarketingCosts = None
 churnContractionCosts = None
 
-
 # Results
 totalYears = None
+burnMultiple = None
+CACPayback = None
+NRRPercent = None
+growthDiffPercent = None
+rule40 = None
+
+# Metric Numbers
 burnMultiple = None
 CACPayback = None
 NRRPercent = None
@@ -63,15 +72,15 @@ def calculateMetrics():
     global burnMultiple, CACPayback, NRRPercent, growthBench, growthDiffPercent, rule40
 
     burnMultiple = netBurn / netARR
-    CACPayback = (salesMarketingCosts / numberofCustomersAcquired) * (1/(MRRperCustomer * grossMargin))
+    CACPayback = (salesMarketingCosts / numberofCustomersAcquired) * (1 / (MRRperCustomer * grossMargin))
     NRRPercent = ((totalMRR + upsellRevenue - churnContractionCosts) / totalMRR) * 100
     growthBench = T2D3Dict[totalYears]
     growthDiffPercent = calculate_diff(netARR, growthBench)
     rule40 = growthRate + grossMargin
 
 def checkRestart(input):
+    global restart
     if input == 'restart':
-        global restart
         write("\nThe program has restarted!")
         userInput()
 
@@ -88,7 +97,6 @@ def userInputandCheck(directions):
     else:
         return float(userInput)
 
-
 def introDirections():
 
     write("Welcome to this tool! We're so glad to have you join us.")
@@ -101,42 +109,49 @@ def introDirections():
     # Basic info
     write("Don't worry - this won't take long. You only need 11 numbers at hand.")
     sleep(userInputSleep)
-    write("If you ever want to quit the program, just write and enter the word: 'quit'. If you want to restart, enter the word: 'restart'.")
+    write(
+        "If you ever want to quit the program, just write and enter the word: 'quit'. If you want to restart, enter the word: 'restart'.")
     sleep(userInputSleep)
-    write("Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'!")
+    write(
+        "Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'!")
     sleep(userInputSleep)
 
 def userInput():
     global restart, totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts
 
     # basic info
-    totalYears = userInputandCheck("\nTo begin, enter how many years your company has been in operation: ")
-    #yearly info
-
     while restart == True:
+        totalYears = userInputandCheck("\nTo begin, enter how many years your company has been in operation: ")
+        if totalYears == 'restart' and restart:
+            userInput()
+        elif not restart:
+            return
+        # yearly info
         write("\nGreat! Now let's fill in some data from the last full 12 months")
-        sleep(userInputSleep/2)
+        sleep(userInputSleep / 2)
         netARR = userInputandCheck("Enter your Net ARR from the last full 12 months: ")
         netBurn = userInputandCheck("Enter your Net Burn from the last full 12 months: ")
-        #monthly info
-        write("\nGreat! Now let's fill in the bulk of the data. Please make sure these numbers are only from the last full month (not year).")
+
+        # monthly info
+        write(
+            "\nGreat! Now let's fill in the bulk of the data. Please make sure these numbers are only from the last full month (not year).")
         sleep(userInputSleep)
         growthRate = userInputandCheck("Enter your MRR Growth Rate (%): ")
         MRRperCustomer = userInputandCheck("Enter your Average MRR per customer ($): ")
         totalMRR = userInputandCheck("Enter your total MRR at the start of the last month ($): ")
         upsellRevenue = userInputandCheck("Enter your revenue in expansions and upsells ($): ")
         grossMargin = userInputandCheck("Enter your Gross Margin (%): ")
-        numberofCustomersAcquired = userInputandCheck("Enter the number of new customers or subscribers acquired (#): ")
+        numberofCustomersAcquired = userInputandCheck(
+            "Enter the number of new customers or subscribers acquired (#): ")
         salesMarketingCosts = userInputandCheck("Enter your sales and marketing costs ($): ")
         churnContractionCosts = userInputandCheck("Enter your revenue lost in churns and contractions ($): ")
         restart = False
         write("\nGreat thank you! The report should be ready in a few seconds...\n")
-        sleep(userInputSleep/2)
+        sleep(userInputSleep / 2)
+
 ## Output
 
 # basic info
-
-
 
 def calculate_diff(Input, Benchmark):
     metricDiff = ((abs(Input - Benchmark)) / ((Input + Benchmark) / 2)) * 100
@@ -144,7 +159,6 @@ def calculate_diff(Input, Benchmark):
         return -round(metricDiff, 2)
     else:
         return round(metricDiff, 2)
-
 
 # comparable is 1 when input >= benchmark counts as a pass and 0 when input <= benchmark counts as pass
 def check_metric(input, benchmark, comparable, metricName):
@@ -163,7 +177,6 @@ def check_metric(input, benchmark, comparable, metricName):
         else:
             write("Failed " + metricName)
             return 0
-
 
 # Metric Names
 burnMultipleName = 'Burn Multiple'
@@ -186,7 +199,6 @@ CACPaybackResult = None
 NRRResult = None
 growthDiffResult = None
 rule40Result = None
-
 
 # Metric Success Desc
 
@@ -211,10 +223,10 @@ rule40SuccessDesc = "This means that you are either at least somewhat profitable
 burnActionStepsDesc = "Burn Action Steps Desc\n"
 
 CACActionStepsDesc = "1. Check if the company can narrow its target market to reduce burn\n" \
-                 "2. See if there are more effective marketing techniques for each target segment to lower the CAC\n" \
-                 "3. Check whether the company is targeting the wrong audience\n" \
-                 "4. Check to see if company is focusing on least-cost customer acquisition channels\n" \
-                 "5. Loss of business champion / executive sponsor\n"
+                     "2. See if there are more effective marketing techniques for each target segment to lower the CAC\n" \
+                     "3. Check whether the company is targeting the wrong audience\n" \
+                     "4. Check to see if company is focusing on least-cost customer acquisition channels\n" \
+                     "5. Loss of business champion / executive sponsor\n"
 
 NRRActionStepsDesc = "1. Check if there is easy onboarding for customers.\n" \
                      "2. Check if there are enough new features.\n" \
@@ -243,18 +255,15 @@ metricNameResultDict = {}
 metricNameBaseDescDict = {}
 metricNameSuccessDescDict = {}
 metricNameActionStepsDict = {}
-finalDescList = []
-
-
 
 def incrementIndex(index, list):
     if index + 1 == len(list):
         metricIndex = 0
-        #print(metricIndex)
+        # print(metricIndex)
         return metricIndex
     else:
         metricIndex = index + 1
-        #print(metricIndex)
+        # print(metricIndex)
         return metricIndex
 
 def updateHelperDicts():
@@ -264,8 +273,10 @@ def updateHelperDicts():
     metricBenchList = [burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench]
     metricComparableList = [0, 0, 1, 1, 1]
     metricResultList = [burnMultipleResult, CACPaybackResult, NRRResult, growthDiffResult, rule40Result]
-    metricNameActionStepsList = [burnActionStepsDesc, CACActionStepsDesc, NRRActionStepsDesc, growthActionStepsDesc, rule40ActionStepsDesc]
-    metricNameSuccessDescList = [burnSuccessDesc, CACSuccessDesc, NRRSuccessDesc, growthSuccessDesc, rule40SuccessDesc]
+    metricNameActionStepsList = [burnActionStepsDesc, CACActionStepsDesc, NRRActionStepsDesc, growthActionStepsDesc,
+                                 rule40ActionStepsDesc]
+    metricNameSuccessDescList = [burnSuccessDesc, CACSuccessDesc, NRRSuccessDesc, growthSuccessDesc,
+                                 rule40SuccessDesc]
     metricInputList = [burnMultiple, CACPayback, NRRPercent, growthDiffPercent, rule40]
     metricCategoryList = [burnMultipleCategory, CACPaybackCategory, NRRCategory, growthCategory, rule40Category]
 
@@ -276,7 +287,7 @@ def updateHelperDicts():
     metricNameActionStepsDict = dict(zip(metricNameList, metricNameActionStepsList))
     metricNameResultDict = dict(zip(metricNameList, metricResultList))
     metricNameSuccessDescDict = dict(zip(metricNameList, metricNameSuccessDescList))
-    #print(metricNameResultDict)
+    # print(metricNameResultDict)
 
 def passFailMetric():
     global burnMultipleResult, CACPaybackResult, NRRResult, growthDiffResult, rule40Result
@@ -293,9 +304,8 @@ def passFailMetric():
 
     updateHelperDicts()
 
-
 def addDict(startingIndex, metricDict, descList):
-    #print("starting desc List index: " + str(startingIndex))
+    # print("starting desc List index: " + str(startingIndex))
 
     descListIndex = startingIndex
     metricIndex = startingIndex + 1
@@ -306,8 +316,7 @@ def addDict(startingIndex, metricDict, descList):
     if metricIndex == len(metricNameList):
         metricIndex = 0
 
-    #print("metric name list index: " + str(metricIndex))
-
+    # print("metric name list index: " + str(metricIndex))
 
     count = 0
     while count < len(descList):
@@ -326,13 +335,15 @@ def setUpBurnDict():
     burnDiff = calculate_diff(burnMultiple, burnMultipleBench)
 
     burnBaseDesc = 'Your Burn Multiple is {burnMultiple:.2f}x, which is {burnDiff:.2f}% worse than {burnMultipleBench}x, ' \
-                   'the benchmark of excellent overall company efficiency.\n'.format(burnMultiple = burnMultiple, burnDiff = burnDiff, burnMultipleBench = burnMultipleBench)
+                   'the benchmark of excellent overall company efficiency.\n'.format(burnMultiple=burnMultiple,
+                                                                                     burnDiff=burnDiff,
+                                                                                     burnMultipleBench=burnMultipleBench)
 
     # update metric name -> base desc dictionary
     metricNameBaseDescDict[burnMultipleName] = burnBaseDesc
 
     burnCACDesc = "Since your CAC Payback Period is also high, " \
-                                 "the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
+                  "the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
 
     burnNRRDesc = "Since your Net Retention Rate is low, the problem most likely lies in the company's low ARR growth, specifically due to a high rate of churn. A leaky bucket makes it hard to grow efficiently."
     burnGrowthDesc = "Your low growth rate may be indicative that you need to go back to the drawing board to ensure that your product or service is what the market truly needs."
@@ -341,15 +352,16 @@ def setUpBurnDict():
     descBurnList = [burnCACDesc, burnNRRDesc, burnGrowthDesc, burnRule40Desc]
     addDict(startingIndex, dictBurn, descBurnList)
 
-
 def setUpCACDict():
     startingIndex = metricNameList.index(CACPaybackName)
-    #print("starting index: " + str(startingIndex))
+    # print("starting index: " + str(startingIndex))
     dictCAC = {}
     CACDiff = calculate_diff(CACPayback, CACPaybackBench)
 
     CACBaseDesc = 'Your CAC Payback Multiple is {CACPayBack:.2f}, which is {cacDiff:.2f}% worse than {CACPaybackBench}, ' \
-                   'the benchmark of excellent company sales efficiency.\n'.format(CACPayBack = CACPayback, cacDiff = CACDiff, CACPaybackBench = CACPaybackBench)
+                  'the benchmark of excellent company sales efficiency.\n'.format(CACPayBack=CACPayback,
+                                                                                  cacDiff=CACDiff,
+                                                                                  CACPaybackBench=CACPaybackBench)
 
     metricNameBaseDescDict[CACPaybackName] = CACBaseDesc
 
@@ -362,16 +374,16 @@ def setUpCACDict():
 
     addDict(startingIndex, dictCAC, descCACList)
 
-
 def setUpNRRDict():
     startingIndex = metricNameList.index(NRRName)
-    #print("starting index: " + str(startingIndex))
+    # print("starting index: " + str(startingIndex))
     dictNRR = {}
 
     # update nrr base description
     NRRDiff = calculate_diff(NRRPercent, NRRBench)
     NRRBaseDesc = 'Your Net Retention Rate is {NRRPercent:.2f}, which is {NRRDiff:.2f}% worse than {NRRBench}, ' \
-                   'the benchmark of excellent product retention.\n'.format(NRRPercent = NRRPercent, NRRDiff = NRRDiff, NRRBench = NRRBench)
+                  'the benchmark of excellent product retention.\n'.format(NRRPercent=NRRPercent, NRRDiff=NRRDiff,
+                                                                           NRRBench=NRRBench)
 
     # update metric name -> base desc dictionary
     metricNameBaseDescDict[NRRName] = NRRBaseDesc
@@ -385,13 +397,14 @@ def setUpNRRDict():
 
     addDict(startingIndex, dictNRR, descNRRList)
 
-
 def setUpGrowthDict():
     startingIndex = metricNameList.index(growthName)
-    #print("starting index: " + str(startingIndex))
+    # print("starting index: " + str(startingIndex))
     dictGrowth = {}
     growthBaseDesc = 'Your growth rate after {totalYears} years is {ARR}, which is {growthDiff:.2f}% worse than {growthBench}, ' \
-                   'the benchmark of excellent {growthCategory} at your company stage.\n'.format(totalYears = totalYears, ARR = netARR, growthDiff = growthDiffPercent, growthBench = growthBench, growthCategory = metricNameCategoryDict['T2D3'])
+                     'the benchmark of excellent {growthCategory} at your company stage.\n'.format(
+        totalYears=totalYears, ARR=netARR, growthDiff=growthDiffPercent, growthBench=growthBench,
+        growthCategory=metricNameCategoryDict['T2D3'])
 
     metricNameBaseDescDict[growthName] = growthBaseDesc
 
@@ -404,16 +417,16 @@ def setUpGrowthDict():
 
     addDict(startingIndex, dictGrowth, descGrowthList)
 
-
 def setUpProfitDict():
     startingIndex = metricNameList.index(rule40Name)
-    #print("starting index: " + str(startingIndex))
+    # print("starting index: " + str(startingIndex))
     dictRule40 = {}
     # update nrr base description
     rule40Diff = calculate_diff(rule40, rule40Bench)
     rule40BaseDesc = 'Your Rule of 40 is {rule40}, which is {rule40Diff:.2f}% worse than {rule40Bench}, ' \
-                  'the benchmark of excellent foundation for sustainable company success.\n'.format(rule40=rule40, rule40Diff=rule40Diff,
-                                                                                rule40Bench=rule40Bench)
+                     'the benchmark of excellent foundation for sustainable company success.\n'.format(
+        rule40=rule40, rule40Diff=rule40Diff,
+        rule40Bench=rule40Bench)
 
     # update metric name -> base desc dictionary
     metricNameBaseDescDict[rule40Name] = rule40BaseDesc
@@ -434,7 +447,6 @@ def operateSuccessMetrics():
 
     index = 0
 
-
     write("\n\nReport: \n")
 
     while index < len(metricSuccessList):
@@ -442,9 +454,17 @@ def operateSuccessMetrics():
         metricSuccess = metricSuccessList[index]
         metricDiff = calculate_diff(metricNameInputDict[metricSuccess], metricNameBenchDict[metricSuccess])
         if metricNameComparableDict[metricSuccess] == 1:
-            write("Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% higher than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
+            write(
+                "Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% higher than {metricBench}, the benchmark of excellent {metricName}.".format(
+                    metricSuccess=metricSuccess, metricInput=metricNameInputDict[metricSuccess],
+                    metricDiff=metricDiff, metricBench=metricNameBenchDict[metricSuccess],
+                    metricName=metricNameCategoryDict[metricSuccess]))
         else:
-            write("Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% lower than {metricBench}, the benchmark of excellent {metricName}.".format(metricSuccess = metricSuccess, metricInput = metricNameInputDict[metricSuccess], metricDiff = metricDiff, metricBench = metricNameBenchDict[metricSuccess], metricName = metricNameCategoryDict[metricSuccess]))
+            write(
+                "Your {metricSuccess} is {metricInput:.2f}, which is {metricDiff}% lower than {metricBench}, the benchmark of excellent {metricName}.".format(
+                    metricSuccess=metricSuccess, metricInput=metricNameInputDict[metricSuccess],
+                    metricDiff=metricDiff, metricBench=metricNameBenchDict[metricSuccess],
+                    metricName=metricNameCategoryDict[metricSuccess]))
         write(metricNameSuccessDescDict[metricSuccess])
         index += 1
 
@@ -456,7 +476,7 @@ def operateFailMetrics():
     for metric in metricNameList:
         if metricNameResultDict[metric] == 0:
             metricFailList.append(metric)
-    #print("metric fail list: " + str(metricFailList))
+    # print("metric fail list: " + str(metricFailList))
 
     # get the base desc for each failed metric
     index1stLevel = 0
@@ -466,11 +486,11 @@ def operateFailMetrics():
         write('\n' + metricNameCategoryDict[metricFail1stLevel] + '\n')
         write(baseDesc)
 
-
         index2ndLevel = index1stLevel + 1
         # if there's no other 2nd level metric, then the 1st level metric must have already been addressed in the previous sections
         if index2ndLevel >= len(metricFailList):
-            write("Refer to the report above for further information on " + str(metricFailList[index1stLevel]) + ".\n")
+            write("Refer to the report above for further information on " + str(
+                metricFailList[index1stLevel]) + ".\n")
             index1stLevel += 1
             break
 
@@ -486,14 +506,13 @@ def operateFailMetrics():
                 write(metricNameActionStepsDict[metricFail2ndLevel])
                 metricNameActionStepsDict.pop(metricFail2ndLevel)
             except Exception:
-                write("Refer to the previous sections above for potential solutions on how to improve your " + metricNameCategoryDict[metricFail2ndLevel] + ".\n")
+                write("Refer to the previous sections above for potential solutions on how to improve your " +
+                      metricNameCategoryDict[metricFail2ndLevel] + ".\n")
                 index2ndLevel += 1
             else:
                 index2ndLevel += 1
                 continue
         index1stLevel += 1
-
-
 
 def setUpDiagMetricDict():
     setUpBurnDict()
@@ -501,10 +520,10 @@ def setUpDiagMetricDict():
     setUpNRRDict()
     setUpGrowthDict()
     setUpProfitDict()
-    #print(diagMetricDict)
+    # print(diagMetricDict)
 
 def run():
-    #introDirections()
+    introDirections()
     userInput()
     calculateMetrics()
     passFailMetric()
