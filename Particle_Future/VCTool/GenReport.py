@@ -5,9 +5,11 @@ from time import sleep
 
 
 class GenReport:
-
+    file = ''
+    writeList = []
     metricCalculateSleep = None
     numMetrics = None
+    netARR = None
 
     #stage
     stage1 = False
@@ -46,12 +48,19 @@ class GenReport:
 
 
 
-    def __init__(self, metricCalculateSleep, numMetric = None):
+    def __init__(self, metricCalculateSleep, netARR, file, writeList, numMetric = None):
         self.metricCalculateSleep = metricCalculateSleep
         self.numMetric = numMetric
+        self.file = file
+        self.netARR = netARR
+        self.writeList = writeList
 
     def write(self, text):
         print(text)
+        self.writeList.append(text + '\n')
+
+    def writeLines(self):
+        return self.writeList
 
     def inputStage(self, stage):
         if stage == 'early':
@@ -76,23 +85,23 @@ class GenReport:
         else:
             self.stage3 = True
 
-    def writeStage(self, netARR):
+    def writeStage(self):
         if self.stage1:
             self.write('Since you earned {ARR:.0f} ARR in the last 12 full months, you are an early stage company.\n'.format(
-                 ARR= netARR))
+                 ARR= self.netARR))
 
             if self.growthCalculate:
                 self.write(
                    'Since you earned {ARR:.0f} ARR in the last 12 full months, the tool will be measuring your growth against the T2D3 standard.'.format(
-                   ARR=netARR))
+                   ARR=self.netARR))
 
         elif self.stage2:
             self.write('Since you earned {ARR:.0f} ARR in the last 12 full months, you are a growth stage company.\n'.format(
-                 ARR= netARR))
+                 ARR= self.netARR))
 
         elif self.stage3:
              self.write('Since you earned {ARR:.0f} ARR in the last 12 full months, you are a late stage company.\n'.format(
-                ARR= netARR))
+                ARR= self.netARR))
 
 
     def calculateDiff(self, input, benchmark):
@@ -239,6 +248,7 @@ class GenReport:
         index = 0
 
         self.write("\n\nReport: \n")
+        self.writeStage()
 
         while index < len(metricSuccessList):
             self.write(self.metricNameCategoryDict[metricSuccessList[index]] + '\n')

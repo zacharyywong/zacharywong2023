@@ -2,9 +2,10 @@
 from GenReport import *
 from Input import *
 
-
+#
+file = './VCToolDemo-Report.txt'
 # Pause Times
-
+writeList = []
 metricCalculateSleep = 0.5
 userInputSleep = 2
 
@@ -140,15 +141,17 @@ rule40ActionStepsDesc = "1. Check whether there are ways to increase R&D efficie
 
 # Run program with intro, input, and report generator
 def run():
-
     # Intro + Input
-    input = Input(userInputSleep, helpGlossary)
+    global writeList
+    input = Input(userInputSleep, helpGlossary, file, writeList)
     input.introDirections()
     totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
     numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
+    writeList = input.writeLines()
+    writeList.append('\n')
 
     # Set up Infra
-    report = GenReport(metricCalculateSleep)
+    report = GenReport(metricCalculateSleep, netARR, file, writeList)
     report.calculateStage(T2D3StartARR, netARR, upperEarlyStage, upperGrowthStage)
     T2D3Dict = {0: Year0ARR, 1: Year1ARR, 2: Year2ARR, 3: Year3ARR, 4: Year4ARR, 5: Year5ARR}
     global growthBench
@@ -174,9 +177,13 @@ def run():
     report.setUpMetricDict(rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc)
 
     # Generate Report
-    report.writeStage(netARR)
+    #report.writeStage(netARR)
     report.operateSuccessMetrics()
     report.operateFailMetrics()
+    writeList = report.writeLines()
+
+    with open(file, 'w') as f:
+        f.writelines(writeList)
 
 if __name__ == '__main__':
     run()

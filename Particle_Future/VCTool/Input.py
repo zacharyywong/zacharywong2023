@@ -1,8 +1,11 @@
 from time import sleep
+from timeit import default_timer as timer
 
 class Input:
     userInputSleep = None
     helpGlossary = ''
+    file = ''
+    writeList = []
 
     #Inputs
     totalYears = None
@@ -18,53 +21,89 @@ class Input:
     churnContractionCosts = None
 
 
-    def __init__(self, sleepTime, helpGlossary):
+    def __init__(self, sleepTime, helpGlossary, file, writeList):
         self.userInputSleep = sleepTime
         self.helpGlossary = helpGlossary
+        self.file = file
+        self.writeList = writeList
+
+    def addtowriteList(self, text):
+        self.writeList.append(text + '\n')
 
     def write(self, text):
         print(text)
+        self.addtowriteList(text)
 
+
+
+    def writeLines(self):
+        return self.writeList
+
+    def promptUser(self):
+        self.write(input(""))
 
     def introDirections(self):
 
-        self.write("Welcome to the StartUp Health Diagnostic Tool!")
-        sleep(self.userInputSleep)
-        input("Press Enter to Continue")
-        self.write(
-            "This tool's purpose is to help you gain a clearer view of your company and help improve your startup.")
-        input("")
-        self.write(
-            "It will do this by measuring your company's overall efficiency, sales efficiency, product retention, growth, and profitability.")
-        input("")
-        self.write("Based on these measurements, the tool will attempt to pinpoint why a metric may be underperforming and "
-                   "further suggest some actions steps to improve your startup.")
-        input("")
-        self.write("All you have to do is put in some of your business accounts and the tool will do the rest!")
-        input("")
-        self.write("Don't worry - this won't take long. You only need 11 numbers at hand.")
-        input("")
-        self.write(
-            "If you ever want to quit the program, just write and enter the word: 'quit'.")
-        input("")
-        self.write(
-            "Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'!")
-        input("")
+        text = "Welcome to the StartUp Health Diagnostic Tool!"
+        self.write(text)
 
+        sleep(self.userInputSleep)
+
+        text = "Press Enter to Continue"
+        input(text)
+        self.addtowriteList(text)
+
+        text = "This tool's purpose is to help you gain a clearer view of your company and help improve your startup."
+        self.write(text)
+
+        self.promptUser()
+
+        text = "It will do this by measuring your company's overall efficiency, sales efficiency, product retention, growth, and profitability."
+        self.write(text)
+
+        self.promptUser()
+
+        text = "Based on these measurements, the tool will attempt to pinpoint why a metric may be underperforming and " \
+               "further suggest some actions steps to improve your startup."
+        self.write(text)
+
+        self.promptUser()
+
+        text = "All you have to do is put in some of your business accounts and the tool will do the rest!"
+        self.write(text)
+
+        self.promptUser()
+
+        text = "Don't worry - this won't take long. You only need 11 numbers at hand."
+        self.write(text)
+
+        self.promptUser()
+
+        text = "If you ever want to quit the program, just write and enter the word: 'quit'."
+        self.write(text)
+
+        self.promptUser()
+
+        text =  "Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'."
+        self.write(text)
+
+        self.promptUser()
     def userInputandCheck(self, directions):
         done = False
 
         while True:
             try:
                 userInput = input(directions)
+                self.addtowriteList(directions+userInput)
                 while userInput == 'help':
                     self.write(self.helpGlossary)
                     userInput = input(directions)
+                    self.addtowriteList(directions + userInput)
                 if userInput == 'quit':
                     quit()
                 userInput = float(userInput)
             except ValueError:
-                print("Please try again and enter a number")
+                self.write("Please try again and enter a number")
             else:
                 return float(userInput)
 
@@ -80,7 +119,7 @@ class Input:
 
             # monthly info
             self.write(
-                "\nGreat! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month")
+                "\nGreat! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month.")
             sleep(self.userInputSleep)
             self.growthRate = self.userInputandCheck("Enter your MRR Growth Rate (%): ")
             self.MRRperCustomer = self.userInputandCheck("Enter your Average MRR per customer ($): ")
