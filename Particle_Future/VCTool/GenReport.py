@@ -1,3 +1,6 @@
+
+# Class to generate report for 3 stages and 5 stages
+
 from time import sleep
 
 
@@ -26,6 +29,8 @@ class GenReport:
     metricResult4 = None
     metricResult5 = None
 
+    #growth bench
+    growthBench = None
     # Hash Tables and lists
     metricNameList = []
     diagMetricDict = {}
@@ -51,13 +56,10 @@ class GenReport:
     def inputStage(self, stage):
         if stage == 'early':
             self.stage1 = True
-            #self.stageReport = 'You have inputted that you are an early stage company.\n'
         elif stage == 'growth':
             self.stage2 = True
-            #self.stageReport = 'You have inputted that you are a growth stage company.\n'
         elif stage == 'late':
             self.stage3 = True
-            #self.stageReport = 'You have inputted that you are a late stage company.\n'
 
     # Calculate which stage the company is in
     def calculateStage(self, startARR, ARR, upperStage1, upperStage2):
@@ -113,14 +115,14 @@ class GenReport:
 
     # calculate metrics and check whether pass or fail the benchmarks
     #return metrics
-    def calculateMetrics(self, T2D3Dict, years, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired
+    def calculateMetrics(self, growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired
                          ,salesMarketingCosts, churnContractionCosts):
 
         self.metric1 = netBurn / netARR
         self.metric2 = (salesMarketingCosts / numberofCustomersAcquired) * (1 / (MRRperCustomer * grossMargin))
         self.metric3 = ((totalMRR + upsellRevenue - churnContractionCosts) / totalMRR) * 100
-        growthBench = T2D3Dict[years]
-        self.metric4 = self.calculateDiff(netARR, growthBench)
+        self.growthBench = growthBench
+        self.metric4 = self.calculateDiff(netARR, self.growthBench)
         self.metric5 = growthRate + grossMargin
 
     # comparable is 1 when input >= benchmark counts as a pass and 0 when input <= benchmark counts as pass
@@ -210,8 +212,7 @@ class GenReport:
         self.diagMetricDict[self.metricNameList[startingIndex]] = metricDict
 
     # set up all metric Dicts to set up for failed dictionaries
-    def setUpMetricDict(self,
-                        desc1, desc2, desc3, desc4):
+    def setUpMetricDict(self, desc1, desc2, desc3, desc4):
 
         for metricName in self.metricNameList:
             startingIndex = self.metricNameList.index(metricName)

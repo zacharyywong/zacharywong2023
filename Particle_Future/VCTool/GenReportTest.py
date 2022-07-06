@@ -1,28 +1,26 @@
 # This script tests the gen report class
 from GenReport import *
-
+from Input import *
 
 T2D3Dict = {0: 2, 1: 6, 2: 18, 3: 36, 4: 72, 5: 144}
 metricCalculateSleep = 0.5
+userInputSleep = 2
+
+helpGlossary = """
+    MRR = Monthly Recurring Revenue
+    ARR = Annual Recurring Revenue
+    CAC = Customer Acquisition Cost
+    Upsells/Expansions = The amount of revenue gained either due to customers upgrading to a more expensive subscription or purchasing expanded features
+    Churn/Contractions = The amount of revenue lost either due to customers cancelling their subscriptions or downgrading to a less expensive version
+    % Gross Margin = ((Revenue - the cost of goods sold) / revenue) * 100 
+    % Growth Rate = ((Ending ARR last month- Ending ARR two months ago)  / Ending ARR two months ago) * 100
+"""
 
 #Inputs
-totalYears = 3
-netARR = 20
-netBurn = 22
-growthRate = 40
-MRRperCustomer = 0.009
-totalMRR = 10
-upsellRevenue = 3
-grossMargin = 12
-numberofCustomersAcquired = 25
-salesMarketingCosts = 4
-churnContractionCosts = 2
+
 
 # stage
-earlyStage = False
-growthStage = False
-lateStage = False
-growthCalculate = False
+
 T2D3StartARR = 2
 upperEarlyStage = 10
 upperGrowthStage = 50
@@ -31,7 +29,7 @@ upperGrowthStage = 50
 burnMultipleBench = 1
 CACPaybackBench = 1
 NRRBench = 100
-growthBench = T2D3Dict[totalYears]
+growthBench = None
 rule40Bench = 40
 
 # Metric Names
@@ -47,21 +45,6 @@ CACPaybackCategory = 'Overall Sales Efficiency'
 NRRCategory = 'Overall Product Retention'
 growthCategory = 'Growth Rate'
 rule40Category = 'Profitability'
-
-# Metric Numbers
-burnMultiple = None
-CACPayback = None
-NRRPercent = None
-rule40 = None
-
-# Metric Diffs
-
-burnDiff = None
-CACDiff = None
-NRRDiff = None
-growthDiffPercent = None
-rule40Diff = None
-
 # Metric Comps
 # 0 if it's pass to be below benchmark, 1 if it's pass to be above benchmark
 
@@ -70,14 +53,6 @@ CACPaybackComp = 0
 NRRComp = 1
 growthComp = 1
 rule40Comp = 1
-
-# metric results (1 for pass, 0 for fail)
-burnMultipleResult = None
-CACPaybackResult = None
-NRRResult = None
-growthDiffResult = None
-rule40Result = None
-
 
 # Burn Fail Descriptions
 burnCACDesc = "Since your CAC Payback Period is also high, " \
@@ -164,17 +139,23 @@ rule40ActionStepsDesc = "1. Check whether there are ways to increase R&D efficie
 
 def run():
 
-    report = GenReport(metricCalculateSleep)
+    # Intro + Input
+    input = Input(userInputSleep, helpGlossary)
 
-    global earlyStage, growthStage, lateStage, growthCalculate, diagMetricDict, \
-        metricNameList, burnMultiple, CACPayback, NRRPercent, growthDiffPercent, rule40,\
-        burnMultipleResult, CACPaybackResult, NRRResult, growthDiffResult, rule40Result, \
-        metricNameCategoryDict, metricNameComparableDict, metricNameBenchDict, metricNameInputDict, \
-        metricNameResultDict, metricNameSuccessDescDict, metricNameActionStepsDict
+    input.introDirections()
+
+    totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
+
+    # Generate Report
+    report = GenReport(metricCalculateSleep)
 
     report.calculateStage(T2D3StartARR, netARR, upperEarlyStage, upperGrowthStage)
 
-    report.calculateMetrics(T2D3Dict, totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
+    global growthBench
+    growthBench = T2D3Dict[totalYears]
+
+    report.calculateMetrics(growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
 
     report.passFailMetric(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name, burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
                             burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp)
@@ -188,9 +169,9 @@ def run():
 
     # burn
     report.setUpMetricDict(burnCACDesc, burnNRRDesc, burnGrowthDesc, burnRule40Desc)
+
     # CAC
-    report.setUpMetricDict(
-                        CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc)
+    report.setUpMetricDict(CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc)
     # NRR
     report.setUpMetricDict(NRRBurnDesc, NRRCACDesc,
                                             NRRGrowthDesc, NRRRule40Desc)
