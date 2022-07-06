@@ -11,7 +11,7 @@ metricCalculateSleep = 0.5
 restart = True
 
 # path
-path = '/Users/zacharywong/github/zacharywong2023/Particle_Future/VCTool'
+path = '/'
 
 helpGlossary = """
     MRR = Monthly Recurring Revenue
