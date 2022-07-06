@@ -33,7 +33,7 @@ Enter your Net Burn from the last full 12 months: 22
 
 Great! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month.
 Enter your MRR Growth Rate (%): 40
-Enter your Average MRR per customer ($): not a number
+Enter your Average MRR per customer ($): test - not a number
 Please try again and enter a number
 Enter your Average MRR per customer ($): 0.009
 Enter your total MRR at the start of the last month ($): 10
@@ -72,7 +72,7 @@ Avoid focusing too much on profitability too early on, which can sacrifice growt
 
 Overall Company Efficiency
 
-Your Burn Multiple is 1.1, which is 9.52% worse than 1, the benchmark of Overall Company Efficiency.
+Your Burn Multiple is 1.10, which is 9.52% worse than 1, the benchmark of Overall Company Efficiency.
 
 Since your burn multiple is also high, the problem most likely lies in a combination of low growth and low % gross margins, specifically due to low growth with a high cash burn.
 1. Check if the company can narrow its target market to reduce burn
@@ -90,7 +90,7 @@ Since your retention rates are also low, the problem most likely lies in the low
 
 Overall Sales Efficiency
 
-Your CAC Payback Period is 1.4814814814814818, which is 38.81% worse than 1, the benchmark of Overall Sales Efficiency.
+Your CAC Payback Period is 1.48, which is 38.81% worse than 1, the benchmark of Overall Sales Efficiency.
 
 Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product
 Refer to the previous sections above for potential solutions on how to improve your Growth Rate.

@@ -231,7 +231,7 @@ class GenReport:
             metricCategory = self.metricNameCategoryDict[metricName]
             metricDiff = self.calculateDiff(metricInput, metricBench)
 
-            metricBaseDesc = 'Your {metricName} is {metric}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
+            metricBaseDesc = 'Your {metricName} is {metric:.2f}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
                       'the benchmark of {metricCategory}.\n'.format(metricName = metricName, metric = metricInput, metricDiff = metricDiff, metricBench = metricBench, metricCategory = metricCategory)
             # update metric name -> base desc dictionary
             self.metricNameBaseDescDict[metricName] = metricBaseDesc
