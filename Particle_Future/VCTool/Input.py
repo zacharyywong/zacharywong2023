@@ -1,3 +1,5 @@
+# Class for intro directions and user input
+
 from time import sleep
 from timeit import default_timer as timer
 

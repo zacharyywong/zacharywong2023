@@ -1,5 +1,5 @@
 
-# Class to generate report for 3 stages and 5 stages
+# Class to generate report for 3 stages and 5 metrics
 
 from time import sleep
 
