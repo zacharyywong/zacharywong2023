@@ -150,11 +150,9 @@ def run():
     # Set up Infra
     report = GenReport(metricCalculateSleep)
     report.calculateStage(T2D3StartARR, netARR, upperEarlyStage, upperGrowthStage)
-
     T2D3Dict = {0: Year0ARR, 1: Year1ARR, 2: Year2ARR, 3: Year3ARR, 4: Year4ARR, 5: Year5ARR}
     global growthBench
     growthBench = T2D3Dict[totalYears]
-
     report.calculateMetrics(growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
     report.passFailMetric(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name, burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
                             burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp)
@@ -169,14 +167,11 @@ def run():
     # CAC Dictionary
     report.setUpMetricDict(CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc)
     # NRR Dictionary
-    report.setUpMetricDict(NRRBurnDesc, NRRCACDesc,
-                                            NRRGrowthDesc, NRRRule40Desc)
+    report.setUpMetricDict(NRRBurnDesc, NRRCACDesc, NRRGrowthDesc, NRRRule40Desc)
     # Growth Dictionary
-    report.setUpMetricDict(growthBurnDesc, growthCACDesc,
-                                            growthNRRDesc, growthRule40Desc)
+    report.setUpMetricDict(growthBurnDesc, growthCACDesc, growthNRRDesc, growthRule40Desc)
     # Rule40 Dictionary
-    report.setUpMetricDict(rule40BurnDesc, rule40CACDesc,
-                                            rule40NRRDesc, rule40GrowthDesc)
+    report.setUpMetricDict(rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc)
 
     # Generate Report
     report.writeStage(netARR)

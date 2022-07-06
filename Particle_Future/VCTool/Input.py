@@ -17,6 +17,7 @@ class Input:
     salesMarketingCosts = None
     churnContractionCosts = None
 
+
     def __init__(self, sleepTime, helpGlossary):
         self.userInputSleep = sleepTime
         self.helpGlossary = helpGlossary
@@ -27,34 +28,45 @@ class Input:
 
     def introDirections(self):
 
-        self.write("Welcome to this tool! We're so glad to have you join us.")
+        self.write("Welcome to the StartUp Health Diagnostic Tool!")
         sleep(self.userInputSleep)
+        input("Press Enter to Continue")
         self.write(
-            "I hope this program will help you gain a clearer view of your company and help improve your business.")
-        sleep(self.userInputSleep)
-        self.write("All you have to do is put in some of your business accounts and the program will do the rest!")
-        sleep(self.userInputSleep)
-
-        # Basic info
+            "This tool's purpose is to help you gain a clearer view of your company and help improve your startup.")
+        input("")
+        self.write(
+            "It will do this by measuring your company's overall efficiency, sales efficiency, product retention, growth, and profitability.")
+        input("")
+        self.write("Based on these measurements, the tool will attempt to pinpoint why a metric may be underperforming and "
+                   "further suggest some actions steps to improve your startup.")
+        input("")
+        self.write("All you have to do is put in some of your business accounts and the tool will do the rest!")
+        input("")
         self.write("Don't worry - this won't take long. You only need 11 numbers at hand.")
-        sleep(self.userInputSleep)
+        input("")
         self.write(
-            "If you ever want to quit the program, just write and enter the word: 'quit'. If you want to restart, enter the word: 'restart'.")
-        sleep(self.userInputSleep)
+            "If you ever want to quit the program, just write and enter the word: 'quit'.")
+        input("")
         self.write(
             "Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'!")
-        sleep(self.userInputSleep)
+        input("")
 
     def userInputandCheck(self, directions):
-        userInput = input(directions)
-        while userInput == 'help':
-            self.write(self.helpGlossary)
-            userInput = input(directions)
+        done = False
 
-        if userInput == 'quit':
-            quit()
-        else:
-            return float(userInput)
+        while True:
+            try:
+                userInput = input(directions)
+                while userInput == 'help':
+                    self.write(self.helpGlossary)
+                    userInput = input(directions)
+                if userInput == 'quit':
+                    quit()
+                userInput = float(userInput)
+            except ValueError:
+                print("Please try again and enter a number")
+            else:
+                return float(userInput)
 
     def runUserInput(self):
         # basic info
@@ -68,7 +80,7 @@ class Input:
 
             # monthly info
             self.write(
-                "\nGreat! Now let's fill in the bulk of the data. Please make sure these numbers are only from the last full month (not year).")
+                "\nGreat! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month")
             sleep(self.userInputSleep)
             self.growthRate = self.userInputandCheck("Enter your MRR Growth Rate (%): ")
             self.MRRperCustomer = self.userInputandCheck("Enter your Average MRR per customer ($): ")
