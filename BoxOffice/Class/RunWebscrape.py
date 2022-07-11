@@ -4,12 +4,11 @@ from datetime import datetime
 from time import sleep
 
 packages = ["pandas", "numpy", "xlwt", "wheel", "html5lib", "bs4", "openpyxl", "selenium", "webdriver-manager"]
-yearList = [2022, 2021]
+yearList = [2022]
 urlYearly = 'https://www.boxofficemojo.com/year/?ref_=bo_nb_hm_secondarytab'
 sheetNameDaily = "DailyMovieData"
 sheetNameYear = "{year}Summary.xlsx"
 sleepTime = random.randrange(4, 7)
-
 
 def installPackages():
     for package in packages:

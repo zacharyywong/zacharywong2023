@@ -1,12 +1,13 @@
 import subprocess
 import sys
+
+from openpyxl import Workbook
 import pandas as pd
 import numpy as np
 from datetime import datetime
 from time import sleep
 import pytz
 import random
-from openpyxl import *
 from openpyxl.utils.dataframe import dataframe_to_rows
 
 # import selenium/webscraping libs
@@ -23,17 +24,17 @@ service = Service(driver_path)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 sleepTime = random.randrange(4, 7)
 
-# excel
-path = "/Users/zacharywong/github/zacharywong2023/BoxOffice/"
-totalFileName = "DecayCurveData.xlsx"
-wb = Workbook()
-
 # keep track of day/time
 est = pytz.timezone('US/Eastern')
 fmt = '%d/%m/%Y %H:%M:%S'
 now = datetime.now()
 now = now.astimezone(est).strftime(fmt)
 print("day/time: " + now)
+
+# excel
+path = "/Users/zacharywong/github/zacharywong2023/BoxOffice/"
+totalFileName = "DecayCurveData-{date}.xlsx".format(date = now)
+wb = Workbook()
 
 urlYearly = 'https://www.boxofficemojo.com/year/?ref_=bo_nb_hm_secondarytab'
 dailyColumns = ["Date", "DOW", "Rank", "Daily", "%+/-YR", "%+/-LW", "Theaters", "Avg", "To Date", "Day", "Title",
@@ -57,7 +58,7 @@ class BoxOfficeWebScrape:
         rows = dataframe_to_rows(df, index=False, header=True)
         for row in rows:
             ws.append(row)
-        wb.save(totalFileName)
+        wb.save(filename=totalFileName)
 
     # Filter by In Year Releases and Wide Releases
     def clickFilters(self):
@@ -153,7 +154,7 @@ class BoxOfficeWebScrape:
 
     def getAllDailyData(self, rowNumber):
         print("Number of Movies:" + str(rowNumber))
-        index = 2
+        index = 40
         while index < rowNumber + 2:
             print("index: " + str(index))
             startNow = datetime.now()
