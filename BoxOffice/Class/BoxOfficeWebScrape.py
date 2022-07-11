@@ -1,13 +1,9 @@
-import subprocess
-import sys
-
 from openpyxl import Workbook
 import pandas as pd
 import numpy as np
 from datetime import datetime
 from time import sleep
 import pytz
-import random
 from openpyxl.utils.dataframe import dataframe_to_rows
 
 # import selenium/webscraping libs
@@ -22,18 +18,18 @@ from selenium.webdriver.support import expected_conditions as EC
 driver_path = '/Users/zacharywong/Downloads/chromedriver'
 service = Service(driver_path)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-sleepTime = random.randrange(4, 7)
+waitTime = 10
+boolColumnDropIndex = 10
 
 # keep track of day/time
 est = pytz.timezone('US/Eastern')
-fmt = '%d/%m/%Y %H:%M:%S'
+fmt = '%d-%m-%Y'
 now = datetime.now()
 now = now.astimezone(est).strftime(fmt)
 print("day/time: " + now)
 
 # excel
 path = "/Users/zacharywong/github/zacharywong2023/BoxOffice/"
-totalFileName = "DecayCurveData-{date}.xlsx".format(date = now)
 wb = Workbook()
 
 urlYearly = 'https://www.boxofficemojo.com/year/?ref_=bo_nb_hm_secondarytab'
@@ -45,12 +41,19 @@ yearlyColumns = ["Rank", "Release", "Gross", "Max Th", "Opening", "% of Total", 
 dfDailyTable = pd.DataFrame()
 dfYearlyTable = pd.DataFrame()
 
-yearList = [2022, 2021]
 
 class BoxOfficeWebScrape:
+    def __init__(self, yearList, workbookName, sheetNameYear, sheetNameDaily, holidayList, sleepTime):
+        self.yearList = yearList
+        self.workBookName = workbookName
+        self.totalFileName = self.workBookName.format(date=now)
+        wb.save(self.totalFileName)
 
-    def __init__(self, urlYearly):
-        self.urlYearly = urlYearly
+        self.sheetNameYear = sheetNameYear
+        self.sheetNameDaily = sheetNameDaily
+        self.holidayList = holidayList
+
+        self.sleepTime = sleepTime
 
     def writetoExcel(self, df, sheetName):
         ws = wb.create_sheet()
@@ -58,27 +61,27 @@ class BoxOfficeWebScrape:
         rows = dataframe_to_rows(df, index=False, header=True)
         for row in rows:
             ws.append(row)
-        wb.save(filename=totalFileName)
+        wb.save(self.totalFileName)
 
     # Filter by In Year Releases and Wide Releases
     def clickFilters(self):
         XPATHinYear = "/html/body/div[1]/main/div/div/div[1]/div[2]/span/form/span/select"
         XPATHwideRelease = "/html/body/div[1]/main/div/div/div[1]/div[3]/span/form/span/select"
-        sleep(sleepTime)
+        sleep(self.sleepTime)
 
         try:
             filterInYearSelect = Select(driver.find_element(By.XPATH, XPATHinYear))
         except:
-            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, XPATHinYear)))
+            WebDriverWait(driver, waitTime).until(EC.presence_of_element_located((By.XPATH, XPATHinYear)))
             filterInYearSelect = Select(driver.find_element(By.XPATH, XPATHinYear))
 
         filterInYearSelect.select_by_visible_text("In-year releases")
-        sleep(sleepTime)
+        sleep(self.sleepTime)
 
         try:
             filterwidereleaseSelect = Select(driver.find_element(By.XPATH, XPATHwideRelease))
         except:
-            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, XPATHwideRelease)))
+            WebDriverWait(driver, waitTime).until(EC.presence_of_element_located((By.XPATH, XPATHwideRelease)))
             filterwidereleaseSelect = Select(driver.find_element(By.XPATH, XPATHwideRelease))
 
         filterwidereleaseSelect.select_by_visible_text("Wide releases")
@@ -89,7 +92,7 @@ class BoxOfficeWebScrape:
         try:
             movie = driver.find_element(By.XPATH, XPATHMovie)
         except:
-            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, XPATHMovie)))
+            WebDriverWait(driver, waitTime).until(EC.presence_of_element_located((By.XPATH, XPATHMovie)))
             movie = driver.find_element(By.XPATH, XPATHMovie)
         return movie, movie.text
 
@@ -105,24 +108,26 @@ class BoxOfficeWebScrape:
         tempResult = pd.read_html(driver.page_source, flavor='html5lib')[1]
         return tempResult
 
-    def cleanTable(self, df):
+    @staticmethod
+    def cleanTable(df):
         for column in df:
             df[column] = df[column].replace(['-'], np.nan)
-            # if df[column].dtypes == bool:
-            #    df.drop(column, inplace = True, axis = 1)
         df = df.dropna(axis=1, how='all')
-        df = df.drop(df.columns[[10]], axis=1)
+        df = df.drop(df.columns[[boolColumnDropIndex]], axis=1)
         return df
 
-    def renameYearlyTable(self, df):
+    @staticmethod
+    def renameYearlyTable(df):
         df.columns = yearlyColumns
         return df
 
-    def renameDailyTable(self, df):
+    @staticmethod
+    def renameDailyTable(df):
         df.columns = dailyColumns
         return df
 
-    def reorderDailyTable(self, df):
+    @staticmethod
+    def reorderDailyTable(df):
         colsOrdered = ["Distributor", "Title", "Genre", "Date", "DOW", "Rank", "Daily", "%+/-YR", "%+/-LW", "Theaters",
                        "Avg", "To Date", "Day"]
         df = df[colsOrdered]
@@ -133,7 +138,9 @@ class BoxOfficeWebScrape:
         return df
 
     def cleanDate(self, df):
-        df["Date"] = df["Date"].str.split('COVID-19 Pandemic').str[0]
+        for holiday in self.holidayList:
+            df["Date"] = df["Date"].str.split(holiday).str[0]
+
         return df
 
     def getDailyMovieData(self, movieTitle):
@@ -145,7 +152,6 @@ class BoxOfficeWebScrape:
         for number in range(0, rowNumber):
             indexList.append(number)
 
-        #tempResult = pd.DataFrame(index=indexList)
         tempResult = self.getTableData()
         tempResult["Title"] = movieTitle
         tempResult["Genre"] = (driver.find_element(By.XPATH, XPATHGenre)).text
@@ -154,36 +160,51 @@ class BoxOfficeWebScrape:
 
     def getAllDailyData(self, rowNumber):
         print("Number of Movies:" + str(rowNumber))
-        index = 40
+        index = 2
         while index < rowNumber + 2:
+            tempResult = None
             print("index: " + str(index))
             startNow = datetime.now()
             movieDriver, movieTitle = self.getMovieLink(index)
             print(movieTitle)
             movieDriver.click()
             self.getRowColumnNumber()
+            global dfDailyTable
             try:
                 tempResult = self.getDailyMovieData(movieTitle)
             except:
                 print("cannot read movies further - most likely website overload")
-            global dfDailyTable
+
             dfDailyTable = pd.concat([dfDailyTable, tempResult])
             index += 1
 
-            sleep(sleepTime)
+            sleep(self.sleepTime)
             driver.execute_script("window.history.go(-1)")
-            sleep(sleepTime)
+            sleep(self.sleepTime)
             endNow = datetime.now()
             timeElapsed = endNow - startNow
             print("time elapsed: " + str(timeElapsed))
 
-    def runYear(self, year, sheetName):
+    def cleanYearlyTable(self):
+        global dfYearlyTable
+        dfYearlyTable = self.cleanTable(dfYearlyTable)
+        dfYearlyTable = self.renameYearlyTable(dfYearlyTable)
+
+    def cleanDailyTable(self):
+        global dfDailyTable
+        dfDailyTable = self.cleanTable(dfDailyTable)
+        dfDailyTable = self.renameDailyTable(dfDailyTable)
+        dfDailyTable = self.reorderDailyTable(dfDailyTable)
+        dfDailyTable = self.cleanDailyDistributor(dfDailyTable)
+        dfDailyTable = self.cleanDate(dfDailyTable)
+
+    def runYear(self, year):
         # print(result)
         XPATH_Year = "//*[@class='a-link-normal' and text() = '{year}']".format(year=year)
         try:
             yearListDriver = driver.find_element(By.XPATH, XPATH_Year)
         except:
-            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, XPATH_Year)))
+            WebDriverWait(driver, waitTime).until(EC.presence_of_element_located((By.XPATH, XPATH_Year)))
             yearListDriver = driver.find_element(By.XPATH, XPATH_Year)
         yearListDriver.click()
         self.clickFilters()
@@ -191,10 +212,24 @@ class BoxOfficeWebScrape:
 
         global dfYearlyTable
         dfYearlyTable = self.getTableData()
-        dfYearlyTable = self.cleanTable(dfYearlyTable)
-        dfYearlyTable = self.renameYearlyTable(dfYearlyTable)
-        sheetName = sheetName.format(year = year)
+        self.cleanYearlyTable()
+
         print(dfYearlyTable)
+        sheetName = self.sheetNameYear.format(year=year)
         self.writetoExcel(dfYearlyTable, sheetName)
         self.getAllDailyData(rowNumber)
         driver.execute_script("window.history.go(-1)")
+
+    def run(self):
+        for year in self.yearList:
+            try:
+                driver.get(urlYearly)
+            except:
+                print("Cannot access {url}...quitting now").format(url=urlYearly)
+            self.runYear(year)
+            sleep(self.sleepTime)
+        self.cleanDailyTable()
+        print(dfDailyTable)
+        self.writetoExcel(dfDailyTable, self.sheetNameDaily)
+        del wb['Sheet']
+        wb.save(filename=self.totalFileName)
