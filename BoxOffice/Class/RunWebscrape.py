@@ -2,6 +2,7 @@
 # This is the developer interface script: Use this script to customize which years to pull from,
 # how to name the Excel sheets, and add a Holiday to remove from the Date column in the Daily data
 # It will generate the summary data sheet for every year and all the daily data for all titles in another sheet
+# Make sure that all packages are installed before running -> run install.py first if not all packages have been installed
 
 # Import packages
 from BoxOfficeWebScrape import *
