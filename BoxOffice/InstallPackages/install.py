@@ -1,4 +1,5 @@
 # Install all packages needed for webscrape
+#! /usr/bin/python
 
 import sys
 import subprocess

@@ -59,3 +59,447 @@ Requirement already satisfied: idna<4,>=2.5 in /Users/zacharywong/opt/anaconda3/
 Requirement already satisfied: charset-normalizer~=2.0.0 in /Users/zacharywong/opt/anaconda3/lib/python3.9/site-packages (from requests->webdriver-manager) (2.0.4)
 Requirement already satisfied: urllib3<1.27,>=1.21.1 in /Users/zacharywong/opt/anaconda3/lib/python3.9/site-packages (from requests->webdriver-manager) (1.26.7)
 Requirement already satisfied: certifi>=2017.4.17 in /Users/zacharywong/opt/anaconda3/lib/python3.9/site-packages (from requests->webdriver-manager) (2021.10.8)
+day/time: 12-07-2022
+    Rank  ...                          Distributor
+0      1  ...                   Paramount Pictures
+1      2  ...  Walt Disney Studios Motion Pictures
+2      3  ...                         Warner Bros.
+3      4  ...                   Universal Pictures
+4      5  ...                   Universal Pictures
+5      6  ...                   Paramount Pictures
+6      7  ...    Sony Pictures Entertainment (SPE)
+7      8  ...  Walt Disney Studios Motion Pictures
+8      9  ...  Walt Disney Studios Motion Pictures
+9     10  ...                   Paramount Pictures
+10    11  ...                   Universal Pictures
+11    12  ...                         Warner Bros.
+12    13  ...                         Warner Bros.
+13    14  ...                   Paramount Pictures
+14    15  ...                    Columbia Pictures
+15    16  ...                                  A24
+16    17  ...                   Universal Pictures
+17    18  ...             United Artists Releasing
+18    19  ...                   Paramount Pictures
+19    20  ...                 20th Century Studios
+20    21  ...                       Focus Features
+21    22  ...                       Focus Features
+22    23  ...                 20th Century Studios
+23    24  ...                   Universal Pictures
+24    25  ...                   Universal Pictures
+25    26  ...    Sony Pictures Entertainment (SPE)
+26    27  ...                            Lionsgate
+27    28  ...                            Lionsgate
+28    29  ...                   Universal Pictures
+29    30  ...                                  A24
+30    31  ...             Briarcliff Entertainment
+31    32  ...                   Universal Pictures
+32    33  ...                   Universal Pictures
+33    34  ...                                  A24
+34    35  ...                 Open Road Films (II)
+35    36  ...                     LD Entertainment
+36    37  ...                                GKIDS
+37    38  ...                 Open Road Films (II)
+38    39  ...                        Stage 6 Films
+39    40  ...               Blue Fox Entertainment
+40    41  ...                            IFC Films
+41    42  ...                    Gravitas Ventures
+42    43  ...                Bleecker Street Media
+
+[43 rows x 10 columns]
+Number of Movies:43
+index: 2
+Top Gun: Maverick
+time elapsed: 0:00:11.844120
+index: 3
+Doctor Strange in the Multiverse of Madness
+time elapsed: 0:00:11.594496
+index: 4
+The Batman
+time elapsed: 0:00:11.808149
+index: 5
+Jurassic World Dominion
+time elapsed: 0:00:11.684670
+index: 6
+Minions: The Rise of Gru
+time elapsed: 0:00:11.366962
+index: 7
+Sonic the Hedgehog 2
+time elapsed: 0:00:11.848151
+index: 8
+Uncharted
+time elapsed: 0:00:12.421169
+index: 9
+Thor: Love and Thunder
+time elapsed: 0:00:11.074849
+index: 10
+Lightyear
+time elapsed: 0:00:11.464922
+index: 11
+The Lost City
+time elapsed: 0:00:12.403846
+index: 12
+The Bad Guys
+time elapsed: 0:00:23.251446
+index: 13
+Fantastic Beasts: The Secrets of Dumbledore
+time elapsed: 0:00:12.038780
+index: 14
+Elvis
+time elapsed: 0:00:11.408093
+index: 15
+Scream
+time elapsed: 0:00:13.807283
+index: 16
+Morbius
+time elapsed: 0:00:11.589332
+index: 17
+Everything Everywhere All at Once
+time elapsed: 0:00:11.937526
+index: 18
+The Black Phone
+time elapsed: 0:00:12.576922
+index: 19
+Dog
+time elapsed: 0:00:12.549167
+index: 20
+Jackass Forever
+time elapsed: 0:00:11.622184
+index: 21
+Death on the Nile
+time elapsed: 0:00:11.511668
+index: 22
+Downton Abbey: A New Era
+time elapsed: 0:00:11.893407
+index: 23
+The Northman
+time elapsed: 0:00:11.666011
+index: 24
+The Bob's Burgers Movie
+time elapsed: 0:00:12.292167
+index: 25
+Marry Me
+time elapsed: 0:00:11.534120
+index: 26
+Ambulance
+time elapsed: 0:00:11.530319
+index: 27
+Father Stu
+time elapsed: 0:00:10.989963
+index: 28
+The Unbearable Weight of Massive Talent
+time elapsed: 0:00:11.566131
+index: 29
+Moonfall
+time elapsed: 0:00:12.873716
+index: 30
+The 355
+time elapsed: 0:00:11.257131
+index: 31
+X
+time elapsed: 0:00:11.053684
+index: 32
+Blacklight
+time elapsed: 0:00:11.566389
+index: 33
+Firestarter
+time elapsed: 0:00:11.218741
+index: 34
+Redeeming Love
+time elapsed: 0:00:10.896099
+index: 35
+Men
+time elapsed: 0:00:10.913253
+index: 36
+Memory
+time elapsed: 0:00:10.941196
+index: 37
+The Cursed
+time elapsed: 0:00:10.929738
+index: 38
+Belle
+time elapsed: 0:00:11.844836
+index: 39
+Studio 666
+time elapsed: 0:00:11.490806
+index: 40
+Umma
+time elapsed: 0:00:13.861207
+index: 41
+The Wolf and the Lion
+time elapsed: 0:00:10.744132
+index: 42
+Watcher
+time elapsed: 0:00:10.896075
+index: 43
+The King's Daughter
+time elapsed: 0:00:11.074486
+index: 44
+Mr. Malcolm's List
+time elapsed: 0:00:11.218960
+    Rank  ...                          Distributor
+0      1  ...    Sony Pictures Entertainment (SPE)
+1      2  ...  Walt Disney Studios Motion Pictures
+2      3  ...    Sony Pictures Entertainment (SPE)
+3      4  ...  Walt Disney Studios Motion Pictures
+4      5  ...                   Universal Pictures
+..   ...  ...                                  ...
+74    75  ...                        Stage 6 Films
+75    76  ...                 Roadside Attractions
+76    77  ...                       Focus Features
+77    78  ...                       Focus Features
+78    79  ...                    STX Entertainment
+
+[79 rows x 10 columns]
+Number of Movies:79
+index: 2
+Spider-Man: No Way Home
+time elapsed: 0:00:11.766857
+index: 3
+Shang-Chi and the Legend of the Ten Rings
+time elapsed: 0:00:11.068660
+index: 4
+Venom: Let There Be Carnage
+time elapsed: 0:00:11.324350
+index: 5
+Black Widow
+time elapsed: 0:00:11.179666
+index: 6
+F9: The Fast Saga
+time elapsed: 0:00:11.218265
+index: 7
+Eternals
+time elapsed: 0:00:10.965351
+index: 8
+Sing 2
+time elapsed: 0:00:11.356833
+index: 9
+No Time to Die
+time elapsed: 0:00:11.028738
+index: 10
+A Quiet Place Part II
+time elapsed: 0:00:11.148442
+index: 11
+Ghostbusters: Afterlife
+time elapsed: 0:00:11.208494
+index: 12
+Free Guy
+time elapsed: 0:00:11.574703
+index: 13
+Jungle Cruise
+time elapsed: 0:00:12.000197
+index: 14
+Dune
+time elapsed: 0:00:11.485469
+index: 15
+Godzilla vs. Kong
+time elapsed: 0:00:10.838953
+index: 16
+Encanto
+time elapsed: 0:00:11.372683
+index: 17
+Halloween Kills
+time elapsed: 0:00:11.047490
+index: 18
+Cruella
+time elapsed: 0:00:11.180565
+index: 19
+Space Jam: A New Legacy
+time elapsed: 0:00:10.759664
+index: 20
+The Conjuring: The Devil Made Me Do It
+time elapsed: 0:00:11.366812
+index: 21
+Candyman
+time elapsed: 0:00:11.082907
+index: 22
+The Boss Baby 2: Family Business
+time elapsed: 0:00:12.012843
+index: 23
+The Addams Family 2
+time elapsed: 0:00:11.783526
+index: 24
+The Suicide Squad
+time elapsed: 0:00:11.491390
+index: 25
+Raya and the Last Dragon
+time elapsed: 0:00:12.406714
+index: 26
+House of Gucci
+time elapsed: 0:00:11.989657
+index: 27
+Demon Slayer the Movie: Mugen Train
+time elapsed: 0:00:11.925916
+index: 28
+Clifford the Big Red Dog
+time elapsed: 0:00:11.671736
+index: 29
+Old
+time elapsed: 0:00:11.891453
+index: 30
+Tom & Jerry
+time elapsed: 0:00:11.796411
+index: 31
+The Forever Purge
+time elapsed: 0:00:11.823764
+index: 32
+Mortal Kombat
+time elapsed: 0:00:12.270900
+index: 33
+Peter Rabbit 2: The Runaway
+time elapsed: 0:00:12.339841
+index: 34
+PAW Patrol: The Movie
+time elapsed: 0:00:11.661732
+index: 35
+West Side Story
+time elapsed: 0:00:12.029168
+index: 36
+Hitman's Wife's Bodyguard
+time elapsed: 0:00:11.938973
+index: 37
+The Matrix Resurrections
+time elapsed: 0:00:11.809562
+index: 38
+The King's Man
+time elapsed: 0:00:11.917230
+index: 39
+Don't Breathe 2
+time elapsed: 0:00:11.758288
+index: 40
+In the Heights
+time elapsed: 0:00:11.597065
+index: 41
+Snake Eyes
+time elapsed: 0:00:11.467457
+index: 42
+Nobody
+time elapsed: 0:00:11.337194
+index: 43
+Wrath of Man
+time elapsed: 0:00:11.826227
+index: 44
+American Underdog
+time elapsed: 0:00:11.773392
+index: 45
+Escape Room: Tournament of Champions
+time elapsed: 0:00:11.643398
+index: 46
+Respect
+time elapsed: 0:00:11.799976
+index: 47
+Spiral
+time elapsed: 0:00:11.739163
+index: 48
+Ron's Gone Wrong
+time elapsed: 0:00:11.677272
+index: 49
+Spirit Untamed
+time elapsed: 0:00:11.707614
+index: 50
+The Green Knight
+time elapsed: 0:00:11.628110
+index: 51
+Resident Evil: Welcome to Raccoon City
+time elapsed: 0:00:11.769805
+index: 52
+The Marksman
+time elapsed: 0:00:11.776407
+index: 53
+The Unholy
+time elapsed: 0:00:11.790693
+index: 54
+The Little Things
+time elapsed: 0:00:11.760280
+index: 55
+King Richard
+time elapsed: 0:00:12.162785
+index: 56
+Dear Evan Hansen
+time elapsed: 0:00:11.640964
+index: 57
+Stillwater
+time elapsed: 0:00:11.663986
+index: 58
+Nightmare Alley
+time elapsed: 0:00:11.852391
+index: 59
+The Last Duel
+time elapsed: 0:00:11.661138
+index: 60
+Antlers
+time elapsed: 0:00:11.804332
+index: 61
+Cry Macho
+time elapsed: 0:00:11.479131
+index: 62
+Last Night in Soho
+time elapsed: 0:00:11.645818
+index: 63
+Belfast
+time elapsed: 0:00:12.088405
+index: 64
+The Many Saints of Newark
+time elapsed: 0:00:11.503915
+index: 65
+The Protégé
+time elapsed: 0:00:11.787736
+index: 66
+Those Who Wish Me Dead
+time elapsed: 0:00:11.723223
+index: 67
+The Night House
+time elapsed: 0:00:11.696815
+index: 68
+The Courier
+time elapsed: 0:00:12.291430
+index: 69
+A Journal for Jordan
+time elapsed: 0:00:11.687647
+index: 70
+Copshop
+time elapsed: 0:00:11.580807
+index: 71
+Zola
+time elapsed: 0:00:11.067795
+index: 72
+Separation
+time elapsed: 0:00:11.672833
+index: 73
+Boogie
+time elapsed: 0:00:11.686317
+index: 74
+Reminiscence
+time elapsed: 0:00:11.619762
+index: 75
+Voyagers
+time elapsed: 0:00:11.574232
+index: 76
+Here Today
+time elapsed: 0:00:11.688581
+index: 77
+Finding You
+time elapsed: 0:00:11.685155
+index: 78
+Land
+time elapsed: 0:00:11.732473
+index: 79
+Profile
+time elapsed: 0:00:11.679391
+index: 80
+National Champions
+time elapsed: 0:00:11.565594
+           Distributor               Title  ...       To Date   Day
+0   Paramount Pictures   Top Gun: Maverick  ...   $52,012,661   1.0
+1   Paramount Pictures   Top Gun: Maverick  ...   $90,030,362   2.0
+2   Paramount Pictures   Top Gun: Maverick  ...  $126,707,459   3.0
+3   Paramount Pictures   Top Gun: Maverick  ...  $160,514,980   4.0
+4   Paramount Pictures   Top Gun: Maverick  ...  $176,315,726   5.0
+..                 ...                 ...  ...           ...   ...
+9    STX Entertainment  National Champions  ...      $455,492  10.0
+10   STX Entertainment  National Champions  ...      $463,700  11.0
+11   STX Entertainment  National Champions  ...      $473,129  12.0
+12   STX Entertainment  National Champions  ...      $474,373  13.0
+13   STX Entertainment  National Champions  ...      $475,488  14.0
+
+[7760 rows x 13 columns]
+Total Time Elapsed: 0:24:40.825073
