@@ -81,6 +81,7 @@ class BoxOfficeWebScrape:
         for row in rows:
             ws.append(row)
         wb.save(self.totalFileName)
+        print("Data saved to {totalFileName} under the sheet name: {sheetName}").format(totalFileName = self.totalFileName, sheetName = sheetName)
 
     # Filter by In Year Releases and Wide Releases
     def clickFilters(self):
