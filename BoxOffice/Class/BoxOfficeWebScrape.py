@@ -212,7 +212,7 @@ class BoxOfficeWebScrape:
         tempResult["Title"] = movieTitle
         tempResult["Genre"] = (driver.find_element(By.XPATH, XPATHGenre)).text
         tempResult["Distributor"] = (driver.find_element(By.XPATH, XPATHDistributor)).text
-        print(tempResult)
+        #print(tempResult)
         return tempResult
 
     # Fill the Daily Data Table for every movie in a year
@@ -292,7 +292,7 @@ class BoxOfficeWebScrape:
                 print("Cannot access {url}...quitting now").format(url=urlYearly)
             self.runYear(year)
             sleep(self.sleepTime)
-        print(dfDailyTable)
+        #print(dfDailyTable)
         #self.writetoExcel(dfDailyTable, "Scratch")
         self.cleanDailyTable()
         print(dfDailyTable)
