@@ -10,15 +10,15 @@ metricCalculateSleep = 0.5
 userInputSleep = 2
 
 # Growth Inputs
-Year0ARR = 2
-Year1ARR = 6
-Year2ARR = 18
-Year3ARR = 36
-Year4ARR = 72
-Year5ARR = 144
+Year0ARR = 2000000
+Year1ARR = 6000000 - 2000000
+Year2ARR = 18000000 - 6000000
+Year3ARR = 36000000 - 18000000
+Year4ARR = 72000000 - 36000000
+Year5ARR = 1440000000 - 72000000
 T2D3StartARR = 2
-upperEarlyStage = 10
-upperGrowthStage = 50
+upperEarlyStage = 10000000
+upperGrowthStage = 50000000
 
 # Help Glossary
 helpGlossary = """
@@ -62,9 +62,43 @@ rule40Comp = 1
 
 # Descriptions
 
+
+burnCACDesc = 'burnCACDesc '
+burnNRRDesc = 'burnNRRDesc'
+burnGrowthDesc = 'burnGrowthDesc'
+burnRule40Desc = 'burnRule40Desc'
+
+
+#CAC Fail descriptions
+CACBurnDesc = 'CACBurnDesc'
+CACNRRDesc = 'CACNRRDesc'
+CACGrowthDesc = 'CACGrowthDesc'
+CACRule40Desc = 'CACRule40Desc'
+
+
+#NRR Fail Descriptions
+NRRBurnDesc = 'NRRBurnDesc'
+NRRCACDesc ='NRRCACDesc'
+NRRGrowthDesc ='NRRGrowthDesc'
+NRRRule40Desc = 'NRRRule40Desc'
+
+
+# Growth Fail Descriptions
+growthBurnDesc = 'growthBurnDesc'
+growthCACDesc ='growthCACDesc'
+growthNRRDesc ='growthNRRDesc'
+growthRule40Desc ='growthRule40Desc'
+
+
+# Rule 40 Fail Descriptions
+rule40BurnDesc = 'rule40BurnDesc'
+rule40CACDesc = 'rule40CACDesc'
+rule40NRRDesc = 'rule40NRRDesc'
+rule40GrowthDesc = 'rule40GrowthDesc'
+
 # Burn Fail Descriptions
 burnCACDesc = "Since your CAC Payback Period is also high, " \
-                  "the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
+                  #"the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
 
 burnNRRDesc = "Since your Net Retention Rate is low, the problem most likely lies in the company's low ARR growth, specifically due to a high rate of churn. A leaky bucket makes it hard to grow efficiently."
 burnGrowthDesc = "Your low growth rate may be indicative that you need to go back to the drawing board to ensure that your product or service is what the market truly needs."
@@ -73,7 +107,7 @@ burnRule40Desc = "Since your gross margins are low, the problem most likely lies
 
 # CAC Fail descriptions
 CACBurnDesc = 'Since your burn multiple is high, the problem is most likely due to high spending on sales and marketing to acquire customers, specifically a high customer acquisition costs'
-CACNRRDesc = 'Since your net retention rates are low, the problem may lie in low average MRR per customer, to specifically due to high churn and contractions before you have recovered their acquisition costs '
+CACNRRDesc = 'Since your net retention rates are low, the problem may lie in low average MRR per customer, specifically due to high churn and contractions before you have recovered their acquisition costs '
 CACGrowthDesc = "Since your growth rates are lower than ideal, the problem is most likely due to low returns, specifically a low average MRR per customer"
 CACRule40Desc = 'Since you have not passed the Rule of 40, the problem is most likely due to low gross margins, specifically because of high COGS spending.'
 
@@ -94,16 +128,18 @@ growthRule40Desc = "Your failure of the Rule of 40 means that your gross margins
 
 # Rule 40 Fail Descriptions
 rule40BurnDesc = 'Since your burn multiple is also high, the problem most likely lies in a combination of low growth and low % gross margins, specifically due to low growth with a high cash burn.'
-rule40CACDesc = 'Since your CAC Pauback Ratio is also high, the problem most likely lies in the low % gross margin, specifically due to high sales and marketing spending.'
+rule40CACDesc = 'Since your CAC Payback Ratio is also high, the problem most likely lies in the low % gross margin, specifically due to high sales and marketing spending.'
 rule40NRRDesc = 'Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product'
 rule40GrowthDesc = "Your low growth rates means that your groth rates aren't high enough to compensate for low gross margins. Please check the growth aspects of the report to see what are some potential ways to increase your growth."
+
+
 
 # Metric Success Descriptions
 burnSuccessDesc = 'This means that the amount of revenue that you are earning is greater than the amount of cash you are spending to achieve this growth. ' \
                   'However, check the growth rate of your company. A company with a great burn multiple but low growth means it is not spending enough to achieve its highest potential growth rate. \n'
 
 CACSuccessDesc = "This means that either the costs to acquire your customer is low and/or the amount of revenue you are gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.' \
-                 'However, mcheck the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. \n"
+                 'However, check the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. \n"
 
 NRRSuccessDesc = 'This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. ' \
                  'However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.\n'
@@ -139,16 +175,33 @@ rule40ActionStepsDesc = "1. Check whether there are ways to increase R&D efficie
                         "3. Check whether you can negotiate better terms with your suppliers or change your use model\n" \
                         "4. Check whether there are any overheads that can be cut\n"
 
+def manualInput():
+    totalYears = 4
+    netARR = 600000
+    netBurn = 5000000
+    growthRate = 85
+    MRRperCustomer= 10000
+    totalMRR = 833333
+    upsellRevenue = 1000000
+    grossMargin = 85
+    numberofCustomersAcquired = 6
+    salesMarketingCosts = 200000
+    churnContractionCosts = 167777
+    return totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+        numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts
 # Run program with intro, input, and report generator
 def run():
     # Intro + Input
     global writeList
-    input = Input(userInputSleep, helpGlossary, file, writeList)
-    input.introDirections()
+    #input = Input(userInputSleep, helpGlossary, file, writeList)
+    #input.introDirections()
+    #totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+    #numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
+    #writeList = input.writeLines()
+    #writeList.append('\n')
+
     totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
-    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
-    writeList = input.writeLines()
-    writeList.append('\n')
+    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = manualInput()
 
     # Set up Infra
     report = GenReport(metricCalculateSleep, netARR, file, writeList)
@@ -166,15 +219,15 @@ def run():
                           burnActionStepsDesc, CACActionStepsDesc, NRRActionStepsDesc, growthActionStepsDesc, rule40ActionStepsDesc,
                           burnSuccessDesc, CACSuccessDesc, NRRSuccessDesc, growthSuccessDesc, rule40SuccessDesc)
     # burn Dictionary
-    report.setUpMetricDict(burnCACDesc, burnNRRDesc, burnGrowthDesc, burnRule40Desc)
+    report.setUpMetricDict(burnCACDesc, burnNRRDesc, burnGrowthDesc, burnRule40Desc, burnMultipleName)
     # CAC Dictionary
-    report.setUpMetricDict(CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc)
+    report.setUpMetricDict(CACBurnDesc, CACNRRDesc, CACGrowthDesc, CACRule40Desc, CACPaybackName)
     # NRR Dictionary
-    report.setUpMetricDict(NRRBurnDesc, NRRCACDesc, NRRGrowthDesc, NRRRule40Desc)
+    report.setUpMetricDict(NRRBurnDesc, NRRCACDesc, NRRGrowthDesc, NRRRule40Desc, NRRName)
     # Growth Dictionary
-    report.setUpMetricDict(growthBurnDesc, growthCACDesc, growthNRRDesc, growthRule40Desc)
+    report.setUpMetricDict(growthBurnDesc, growthCACDesc, growthNRRDesc, growthRule40Desc, growthName)
     # Rule40 Dictionary
-    report.setUpMetricDict(rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc)
+    report.setUpMetricDict(rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc, rule40Name)
 
     # Generate Report
     #report.writeStage(netARR)

@@ -1,104 +1,42 @@
-Welcome to the StartUp Health Diagnostic Tool!
-Press Enter to Continue
-This tool's purpose is to help you gain a clearer view of your company and help improve your startup.
-
-It will do this by measuring your company's overall efficiency, sales efficiency, product retention, growth, and profitability.
-
-Based on these measurements, the tool will attempt to pinpoint why a metric may be underperforming and further suggest some actions steps to improve your startup.
-
-All you have to do is put in some of your business accounts and the tool will do the rest!
-
-Don't worry - this won't take long. You only need 11 numbers at hand.
-
-If you ever want to quit the program, just write and enter the word: 'quit'.
-
-Lastly, an Input Help Guide is available for your reference. If you ever want to access this guide, enter the word 'help'.
-
-
-To begin, enter how many years your company has been in operation: 3
-
-Great! Now let's fill in some data from the last full 12 months
-Enter your Net ARR from the last full 12 months: 20
-Enter your Net Burn from the last full 12 months: help
-
-    MRR = Monthly Recurring Revenue
-    ARR = Annual Recurring Revenue
-    CAC = Customer Acquisition Cost
-    Upsells/Expansions = The amount of revenue gained either due to customers upgrading to a more expensive subscription or purchasing expanded features
-    Churn/Contractions = The amount of revenue lost either due to customers cancelling their subscriptions or downgrading to a less expensive version
-    % Gross Margin = ((Revenue - the cost of goods sold) / revenue) * 100 
-    % Growth Rate = ((Ending ARR last month- Ending ARR two months ago)  / Ending ARR two months ago) * 100
-
-Enter your Net Burn from the last full 12 months: 22
-
-Great! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month.
-Enter your MRR Growth Rate (%): 40
-Enter your Average MRR per customer ($): test - not a number
-Please try again and enter a number
-Enter your Average MRR per customer ($): 0.009
-Enter your total MRR at the start of the last month ($): 10
-Enter your revenue in expansions and upsells ($): 3
-Enter your Gross Margin (%): 12
-Enter the number of new customers or subscribers acquired (#): 25
-Enter your sales and marketing costs ($): 4
-Enter your revenue lost in churns and contractions ($): 2
-
-Great thank you! The report should be ready in a few seconds...
-
-
-Failed Burn Multiple
-Failed CAC Payback Period
+Passed Burn Multiple
+Passed CAC Payback Period
 Passed Net Retention Rate
 Failed T2D3
 Passed Rule of 40
-
-
 Report: 
 
-Since you earned 20 ARR in the last 12 full months, you are a growth stage company.
+Since you earned 600000 ARR in the last 12 full months, you are an early stage company.
+
+Since you earned 600000 ARR in the last 12 full months, the tool will be measuring your growth against the T2D3 standard.
+Overall Company Efficiency
+
+Your Burn Multiple is 0.69, which is -36.07% lower than 1, the benchmark of excellent Overall Company Efficiency.
+This means that the amount of revenue that you are earning is greater than the amount of cash you are spending to achieve this growth. However, check the growth rate of your company. A company with a great burn multiple but low growth means it is not spending enough to achieve its highest potential growth rate. 
+
+Overall Sales Efficiency
+
+Your CAC Payback Period is 0.04, which is -184.91% lower than 1, the benchmark of excellent Overall Sales Efficiency.
+This means that either the costs to acquire your customer is low and/or the amount of revenue you are gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.'                  'However, check the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. 
 
 Overall Product Retention
 
-Your Net Retention Rate is 110.00, which is 9.52% higher than 100, the benchmark of excellent Overall Product Retention.
+Your Net Retention Rate is 199.87, which is 66.61% higher than 100, the benchmark of excellent Overall Product Retention.
 This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.
 
 Profitability
 
-Your Rule of 40 is 52.00, which is 26.09% higher than 40, the benchmark of excellent Profitability.
+Your Rule of 40 is 170.00, which is 123.81% higher than 40, the benchmark of excellent Profitability.
 This means that you are either at least somewhat profitable or growing at an extremely high pace to compensate for low or negative gross margins.
 However, if you're at early stages, check the growth rate of your company. If you're near a 20 / 20 split, you have passed the Rule of 40 but still be stuck in sub-scale growth mode.
 Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, and hinder opportunities to lower your Customer Acquisition Costs. 
 
 
-Overall Company Efficiency
+Growth Rate
 
-Your Burn Multiple is 1.10, which is 9.52% worse than 1, the benchmark of Overall Company Efficiency.
+Your T2D3 is -193.44, which is -200.00% worse than 36000000, the benchmark of Growth Rate.
 
-Since your burn multiple is also high, the problem most likely lies in a combination of low growth and low % gross margins, specifically due to low growth with a high cash burn.
-1. Check if the company can narrow its target market to reduce burn
-2. See if there are more effective marketing techniques for each target segment to lower the CAC
-3. Check whether the company is targeting the wrong audience
-4. Check to see if company is focusing on least-cost customer acquisition channels
-5. Loss of business champion / executive sponsor
-
-Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product
 1. Check if there is a high enough willingness to pay for the product.
 2. Check whether the problem is actually tackling a necessary problem in the market.
 3. Check whether the product is useful. 
 4. Check whether there is low barrier to entry into the product -> can introduce usage-based pricing or free trials.
-
-
-Overall Sales Efficiency
-
-Your CAC Payback Period is 1.48, which is 38.81% worse than 1, the benchmark of Overall Sales Efficiency.
-
-Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product
-Refer to the previous sections above for potential solutions on how to improve your Growth Rate.
-
-
-Growth Rate
-
-Your T2D3 is -57.14, which is 881.17% worse than 36, the benchmark of Growth Rate.
-
-Refer to the report above for further information on T2D3.
 

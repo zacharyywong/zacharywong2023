@@ -30,6 +30,7 @@ class GenReport:
     metricResult3 = None
     metricResult4 = None
     metricResult5 = None
+    countPass = 0
 
     #growth bench
     growthBench = None
@@ -112,7 +113,7 @@ class GenReport:
             return round(metricDiff, 2)
 
     def incrementIndex(self, index, list):
-        if index + 1 == len(list):
+        if index + 1 >= len(list):
             metricIndex = 0
             # print(metricIndex)
             return metricIndex
@@ -127,7 +128,7 @@ class GenReport:
     def calculateMetrics(self, growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired
                          ,salesMarketingCosts, churnContractionCosts):
 
-        self.metric1 = netBurn / netARR
+        self.metric1 = (netBurn / netARR) / 12
         self.metric2 = (salesMarketingCosts / numberofCustomersAcquired) * (1 / (MRRperCustomer * grossMargin))
         self.metric3 = ((totalMRR + upsellRevenue - churnContractionCosts) / totalMRR) * 100
         self.growthBench = growthBench
@@ -201,7 +202,7 @@ class GenReport:
         # print("starting desc List index: " + str(startingIndex))
 
         descListIndex = startingIndex
-        metricIndex = startingIndex + 1
+        metricIndex = self.incrementIndex(startingIndex, self.metricNameList)
 
         if descListIndex == len(descList):
             descListIndex = 0
@@ -209,7 +210,7 @@ class GenReport:
         if metricIndex == len(self.metricNameList):
             metricIndex = 0
 
-        # print("metric name list index: " + str(metricIndex))
+        #print("metric name list index: " + str(metricIndex))
 
         count = 0
         while count < len(descList):
@@ -219,25 +220,28 @@ class GenReport:
             count += 1
 
         self.diagMetricDict[self.metricNameList[startingIndex]] = metricDict
+        #print("starting index: " + str(startingIndex))
+        #print(self.diagMetricDict)
+        #print()
 
     # set up all metric Dicts to set up for failed dictionaries
-    def setUpMetricDict(self, desc1, desc2, desc3, desc4):
+    def setUpMetricDict(self, desc1, desc2, desc3, desc4, metricName):
+        #for metricName in self.metricNameList:
+        startingIndex = self.metricNameList.index(metricName)
+        metricDict = {}
+        metricInput = self.metricNameInputDict[metricName]
+        metricBench = self.metricNameBenchDict[metricName]
+        metricCategory = self.metricNameCategoryDict[metricName]
+        metricDiff = self.calculateDiff(metricInput, metricBench)
 
-        for metricName in self.metricNameList:
-            startingIndex = self.metricNameList.index(metricName)
-            metricDict = {}
-            metricInput = self.metricNameInputDict[metricName]
-            metricBench = self.metricNameBenchDict[metricName]
-            metricCategory = self.metricNameCategoryDict[metricName]
-            metricDiff = self.calculateDiff(metricInput, metricBench)
+        metricBaseDesc = 'Your {metricName} is {metric:.2f}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
+                  'the benchmark of {metricCategory}.\n'.format(metricName = metricName, metric = metricInput, metricDiff = metricDiff, metricBench = metricBench, metricCategory = metricCategory)
+        # update metric name -> base desc dictionary
+        self.metricNameBaseDescDict[metricName] = metricBaseDesc
 
-            metricBaseDesc = 'Your {metricName} is {metric:.2f}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
-                      'the benchmark of {metricCategory}.\n'.format(metricName = metricName, metric = metricInput, metricDiff = metricDiff, metricBench = metricBench, metricCategory = metricCategory)
-            # update metric name -> base desc dictionary
-            self.metricNameBaseDescDict[metricName] = metricBaseDesc
-
-            descMetricList = [desc1, desc2, desc3, desc4]
-            self.addDict(startingIndex, metricDict, descMetricList)
+        descMetricList = [desc1, desc2, desc3, desc4]
+        #print(descMetricList)
+        self.addDict(startingIndex, metricDict, descMetricList)
 
     def operateSuccessMetrics(self):
         metricSuccessList = []
@@ -247,7 +251,7 @@ class GenReport:
 
         index = 0
 
-        self.write("\n\nReport: \n")
+        self.write("Report: \n")
         self.writeStage()
 
         while index < len(metricSuccessList):
@@ -275,11 +279,14 @@ class GenReport:
     # go through fail list, get metric name, go to diag, push from queue as key, get value and print
     def operateFailMetrics(self):
         metricFailList = []
+        print(str(self.diagMetricDict))
+
         # put all failed metrics in a list
         for metric in self.metricNameList:
             if self.metricNameResultDict[metric] == 0:
                 metricFailList.append(metric)
-        # print("metric fail list: " + str(metricFailList))
+        #print("metric fail list: " + str(metricFailList))
+
 
         # get the base desc for each failed metric
         index1stLevel = 0
@@ -289,6 +296,10 @@ class GenReport:
             self.write('\n' + self.metricNameCategoryDict[metricFail1stLevel] + '\n')
             self.write(baseDesc)
 
+            # account for only 1 failed metric
+            if len(metricFailList) == 1:
+                self.write(self.metricNameActionStepsDict[metricFail1stLevel])
+                break
             index2ndLevel = index1stLevel + 1
             # if there's no other 2nd level metric, then the 1st level metric must have already been addressed in the previous sections
 
@@ -298,11 +309,13 @@ class GenReport:
                 index1stLevel += 1
                 break
 
+
             # print the corresponding 2nd level metric description for the 1st level metric
             while index2ndLevel < len(metricFailList):
                 metricFail2ndLevel = metricFailList[index2ndLevel]
                 desc = self.diagMetricDict[metricFail1stLevel][metricFail2ndLevel]
-
+                #print("metric Fail 2nd Level:" + str(metricFail2ndLevel))
+                #print(str(self.diagMetricDict))
                 # try to print the action steps if there - then pop it out
                 # if no action steps there, that means already printed in earlier section
                 try:
@@ -316,4 +329,4 @@ class GenReport:
                 else:
                     index2ndLevel += 1
                     continue
-            index1stLevel += 1
+                index1stLevel += 1

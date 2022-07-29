@@ -111,7 +111,7 @@ class Input:
 
     def runUserInput(self):
         # basic info
-            self.totalYears = self.userInputandCheck("\nTo begin, enter how many years your company has been in operation: ")
+            self.totalYears = self.userInputandCheck("\nTo begin, enter how many years your company has been in operation since you've reached 2M ARR: ")
 
             # yearly info
             self.write("\nGreat! Now let's fill in some data from the last full 12 months")
@@ -119,13 +119,9 @@ class Input:
             self.netARR = self.userInputandCheck("Enter your Net ARR from the last full 12 months: ")
             self.netBurn = self.userInputandCheck("Enter your Net Burn from the last full 12 months: ")
 
-            # monthly info
-            self.write(
-                "\nGreat! Now let's fill in the bulk of the data. Please ensure these numbers are from the last full month.")
-            sleep(self.userInputSleep)
-            self.growthRate = self.userInputandCheck("Enter your MRR Growth Rate (%): ")
-            self.MRRperCustomer = self.userInputandCheck("Enter your Average MRR per customer ($): ")
-            self.totalMRR = self.userInputandCheck("Enter your total MRR at the start of the last month ($): ")
+            self.growthRate = self.userInputandCheck("Enter your ARR Growth Rate (%): ")
+            self.MRRperCustomer = self.userInputandCheck("Enter your Average ARR per customer ($): ")
+            self.totalMRR = self.userInputandCheck("Enter your total ARR at the start of the last year ($): ")
             self.upsellRevenue = self.userInputandCheck("Enter your revenue in expansions and upsells ($): ")
             self.grossMargin = self.userInputandCheck("Enter your Gross Margin (%): ")
             self.numberofCustomersAcquired = self.userInputandCheck(
