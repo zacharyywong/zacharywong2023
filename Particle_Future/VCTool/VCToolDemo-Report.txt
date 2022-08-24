@@ -1,22 +1,27 @@
 Passed Burn Multiple
 Passed CAC Payback Period
-Failed Net Retention Rate
-Failed T2D3
+Passed Net Retention Rate
+Failed Growth Rate
 Passed Rule of 40
 Report: 
 
-Since you earned 600000 ARR in the last 12 full months, you are an early stage company.
+Since you earned 6000000 ARR in the last 12 full months, you are an early stage company.
 
-Since you earned 600000 ARR in the last 12 full months, the tool will be measuring your growth against the T2D3 standard.
+Since you earned 6000000 ARR in the last 12 full months, the tool will be measuring your growth against the T2D3 standard.
 Overall Company Efficiency
 
-Your Burn Multiple is 0.69, which is -36.07% lower than 1, the benchmark of excellent Overall Company Efficiency.
+Your Burn Multiple is 0.07, which is -174.03% lower than 1, the benchmark of excellent Overall Company Efficiency.
 This means that the amount of revenue that you are earning is greater than the amount of cash you are spending to achieve this growth. However, check the growth rate of your company. A company with a great burn multiple but low growth means it is not spending enough to achieve its highest potential growth rate. 
 
 Overall Sales Efficiency
 
 Your CAC Payback Period is 0.04, which is -184.91% lower than 1, the benchmark of excellent Overall Sales Efficiency.
 This means that either the costs to acquire your customer is low and/or the amount of revenue you are gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.'                  'However, check the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. 
+
+Overall Product Retention
+
+Your Net Retention Rate is 199.87, which is 66.61% higher than 100, the benchmark of excellent Overall Product Retention.
+This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.
 
 Profitability
 
@@ -26,20 +31,12 @@ However, if you're at early stages, check the growth rate of your company. If yo
 Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, and hinder opportunities to lower your Customer Acquisition Costs. 
 
 
-Overall Product Retention
+T2D3
 
-Your Net Retention Rate is 91.87, which is -8.48% worse than 100, the benchmark of Overall Product Retention.
+Your Growth Rate is 6000000.00, which is -142.86% worse than 36000000, the benchmark of T2D3.
 
-Since your growth rates are lower than ideal, the problem lies in low returns, specifically due to the combination of low expansion and upsells and high churn and contractions
 1. Check if there is a high enough willingness to pay for the product.
 2. Check whether the problem is actually tackling a necessary problem in the market.
 3. Check whether the product is useful. 
 4. Check whether there is low barrier to entry into the product -> can introduce usage-based pricing or free trials.
-
-
-Growth Rate
-
-Your T2D3 is -193.44, which is -200.00% worse than 36000000, the benchmark of Growth Rate.
-
-Refer to the report above for further information on T2D3.
 

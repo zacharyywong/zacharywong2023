@@ -42,14 +42,14 @@ rule40Bench = 40
 burnMultipleName = 'Burn Multiple'
 CACPaybackName = 'CAC Payback Period'
 NRRName = 'Net Retention Rate'
-growthName = 'T2D3'
+growthName = 'Growth Rate'
 rule40Name = 'Rule of 40'
 
 # Metric Categories
 burnMultipleCategory = 'Overall Company Efficiency'
 CACPaybackCategory = 'Overall Sales Efficiency'
 NRRCategory = 'Overall Product Retention'
-growthCategory = 'Growth Rate'
+growthCategory = 'T2D3'
 rule40Category = 'Profitability'
 
 # Metric Comparables
@@ -98,58 +98,84 @@ rule40GrowthDesc = 'rule40GrowthDesc'
 
 # Burn Fail Descriptions
 burnCACDesc = "Since your CAC Payback Period is also high, " \
-                  #"the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
+                  "the problem most likely lies in the company's high net burn, specifically due to too high of spending used to acquire new customers."
 
-burnNRRDesc = "Since your Net Retention Rate is low, the problem most likely lies in the company's low ARR growth, specifically due to a high rate of churn. A leaky bucket makes it hard to grow efficiently."
-burnGrowthDesc = "Your low growth rate may be indicative that you need to go back to the drawing board to ensure that your product or service is what the market truly needs."
-burnRule40Desc = "Since your gross margins are low, the problem most likely lies in the company's high net burn, specifically due to high spending COGS. If there’s not operating leverage in the business, the Burn Multiple will not improve with scale."
+burnNRRDesc = "Since your Net Retention Rate is low, the problem most likely lies in the company's low ARR growth, " \
+              "specifically due to a high rate of churn. A leaky bucket makes it hard to grow efficiently."
+burnGrowthDesc = "Your low growth rate may be indicative that you need to go back to the drawing board to ensure " \
+                 "that your product or service is what the market truly needs."
+burnRule40Desc = "Since your gross margins are low, the problem most likely lies in the company's high net burn, " \
+                 "specifically due to high spending COGS. If there’s not operating leverage in the business, the Burn Multiple will not improve with scale."
 
 
 # CAC Fail descriptions
-CACBurnDesc = 'Since your burn multiple is high, the problem is most likely due to high spending on sales and marketing to acquire customers, specifically a high customer acquisition costs'
-CACNRRDesc = 'Since your net retention rates are low, the problem may lie in low average MRR per customer, specifically due to high churn and contractions before you have recovered their acquisition costs '
-CACGrowthDesc = "Since your growth rates are lower than ideal, the problem is most likely due to low returns, specifically a low average MRR per customer"
-CACRule40Desc = 'Since you have not passed the Rule of 40, the problem is most likely due to low gross margins, specifically because of high COGS spending.'
+CACBurnDesc = 'Since your burn multiple is high, the problem is most likely due to high spending on sales and marketing ' \
+              'to acquire customers, specifically a high customer acquisition costs'
+CACNRRDesc = 'Since your net retention rates are low, the problem may lie in low average MRR per customer, ' \
+             'specifically due to high churn and contractions before you have recovered their acquisition costs '
+CACGrowthDesc = "Since your growth rates are lower than ideal, the problem is most likely due to low returns, " \
+                "specifically a low average MRR per customer"
+CACRule40Desc = 'Since you have not passed the Rule of 40, the problem is most likely due to low gross margins, ' \
+                'specifically because of high COGS spending.'
 
 
 # NRR Fail Descriptions
-NRRBurnDesc = 'Since your burn multiple is high, the problem most likely lies in low net new MRR, specifically due to low rates of expansions and upsells'
-NRRCACDesc = 'Since your CAC Payback Ratio is high, the problem most likely lies in high churn and contractions, specifically due to a high, restrictive Customer Acquisition Cost'
-NRRGrowthDesc = 'Since your growth rates are lower than ideal, the problem lies in low returns, specifically due to the combination of low expansion and upsells and high churn and contractions'
-NRRRule40Desc = "While the Rule of 40 can't sufficiently pinpoint why your NRR is low, failing the Rule of 40 may be indicative that you are not growing fast enough. Check your growth rates."
+NRRBurnDesc = 'Since your burn multiple is high, the problem most likely lies in low net new MRR, ' \
+              'specifically due to low rates of expansions and upsells'
+NRRCACDesc = 'Since your CAC Payback Ratio is high, the problem most likely lies in high churn and contractions, ' \
+             'specifically due to a high, restrictive Customer Acquisition Cost'
+NRRGrowthDesc = 'Since your growth rates are lower than ideal, the problem lies in low returns, specifically due to the ' \
+                'combination of low expansion and upsells and high churn and contractions'
+NRRRule40Desc = "While the Rule of 40 can't sufficiently pinpoint why your NRR is low, failing the Rule of 40 may be " \
+                "indicative that you are not growing fast enough. Check your growth rates."
 
 
 # Growth Fail Descriptions
-growthBurnDesc = "The low burn multiple is only further evidence that your growth rates are lower than ideal, It may also indicate that you aren't spending your cash as efficienctly as possible to achieve your low growth rates"
-growthCACDesc = "Your high CAC Payback ratio further substantiates the fact that you're acquiring a low number of customers and/or generating low average returns per acquired customer"
-growthNRRDesc = 'The low NRR is indicative of a combination of high churn rates and/or low expansions and upsells of your products.'
-growthRule40Desc = "Your failure of the Rule of 40 means that your gross margins aren't high enough to compensate for low growth. Please check the Profitability aspects of the report to see what are some potential ways to increase your gross margins."
+growthBurnDesc = "The low burn multiple is only further evidence that your growth rates are lower than ideal, It may also " \
+                 "indicate that you aren't spending your cash as efficienctly as possible to achieve your low growth rates"
+growthCACDesc = "Your high CAC Payback ratio further substantiates the fact that you're acquiring a low number of customers " \
+                "and/or generating low average returns per acquired customer"
+growthNRRDesc = 'The low NRR is indicative of a combination of high churn rates and/or low expansions and upsells of your ' \
+                'products.'
+growthRule40Desc = "Your failure of the Rule of 40 means that your gross margins aren't high enough to compensate for " \
+                   "low growth. Please check the Profitability aspects of the report to see what are some potential ways to increase your gross margins."
 
 
 # Rule 40 Fail Descriptions
-rule40BurnDesc = 'Since your burn multiple is also high, the problem most likely lies in a combination of low growth and low % gross margins, specifically due to low growth with a high cash burn.'
-rule40CACDesc = 'Since your CAC Payback Ratio is also high, the problem most likely lies in the low % gross margin, specifically due to high sales and marketing spending.'
-rule40NRRDesc = 'Since your retention rates are also low, the problem most likely lies in the low % MRR growth, specifically due to high churn of your product'
-rule40GrowthDesc = "Your low growth rates means that your groth rates aren't high enough to compensate for low gross margins. Please check the growth aspects of the report to see what are some potential ways to increase your growth."
+rule40BurnDesc = 'Since your burn multiple is also high, the problem most likely lies in a combination of low growth and ' \
+                 'low % gross margins, specifically due to low growth with a high cash burn.'
+rule40CACDesc = 'Since your CAC Payback Ratio is also high, the problem most likely lies in the low % gross margin, ' \
+                'specifically due to high sales and marketing spending.'
+rule40NRRDesc = 'Since your retention rates are also low, the problem most likely lies in the low % MRR growth, ' \
+                'specifically due to high churn of your product'
+rule40GrowthDesc = "Your low growth rates means that your groth rates aren't high enough to compensate for low gross margins. " \
+                   "Please check the growth aspects of the report to see what are some potential ways to increase your growth."
 
 
 
 # Metric Success Descriptions
 burnSuccessDesc = 'This means that the amount of revenue that you are earning is greater than the amount of cash you are spending to achieve this growth. ' \
-                  'However, check the growth rate of your company. A company with a great burn multiple but low growth means it is not spending enough to achieve its highest potential growth rate. \n'
+                  'However, check the growth rate of your company. A company with a great burn multiple but low growth ' \
+                  'means it is not spending enough to achieve its highest potential growth rate. \n'
 
-CACSuccessDesc = "This means that either the costs to acquire your customer is low and/or the amount of revenue you are gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.' \
-                 'However, check the retention rates of your product since this metric does not account for churn rates after you have recovered the each customer's acquisition costs. \n"
+CACSuccessDesc = "This means that either the costs to acquire your customer is low and/or the amount of revenue you are " \
+                 "gaining for each customer acquired is enough to cover your customer acquisition costs in a short time.' \
+                 'However, check the retention rates of your product since this metric does not account for churn rates " \
+                 "after you have recovered the each customer's acquisition costs. \n"
 
 NRRSuccessDesc = 'This means that your revenue in expansions and upsells are greater than your revenue lost in churns and contractions. ' \
-                 'However, check the overall efficiency and profitability of your company since this metric does not account for your gross margins or overall net burn.\n'
+                 'However, check the overall efficiency and profitability of your company since this metric does not ' \
+                 'account for your gross margins or overall net burn.\n'
 
 growthSuccessDesc = 'This means that the you are on the way to becoming a high exit company at IPO. However, check the overall efficiency of your spending and the retention' \
                     'of your product to ensure that your burn or churn rates are not negating each sale that you make. \n'
 
-rule40SuccessDesc = "This means that you are either at least somewhat profitable or growing at an extremely high pace to compensate for low or negative gross margins.\n" \
-                    "However, if you're at early stages, check the growth rate of your company. If you're near a 20 / 20 split, you have passed the Rule of 40 but still be stuck in sub-scale growth mode.\n" \
-                    "Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, and hinder opportunities to lower your Customer Acquisition Costs. \n"
+rule40SuccessDesc = "This means that you are either at least somewhat profitable or growing at an extremely high pace to" \
+                    " compensate for low or negative gross margins.\n" \
+                    "However, if you're at early stages, check the growth rate of your company. If you're near a 20 / 20 split, " \
+                    "you have passed the Rule of 40 but still be stuck in sub-scale growth mode.\n" \
+                    "Avoid focusing too much on profitability too early on, which can sacrifice growth, hurt your valuations, " \
+                    "and hinder opportunities to lower your Customer Acquisition Costs. \n"
 
 # Metric Action Steps
 burnActionStepsDesc = "Burn Action Steps Desc\n"
@@ -175,9 +201,27 @@ rule40ActionStepsDesc = "1. Check whether there are ways to increase R&D efficie
                         "3. Check whether you can negotiate better terms with your suppliers or change your use model\n" \
                         "4. Check whether there are any overheads that can be cut\n"
 
-def manualInput():
+# For manual override for testing
+def manualOverride():
     totalYears = 4
-    netARR = 600000
+    netARR = 6000000
+    netBurn = 5000000
+    growthRate = 85
+    MRRperCustomer= 10000
+    totalMRR = 833333
+    upsellRevenue = 1000000
+    grossMargin = 85
+    numberofCustomersAcquired = 6
+    salesMarketingCosts = 200000
+    churnContractionCosts = 167777
+    return totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+        numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts
+
+# For What if Analysis
+# calculates / returns the metrics
+def setMetrics():
+    totalYears = 4
+    netARR = 6000000
     netBurn = 5000000
     growthRate = 85
     MRRperCustomer= 10000
@@ -187,8 +231,12 @@ def manualInput():
     numberofCustomersAcquired = 6
     salesMarketingCosts = 200000
     churnContractionCosts = 167777
-    return totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
-        numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts
+    report = GenReport(metricCalculateSleep, netARR, file, writeList)
+    burnMultiple, CACPayback, NRR, growthRate, Rule40 = report.calculateMetrics(totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+        numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
+    #print(burnMultiple, CACPayback, NRR, growthRate, Rule40)
+    return burnMultiple, CACPayback, NRR, growthRate, Rule40
+
 # Run program with intro, input, and report generator
 def run():
     # Intro + Input
@@ -201,7 +249,7 @@ def run():
     #writeList.append('\n')
 
     totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
-    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = manualInput()
+    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = manualOverride()
 
     # Set up Infra
     report = GenReport(metricCalculateSleep, netARR, file, writeList)
@@ -209,9 +257,14 @@ def run():
     T2D3Dict = {0: Year0ARR, 1: Year1ARR, 2: Year2ARR, 3: Year3ARR, 4: Year4ARR, 5: Year5ARR}
     global growthBench
     growthBench = T2D3Dict[totalYears]
-    report.calculateMetrics(growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
+
+    report.calculateMetrics(growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue,
+                            grossMargin,
+                            numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
+
     report.passFailMetric(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name, burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
                             burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp)
+
     report.updateHelperDicts(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name,
                           burnMultipleCategory, CACPaybackCategory, NRRCategory, growthCategory, rule40Category,
                           burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
@@ -238,5 +291,10 @@ def run():
     with open(file, 'w') as f:
         f.writelines(writeList)
 
+
+
 if __name__ == '__main__':
     run()
+
+    # for what if analysis
+    #setMetrics()

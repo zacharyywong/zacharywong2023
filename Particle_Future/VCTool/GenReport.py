@@ -71,6 +71,39 @@ class GenReport:
         elif stage == 'late':
             self.stage3 = True
 
+    # metric getters and setters
+    def getMetric1(self):
+        return self.metric1
+
+    def setMetric1(self, metric1):
+        self.metric1 = metric1
+
+    def getMetric2(self):
+        return self.metric2
+
+    def setMetric2(self, metric2):
+        self.metric2 = metric2
+
+    def getMetric3(self):
+        return self.metric1
+
+    def setMetric3(self, metric3):
+        self.metric3 = metric3
+
+    def getMetric4(self):
+        return self.metric4()
+
+    def setMetric4(self, metric4):
+        self.metric4 = metric4
+
+    def getMetric5(self):
+        return self.metric5()
+
+    def setMetric5(self, metric5):
+        self.metric5 = metric5
+
+
+
     # Calculate which stage the company is in
     def calculateStage(self, startARR, ARR, upperStage1, upperStage2):
         if 0 <= ARR < upperStage1:
@@ -132,8 +165,11 @@ class GenReport:
         self.metric2 = (salesMarketingCosts / numberofCustomersAcquired) * (1 / (MRRperCustomer * grossMargin))
         self.metric3 = ((totalMRR + upsellRevenue - churnContractionCosts) / totalMRR) * 100
         self.growthBench = growthBench
-        self.metric4 = self.calculateDiff(netARR, self.growthBench)
+        self.metric4 = netARR
+        #self.metric4 = self.calculateDiff(netARR, self.growthBench)
         self.metric5 = growthRate + grossMargin
+
+        return self.metric1, self.metric2, self.metric3, self.metric4, self.metric5
 
     # comparable is 1 when input >= benchmark counts as a pass and 0 when input <= benchmark counts as pass
     def checkMetric(self, input, benchmark, comparable, metricName):
@@ -234,8 +270,19 @@ class GenReport:
         metricCategory = self.metricNameCategoryDict[metricName]
         metricDiff = self.calculateDiff(metricInput, metricBench)
 
-        metricBaseDesc = 'Your {metricName} is {metric:.2f}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
-                  'the benchmark of {metricCategory}.\n'.format(metricName = metricName, metric = metricInput, metricDiff = metricDiff, metricBench = metricBench, metricCategory = metricCategory)
+        if metricName == "T2D3":
+            metricBaseDesc = 'Your {metricName} is {metricDiff:.2f}% worse than {metricBench}, ' \
+                             'the benchmark of {metricCategory}.\n'.format(metricName=metricName, metric=metricInput,
+                                                                           metricDiff=
+                                                                           metricDiff, metricBench=metricBench,
+                                                                           metricCategory=metricCategory)
+        else:
+            metricBaseDesc = 'Your {metricName} is {metric:.2f}, which is {metricDiff:.2f}% worse than {metricBench}, ' \
+                             'the benchmark of {metricCategory}.\n'.format(metricName = metricName, metric = metricInput,
+                                                                           metricDiff = metricDiff, metricBench = metricBench,
+                                                                           metricCategory = metricCategory)
+
+
         # update metric name -> base desc dictionary
         self.metricNameBaseDescDict[metricName] = metricBaseDesc
 
