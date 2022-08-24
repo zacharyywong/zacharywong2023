@@ -182,7 +182,7 @@ def manualInput():
     growthRate = 85
     MRRperCustomer= 10000
     totalMRR = 833333
-    upsellRevenue = 1000000
+    upsellRevenue = 100000
     grossMargin = 85
     numberofCustomersAcquired = 6
     salesMarketingCosts = 200000

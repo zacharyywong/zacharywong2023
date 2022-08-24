@@ -282,15 +282,13 @@ class GenReport:
         print(str(self.diagMetricDict))
 
         # put all failed metrics in a list
-        for metric in self.metricNameList:
-            if self.metricNameResultDict[metric] == 0:
-                metricFailList.append(metric)
+        [metricFailList.append(metric) for metric in self.metricNameList if self.metricNameResultDict[metric] == 0]
         #print("metric fail list: " + str(metricFailList))
 
 
-        # get the base desc for each failed metric
         index1stLevel = 0
         while index1stLevel < len(metricFailList):
+            # get the base desc for each failed metric
             metricFail1stLevel = metricFailList[index1stLevel]
             baseDesc = self.metricNameBaseDescDict[metricFail1stLevel]
             self.write('\n' + self.metricNameCategoryDict[metricFail1stLevel] + '\n')
@@ -299,7 +297,7 @@ class GenReport:
             # account for only 1 failed metric
             if len(metricFailList) == 1:
                 self.write(self.metricNameActionStepsDict[metricFail1stLevel])
-                break
+                return
             index2ndLevel = index1stLevel + 1
             # if there's no other 2nd level metric, then the 1st level metric must have already been addressed in the previous sections
 
@@ -307,7 +305,7 @@ class GenReport:
                 self.write("Refer to the report above for further information on " + str(
                     metricFailList[index1stLevel]) + ".\n")
                 index1stLevel += 1
-                break
+                return
 
 
             # print the corresponding 2nd level metric description for the 1st level metric
@@ -328,5 +326,4 @@ class GenReport:
                     index2ndLevel += 1
                 else:
                     index2ndLevel += 1
-                    continue
                 index1stLevel += 1
