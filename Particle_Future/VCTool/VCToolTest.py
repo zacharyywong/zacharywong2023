@@ -5,7 +5,7 @@ from Input import *
 #
 file = './VCToolDemo-Report.txt'
 # Pause Times
-writeList = []
+#writeList = []
 metricCalculateSleep = 0.5
 userInputSleep = 2
 
@@ -237,40 +237,34 @@ def setMetrics():
     #print(burnMultiple, CACPayback, NRR, growthRate, Rule40)
     return burnMultiple, CACPayback, NRR, growthRate, Rule40
 
-# Run program with intro, input, and report generator
-def run():
-    # Intro + Input
-    global writeList
-    #input = Input(userInputSleep, helpGlossary, file, writeList)
-    #input.introDirections()
+
+def doit(totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin,
+    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts, writeList = []):
+    global growthBench
+
     #totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
-    #numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
-    #writeList = input.writeLines()
-    #writeList.append('\n')
-
-    totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
-    numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = manualOverride()
-
+    #numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = manualOverride()
     # Set up Infra
     report = GenReport(metricCalculateSleep, netARR, file, writeList)
     report.calculateStage(T2D3StartARR, netARR, upperEarlyStage, upperGrowthStage)
     T2D3Dict = {0: Year0ARR, 1: Year1ARR, 2: Year2ARR, 3: Year3ARR, 4: Year4ARR, 5: Year5ARR}
-    global growthBench
     growthBench = T2D3Dict[totalYears]
 
     report.calculateMetrics(growthBench, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue,
                             grossMargin,
                             numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts)
 
-    report.passFailMetric(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name, burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
-                            burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp)
+    report.passFailMetric(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name, burnMultipleBench,
+                          CACPaybackBench, NRRBench, growthBench, rule40Bench,
+                          burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp)
 
     report.updateHelperDicts(burnMultipleName, CACPaybackName, NRRName, growthName, rule40Name,
-                          burnMultipleCategory, CACPaybackCategory, NRRCategory, growthCategory, rule40Category,
-                          burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
-                          burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp,
-                          burnActionStepsDesc, CACActionStepsDesc, NRRActionStepsDesc, growthActionStepsDesc, rule40ActionStepsDesc,
-                          burnSuccessDesc, CACSuccessDesc, NRRSuccessDesc, growthSuccessDesc, rule40SuccessDesc)
+                             burnMultipleCategory, CACPaybackCategory, NRRCategory, growthCategory, rule40Category,
+                             burnMultipleBench, CACPaybackBench, NRRBench, growthBench, rule40Bench,
+                             burnMultipleComp, CACPaybackComp, NRRComp, growthComp, rule40Comp,
+                             burnActionStepsDesc, CACActionStepsDesc, NRRActionStepsDesc, growthActionStepsDesc,
+                             rule40ActionStepsDesc,
+                             burnSuccessDesc, CACSuccessDesc, NRRSuccessDesc, growthSuccessDesc, rule40SuccessDesc)
     # burn Dictionary
     report.setUpMetricDict(burnCACDesc, burnNRRDesc, burnGrowthDesc, burnRule40Desc, burnMultipleName)
     # CAC Dictionary
@@ -283,14 +277,30 @@ def run():
     report.setUpMetricDict(rule40BurnDesc, rule40CACDesc, rule40NRRDesc, rule40GrowthDesc, rule40Name)
 
     # Generate Report
-    #report.writeStage(netARR)
+    # report.writeStage(netARR)
     report.operateSuccessMetrics()
     report.operateFailMetrics()
-    writeList = report.writeLines()
+
+    return writeList
+
+# Run program with intro, input, and report generator
+def run():
+    # Intro + Input
+    writeList = []
+    #input = Input(userInputSleep, helpGlossary, file, writeList)
+    #input.introDirections()
+    #totalYears, netARR, netBurn, growthRate, MRRperCustomer, totalMRR, upsellRevenue, grossMargin, \
+    #numberofCustomersAcquired, salesMarketingCosts, churnContractionCosts = input.runUserInput()
+    #writeList = input.writeLines()
+    #writeList.append('\n')in
+
+
+    #writeList = report.writeLines()
+
+    writeList = doit(*manualOverride(), writeList)
 
     with open(file, 'w') as f:
         f.writelines(writeList)
-
 
 
 if __name__ == '__main__':
