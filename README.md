@@ -2,7 +2,7 @@
 
 Here are 3 projects included in my portfolio. 
 
-**YC WebScrape**: Built a multi-threading asynchronous webscraping program to retrieve and organize data on hundreds of Y-Combinator company and founders into an Excel sheet in minutes
+**YC WebScrape**: Built a multi-threading asynchronous webscraping program to retrieve/organize data on hundreds of Y-Combinator company and founders into an Excel sheet in minutes
 
 **Shazam_ETL_Pipeline_Python**: Given 48-72 hours, built/automated an end-to-end ETL pipeline to increase revenue/optimize resources for recording labels by surfacing important songs/artists
 
