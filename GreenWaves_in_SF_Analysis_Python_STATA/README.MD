@@ -1,6 +1,8 @@
 **Bay Area’s Happiest Bicyclists: A Study on the 2011 Implementation of GreenWaves in
 San Francisco**
 
+Report: https://docs.google.com/document/d/1-L0sKyK3gul-Vdxqs6uLb7uYozdC8UFJjWg-cD68iLU/edit?usp=sharing
+
 **24 Hour Challenge**
 
 In Spring 2011, the San Francisco Municipal Transportation Agency implemented GreenWaves in the SF Mission district to encourage residents to bicycle instead of drive. The GreenWaves are synchronized traffic lights that let bicyclists encounter a series of green lights, so they experience fewer stops in the particular block. 
