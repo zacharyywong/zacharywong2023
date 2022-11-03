@@ -6,4 +6,9 @@
 // Select the database to use.
 use('lab3');
 
-db.zipcodes.find()
+db.zipcodes.aggregate([
+        {
+            "$group": {"_id": {'state': "$state", 'population': '$population'},'total': {"$sum": '$pop'},
+            "$match": {'$state': 'RI'}}
+        }
+    ])
