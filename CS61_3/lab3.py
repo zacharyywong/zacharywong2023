@@ -46,11 +46,59 @@ def question4(db):
         print("Question 4: " + str(document))
 
 def question5(db):
-    cursor = db.zipcodes.find().sort("pop", 1).limit(5)
+    cursor = db.zipcodes.find().sort("pop", 1).limit(1)
     
     for document in cursor:
         print("Question 5: " + str(document))
 
+#where latitude is closest to 0 or smallest
+# can't be negative 
+def question6(db):
+    cursor = db.zipcodes.aggregate([
+        {
+            "$unwind": "$loc"
+        },
+
+        {
+            "$match": {"loc": {"$gt": 0}}
+        },
+
+        {
+            "$sort": {"loc": 1}
+        },
+
+        {
+            "$limit": 1
+        }
+    ])
+    for document in cursor:
+        print("Question 6: " + str(document))
+
+def question7(db):
+    cursor = db.zipcodes.aggregate([
+        {
+            "$project": 
+            {
+                 "stateSubStr": 
+                 {
+                    "$substr": ["$state", 0, 1]
+                },
+                "city": 1,
+                "state": 1,
+                "pop": 1
+            }
+        },
+
+        {
+            "$match": {"stateSubStr": {"$eq": "M"}}
+        },
+
+        {
+            "$group": {"_id": "$stateSubStr", "avgPop": {"$avg": "$pop"}}
+        }
+    ])
+    for document in cursor:
+        print("Question 7: " + str(document))
 
 # This is added so that many files can reuse the function get_database()
 if __name__ == "__main__":   
@@ -60,7 +108,8 @@ if __name__ == "__main__":
     answer3 = question3(db)
     answer4 = question4(db)
     answer5 = question5(db)
-    # answer6 = question6(db)
+    answer6 = question6(db)
+    answer7 = question7(db)
 
 
     
