@@ -5,7 +5,7 @@ import json
 
 
 def get_database():
-    f = open (r'URI.json')
+    f = open (r'/Users/zacharywong/Documents/Work/Dartmouth/CS61/CS61/URI/URI.json')
     content = json.load(f)
     f.close()
 
