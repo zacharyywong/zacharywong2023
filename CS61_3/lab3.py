@@ -1,13 +1,19 @@
 import pymongo
 import urllib.parse
 from bson import ObjectId
+import json
 
 
 def get_database():
- 
-   client = pymongo.MongoClient("mongodb+srv://zacharyywong:" + urllib.parse.quote("3Cs@CodeRed") + "@lab3.htmdfxa.mongodb.net/?retryWrites=true&w=majority")
-   db = client.lab3 
-   return db
+    f = open (r'URI.json')
+    content = json.load(f)
+    f.close()
+
+    URI = content["user"] + urllib.parse.quote(content["password"]) + content["server"]
+    client = pymongo.MongoClient(URI)
+    
+    db = client.lab3
+    return db
 
 #Assumes every document id equals city zip code and is unique 
 def question2(db):
@@ -39,6 +45,12 @@ def question4(db):
     for document in cursor:
         print("Question 4: " + str(document))
 
+def question5(db):
+    cursor = db.zipcodes.find().sort("pop", 1).limit(5)
+    
+    for document in cursor:
+        print("Question 5: " + str(document))
+
 
 # This is added so that many files can reuse the function get_database()
 if __name__ == "__main__":   
@@ -47,6 +59,8 @@ if __name__ == "__main__":
     answer2 = question2(db)
     answer3 = question3(db)
     answer4 = question4(db)
+    answer5 = question5(db)
+    # answer6 = question6(db)
 
 
     
