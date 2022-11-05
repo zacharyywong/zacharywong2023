@@ -4,7 +4,7 @@
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
 // Select the database to use.
-use('lab3');
+use('lab3')
 
 // db.zipcodes.aggregate([
 //         {
@@ -15,7 +15,18 @@ use('lab3');
 
 db.zipcodes.updateMany(
     {}, 
-    {$set: {"plusFour": "0000"}}, 
-    upsert = false, 
-    multi = true
+    {$unset: {"plusFour": ""}}
 )
+
+
+
+// db.zipcodes.updateMany({},{$unset: {"plusFour": 1}},false,multi = true)
+
+db.zipcodes.find({"passwords": 1})
+
+db.zipcodes.updateMany(
+    {}, 
+    {$unset: {plusFour: ""}},  
+    false, multi = true)
+
+// db.Y2021.aggregate

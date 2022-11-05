@@ -2,6 +2,8 @@ import pymongo
 import urllib.parse
 from bson import ObjectId
 import json
+import math
+from pymongo import GEO2D
 
 
 def get_database():
@@ -21,13 +23,11 @@ def question2(db):
     # total = 0
     # for document in cursor:
     #      total += 1
-    print("Question 2: " + str(total))
-    return total
+    print("Question 2: " + str(total) + '\n')
 
 def question3(db):
     total = db.zipcodes.count_documents({"state":{"$in":['CT', 'RI', 'MA', 'VT', 'NH', 'ME']}})
-    print("Question 3: " + str(total))
-    return total
+    print("Question 3: " + str(total)+ '\n')
 
 
 def question4(db):
@@ -43,13 +43,13 @@ def question4(db):
        
     ])
     for document in cursor:
-        print("Question 4: " + str(document))
+        print("Question 4: " + str(document)+ '\n')
 
 def question5(db):
     cursor = db.zipcodes.find({"loc": 0}).sort("pop", 1).limit(1)
     
     for document in cursor:
-        print("Question 5: " + str(document))
+        print("Question 5: " + str(document)+ '\n')
 
 #where latitude is closest to 0 or smallest
 # can't be negative 
@@ -72,7 +72,7 @@ def question6(db):
         }
     ])
     for document in cursor:
-        print("Question 6: " + str(document))
+        print("Question 6: " + str(document)+ '\n')
 
 def question7(db):
     cursor = db.zipcodes.aggregate([
@@ -98,12 +98,12 @@ def question7(db):
         }
     ])
     for document in cursor:
-        print("Question 7: " + str(document))
+        print("Question 7: " + str(document)+ '\n')
 
 def question8(db):
     cursor = db.zipcodes.find({"pop": {"$gt": 50000}}, {"loc": 0}).limit(5)
     for document in cursor:
-        print("Question 8: " + str(document))
+        print("Question 8: " + str(document)+ '\n')
 
 def question9(db):
     cursor = db.zipcodes.aggregate([
@@ -137,7 +137,7 @@ def question9(db):
     ])
 
     for document in cursor:
-        print("Question 9: " + str(document))
+        print("Question 9: " + str(document)+ '\n')
 
 
 def Part2Num1(db):
@@ -157,7 +157,7 @@ def Part2Num1(db):
     ])
 
     for document in cursor:
-        print("Part2Num1: " + str(document))
+        print("Part2Num1: " + str(document)+ '\n')
 
 def Part2Num2(db):
     cursor = db.zipcodes.aggregate([
@@ -193,7 +193,7 @@ def Part2Num2(db):
     # ])
 
     for document in cursor:
-        print("Part2Num2: " + str(document))
+        print("Part2Num2: " + str(document)+ '\n')
 
 
 def Part2Num3(db): 
@@ -214,24 +214,111 @@ def Part2Num4(db):
 # )
     pass
 
+# exclude alaska and hawaii
+# smallest latitude + ((largest latitude - smallest latittude) / 2)
+# smallest longitude + ((largest longitude - smallest longitude) / 2)
+def findLocation(db, locIndex, smallLarge):
+
+    cursor = db.zipcodes.aggregate([
+        {
+            "$unwind": 
+            {
+                "path": "$loc",
+                "includeArrayIndex": "locIndex"
+            }
+        },
+
+        {
+            "$match":
+            {
+                "$and": [
+                    {
+                        "state": 
+                            {"$nin": ['AK', 'HI']}
+                        
+                    }, 
+                    {
+                        "locIndex": locIndex
+                    }
+
+                ]
+                
+            }
+        },
+        {
+            "$sort":
+            {
+                "loc": smallLarge
+            }
+        }, 
+        {
+            "$project":
+            {
+                "plusFour": 0, 
+                "pop": 0
+
+            }
+        },
+        {
+            "$limit": 1
+        }
+    
+    ])
+
+    for document in cursor:
+       #print("findLocation: " + str(document)+ '\n')
+       return document
+        #return document['loc']
+
+def findZip(db, middleLatitude, middleLongitude):
+    db.zipcodes.create_index([("loc", GEO2D)])
+    #cursor = db.zipcodes.find({"loc": {"$near": [middleLongitude, middleLatitude]}}).limit(5)
+    cursor = db.zipcodes.find({"loc": {"$near": [middleLongitude, middleLatitude]}}).limit(1)
+    for document in cursor:
+       print("findZip: " + str(document)+ '\n')
+       
+def extraCredit(db):
+
+    longitude = 0
+    latitude = 1
+    ascending = 1
+    descending = -1
+
+    mostSouthernLatitude = findLocation(db, latitude, ascending)
+    mostNorthernLatitude = findLocation(db, latitude, descending)
+    mostWesternLongitude = findLocation(db, longitude, ascending)
+    mostEasternLongitude = findLocation(db, longitude, descending)
+    
+    print("Most Southern Latitude: " + str(mostSouthernLatitude) + "\nMost Northern Latitude: " + str(mostNorthernLatitude) + '\n')
+    print("Most Western Longitude: " + str(mostWesternLongitude) + "\nMost Eastern Longitude: " + str(mostEasternLongitude) + '\n')
+
+    middleLatitude = mostSouthernLatitude['loc'] + ((mostNorthernLatitude['loc'] - mostSouthernLatitude['loc'])/2)
+    middleLongitude = mostWesternLongitude['loc'] + ((abs(mostWesternLongitude['loc']) - abs(mostEasternLongitude['loc']))/2)
+
+    print(str(middleLatitude) + ', ' + str(middleLongitude))
+
+    findZip(db, middleLatitude, middleLongitude)
+
+
 
 
 # This is added so that many files can reuse the function get_database()
 if __name__ == "__main__":   
     # Get the database
     db = get_database()
-    answer2 = question2(db)
-    answer3 = question3(db)
-    answer4 = question4(db)
-    answer5 = question5(db)
-    answer6 = question6(db)
-    answer7 = question7(db)
-    answer8 = question8(db)
-    answer9 = question9(db)
-    answerPart2Num1 = Part2Num1(db)
-    answerPart2Num2 = Part2Num2(db)
-    answerPart2Num3 = Part2Num3(db)
-    answerPart2Num4 = Part2Num4(db)
+    # question2(db)
+    # question3(db)
+    # question4(db)
+    # question5(db)
+    # question6(db)
+    # question7(db)
+    # question8(db)
+    # question9(db)
+    # Part2Num1(db)
+    # Part2Num2(db)
+    # Part2Num3(db)
+    # Part2Num4(db)
+    extraCredit(db)
 
 
 
