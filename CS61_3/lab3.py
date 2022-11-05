@@ -197,7 +197,12 @@ def Part2Num2(db):
 
 
 def Part2Num3(db): 
-    
+    # db.cardAmounts.drop();
+#     for (transaction = 0; transaction < 100; transaction++){
+# ... var r = {'amount': Math.random()*100+1}
+# ... db.cardAmounts.insertOne(r);}
+    pass
+
 
 
 # This is added so that many files can reuse the function get_database()
