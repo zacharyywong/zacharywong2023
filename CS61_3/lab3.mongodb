@@ -13,4 +13,4 @@ use('lab3');
 //         }
 //     ])
 
-db.zipcodes.count_documents({})
+db.createCollection("transactions"); 
