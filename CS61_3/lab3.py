@@ -5,7 +5,6 @@ import json
 import math
 from pymongo import GEO2D
 
-
 def get_database():
     f = open (r'/Users/zacharywong/Documents/Work/Dartmouth/CS61/CS61/URI/URI.json')
     content = json.load(f)
@@ -46,7 +45,7 @@ def question4(db):
         print("Question 4: " + str(document)+ '\n')
 
 def question5(db):
-    cursor = db.zipcodes.find({"loc": 0}).sort("pop", 1).limit(1)
+    cursor = db.zipcodes.find({}).sort("pop", 1).limit(1)
     
     for document in cursor:
         print("Question 5: " + str(document)+ '\n')
@@ -306,18 +305,18 @@ def extraCredit(db):
 if __name__ == "__main__":   
     # Get the database
     db = get_database()
-    # question2(db)
-    # question3(db)
-    # question4(db)
-    # question5(db)
-    # question6(db)
-    # question7(db)
-    # question8(db)
-    # question9(db)
-    # Part2Num1(db)
-    # Part2Num2(db)
-    # Part2Num3(db)
-    # Part2Num4(db)
+    question2(db)
+    question3(db)
+    question4(db)
+    question5(db)
+    question6(db)
+    question7(db)
+    question8(db)
+    question9(db)
+    Part2Num1(db)
+    Part2Num2(db)
+    Part2Num3(db)
+    Part2Num4(db)
     extraCredit(db)
 
 
