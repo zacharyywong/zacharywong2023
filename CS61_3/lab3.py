@@ -203,6 +203,17 @@ def Part2Num3(db):
 # ... db.cardAmounts.insertOne(r);}
     pass
 
+def Part2Num4(db): 
+#     use('lab3');
+
+#     db.zipcodes.updateMany(
+#     {}, 
+#     {$set: {"plusFour": "0000"}}, 
+#     upsert = false, 
+#     multi = true
+# )
+    pass
+
 
 
 # This is added so that many files can reuse the function get_database()
@@ -219,7 +230,9 @@ if __name__ == "__main__":
     answer9 = question9(db)
     answerPart2Num1 = Part2Num1(db)
     answerPart2Num2 = Part2Num2(db)
-    answerPart2Num2 = Part2Num3(db)
+    answerPart2Num3 = Part2Num3(db)
+    answerPart2Num4 = Part2Num4(db)
+
 
 
     

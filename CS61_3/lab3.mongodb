@@ -13,4 +13,9 @@ use('lab3');
 //         }
 //     ])
 
-db.createCollection("transactions"); 
+db.zipcodes.updateMany(
+    {}, 
+    {$set: {"plusFour": "0000"}}, 
+    upsert = false, 
+    multi = true
+)
