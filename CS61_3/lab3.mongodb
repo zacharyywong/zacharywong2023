@@ -19,6 +19,22 @@ db.zipcodes.updateMany(
 )
 
 
+    use('lab3');
+
+    db.zipcodes.updateMany(
+    {}, 
+    {$set: {"plusFour": "0000"}}, 
+    upsert = false, 
+    multi = true
+
+)   
+    db.zipcodes.find({}).limit(5)
+
+    use('lab3');
+    db.zipcodes.updateMany({}, 
+        {$unset: {"plusFour": 1}},  
+        multi = true
+    )
 
 // db.zipcodes.updateMany({},{$unset: {"plusFour": 1}},false,multi = true)
 
