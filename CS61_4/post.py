@@ -64,20 +64,25 @@ def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
         }
     )
 
-def updateComment(blogName, userName, commentBody, timestamp, permaLink):
+def insertComment(blogName, userName, commentBody, timestamp, permaLink):
     db.blogs.update_one(
-        {"_id": blogName},
         {
-        "$addToSet": 
+            "_id": blogName,
+            "blogs.permaLink": permaLink
+        }, 
+        {
+        "$push":
             {
-            "comments":
+            "blogs.$.comments":
+            
                 {
-                    "userName": userName,
-                    "commentBody": commentBody,
-                    "permaLink": permaLink
+                "userName": userName,
+                "commentBody": commentBody,
+                "permaLink": timestamp
                 }
+            
             }
-        }
+        } 
     )
 
 def post(blogName, userName, title, postBody, tags, timestamp):
@@ -92,16 +97,12 @@ def post(blogName, userName, title, postBody, tags, timestamp):
 def comment(blogName, permaLink, userName, commentBody, timestamp):
     cursor = db.blogs.find({"_id": blogName})
 
-    for document in cursor:
-        pprint(document)
-
-    if len(list(cursor)) == 0:
-        print(len(list(cursor)))
-        raise ValueError("No blogs found")
+    # if len(list(cursor)) == 1:
+    #     print(len(list(cursor)))
+    #     raise ValueError("No blogs found")
 
     # cursor.blogs.find({"_id": blogName, "blogs.permaLink": permaLink})
-    # permaLink = timestamp
-    # updateComment(userName, commentBody, timestamp, permaLink)
+    insertComment(blogName, userName, commentBody, timestamp, permaLink)
 
 
     # if len(list(cursor)) == 0:
@@ -117,14 +118,12 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
 if __name__ == "__main__":   
     # Get the database
     db = get_database()
-    # db.blogs.delete_many({})
-    # post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
-    # post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
-    # post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
-    # displayCollection(db)
-
-   # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
-    # displayCollection(db)
+    db.blogs.delete_many({})
+    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
+    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
+    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
+    displayCollection(db)
 
 # "quis, tristique ac, eleifend",Illana Frye,fringilla cursus purus. Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida. Aliquam,cereals,"Nov 13, 2021"
 # "elit, a feugiat tellus",Walter Buckley,interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque,"noodles, seafood","Mar 6, 2021"
