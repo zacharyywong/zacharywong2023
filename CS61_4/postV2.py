@@ -317,15 +317,12 @@ def show(blogName):
     result = []
     orderDisplayList = []
     cursor = db.blogs.find({"_id": blogName})
-    result.append([f'In {blogName}'])
     for blog in cursor: 
         numberPosts = len(list(cursor.clone()))
-        i = 0
-        while i < numberPosts:
+        for i in range(numberPosts):
+            result.append([f'In {blogName}'])
             result, orderDisplayList = showPost(blog, result, i, indentMultiplierBlogName, indentMultiplierPostBody, orderDisplayList)
             showDiscussion(blogName, blog, i, result, indentMultiplierBlogComment,indentMultiplierBlogCommentBody, orderDisplayList)
-            i += 1
-
     for block in result:
         for line in block:
             print('\n' + line)
@@ -344,24 +341,23 @@ if __name__ == "__main__":
     # db.comments.delete_many({})
 
 
-    # #add blogs to same blog name
+    #add blogs to same blog name
     # post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
     # post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
 
-    # # # add another blog name 
-    # post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
+    # add another blog name 
+    #post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
 
-    # # #first comment on blog 
+    # first comment on blog 
     # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
-    # # # reply to comment on blog 
-    # comment("vel", "Nov 
-    # 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
+    # # reply to comment on blog 
+    # comment("vel", "Nov 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
     # comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
     # comment("vel", "Nov 13, 2021", "1234 1234", "blahblahblah", "August 10, 2022")
     
     # #
-    # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", "September 1, 2022")
+    #comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", "September 1, 2022")
 
     # comment("vel", "Jan 2, 2022", "-=-=-=-=-=", "987654", "September 10, 2022")
 
