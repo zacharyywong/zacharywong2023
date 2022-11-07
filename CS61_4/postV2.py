@@ -33,14 +33,21 @@ def createLink(blogName, title):
     permaLink  = blogName+'.'+re.sub('[^0-9a-zA-Z]+', '_', title)
     return permaLink
 
-def insertOrderDisplay(orderDisplayList, timestamp):
+def insertOrderDisplay(orderDisplayList, newTimeStamp, oldTimeStamp):
+
+    if oldTimeStamp == None:
+        orderDisplayList.append(newTimeStamp)
+        return orderDisplayList
+
     for i in range(len(orderDisplayList)):
-        if orderDisplayList[i] == timestamp:
-            orderDisplayList[i+1] = timestamp
+        if orderDisplayList[i] == oldTimeStamp:
+            if i == len(orderDisplayList)-1:
+                orderDisplayList.append(newTimeStamp)
+            else:
+                orderDisplayList.insert(i+1, newTimeStamp)
             return orderDisplayList
-       
-    orderDisplayList.append(timestamp)
-    print(orderDisplayList)
+   
+    orderDisplayList.append(newTimeStamp)
     return orderDisplayList
 
 def insertPermaLinkSchema(permaLink):
@@ -228,7 +235,7 @@ def showPost(blog, result, i, indentMultiplierBlogName, indentMultiplierPostBody
     postBody = post['postBody']
     i += 1
 
-    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp)
+    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, None)
 
     order = orderDisplayList.index(timestamp)
 
@@ -248,7 +255,7 @@ def showOriginalComment(comment, result, indentMultiplierBlogComment, indentMult
     commentBody = newComment['commentBody']
     timestamp = newComment['timestamp']
 
-    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp) 
+    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, None) 
     order = orderDisplayList.index(timestamp)
 
     result.insert(order, [addIndent(f"userName: {userName}", indentMultiplierBlogComment), 
@@ -274,7 +281,7 @@ def showReplies(comments, i, result, indentDictionary, orderDisplayList):
             timestamp = thingtoComment['timestamp']
             
             indentMultiplier = indentDictionary[isRepliedComment['timestamp']] + 1
-            orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp)
+            orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, isRepliedComment['timestamp'])
             order = orderDisplayList.index(timestamp)
             result.insert(order, [addIndent(f'userName: {userName}', indentMultiplier),  
                         addIndent(f"timestamp: {timestamp}", indentMultiplier),
@@ -322,7 +329,8 @@ def show(blogName):
     for block in result:
         for line in block:
             print('\n' + line)
-    print(result)
+    #print(result)
+    print(orderDisplayList)
     
 
 
@@ -331,37 +339,38 @@ if __name__ == "__main__":
     db = get_database()
 
 
-    db.blogs.delete_many({})
-    db.permaLinks.delete_many({})
-    db.comments.delete_many({})
+    # db.blogs.delete_many({})
+    # db.permaLinks.delete_many({})
+    # db.comments.delete_many({})
 
 
-    #add blogs to same blog name
-    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
-    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
+    # #add blogs to same blog name
+    # post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
+    # post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
 
-    # # add another blog name 
-    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
+    # # # add another blog name 
+    # post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
 
-    # #first comment on blog 
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
+    # # #first comment on blog 
+    # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
-    # # reply to comment on blog 
-    comment("vel", "Nov 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
-    comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
-    comment("vel", "Nov 13, 2021", "1234 1234", "blahblahblah", "August 10, 2022")
+    # # # reply to comment on blog 
+    # comment("vel", "Nov 
+    # 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
+    # comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
+    # comment("vel", "Nov 13, 2021", "1234 1234", "blahblahblah", "August 10, 2022")
     
-    #
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", "September 1, 2022")
+    # #
+    # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", "September 1, 2022")
 
-    comment("vel", "Jan 2, 2022", "-=-=-=-=-=", "987654", "September 10, 2022")
+    # comment("vel", "Jan 2, 2022", "-=-=-=-=-=", "987654", "September 10, 2022")
 
-    # delete comment
+    # # delete comment
 
-    delete("vel",  "Nov 13, 2021", "qwer qwer", "June 19, 2022")
+    # delete("vel",  "Nov 13, 2021", "qwer qwer", "June 19, 2022")
 
-    #delete post
-    delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", "July 25, 2022")
+    # #delete post
+    # delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", "July 25, 2022")
 
     # #show blog
 
