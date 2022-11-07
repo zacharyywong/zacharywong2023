@@ -326,9 +326,10 @@ def show(blogName):
     blogNameDisplay.append([f'In {blogName}\n'])
     for blog in cursor: 
         cursor1 = db.blogs.aggregate([{"$match": {"_id": blogName}}, {"$project": {"numPosts": {"$size": "$blogPosts"}}}])
+
         for document in cursor1:
-            print(document)
             numPosts = document['numPosts']
+
         for i in range(numPosts):
             discussionsDisplay, orderDisplayList = showPost(blog, discussionsDisplay, i, indentMultiplierBlogName, indentMultiplierPostBody, orderDisplayList)
             showDiscussion(blogName, blog, i, discussionsDisplay, indentMultiplierBlogComment,indentMultiplierBlogCommentBody, orderDisplayList)
@@ -378,7 +379,11 @@ if __name__ == "__main__":
     comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "987654", datetime.datetime(2022,9,10))
 
     comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "QWERRWEGFV", datetime.datetime(2022,11,10))
-    
+    comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "0987654321", datetime.datetime(2022, 10,1))
+
+    post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime.datetime(2022,1,20))
+
+
     # delete comment
     delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
 
@@ -387,7 +392,7 @@ if __name__ == "__main__":
 
     #show blog
 
-    show("ridiculusmus")
+    show("vel")
 
     # Bad Tests
 
