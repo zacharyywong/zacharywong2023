@@ -40,7 +40,7 @@ def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
     db.blogs.insert_one(
         {
             "_id": blogName,
-            "blogs": 
+            "blogPosts": 
             [
                 {
                     "userName": userName,
@@ -54,7 +54,7 @@ def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
         }
     )
 
-    #insertPermaLinkSchema(permaLink)
+    insertPermaLinkSchema(permaLink)
 
 
 
@@ -64,7 +64,7 @@ def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
         {
         "$addToSet": 
             {
-                "blogs":
+                "blogPosts":
                 {
                     "userName": userName,
                     "title": title,
@@ -77,63 +77,49 @@ def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
             }
         }
     )
-    #insertPermaLinkSchema(permaLink)
+    insertPermaLinkSchema(permaLink)
 
 
 def insertComment(blogName, userName, commentBody, timestamp, permaLink):
     db.comments.insert_one(
         {
-            "_id": blogName,
-            "blogs.permaLink": permaLink
-        }, 
-        {
-        "$push":
-            {
-            "blogs.$.comments":
-            
+            "_id": blogName, 
+            "blogDiscussion":
+            [
                 {
-                "userName": userName,
-                "commentBody": commentBody,
-                "permaLink": timestamp
+                    "originalPostLink": permaLink,
+                    "newComment":
+                    {
+                        "userName": userName,
+                        "commentBody": commentBody,
+                        "timestamp": timestamp
+                    }
                 }
             
-            }
-        } 
+            ]
+        }
     )
 
 def insertReply(blogName, userName, commentBody, timestamp, permaLink):
-    db.blogs.update_one(
+    db.comments.update_one(
         {
-            "_id": blogName,
-            "blogs.comments.permaLink": permaLink
+            "_id": blogName
         }, 
         {
         "$push":
             {
-            "blogs.$.comments.$[commentEle].replies":
+                "blogDiscussion":
                 {
-                    "userName": userName,
-                    "replyBody": commentBody,
-                    "permaLink": timestamp
+                "originalPostLink": permaLink,
+                "newComment":
+                    {
+                        "userName": userName,
+                        "commentBody": commentBody,
+                        "timestamp": timestamp
+                    }
                 }
             }
-        },
-
-        upsert = True,
-        
-        array_filters=
-        [{"commentEle.permaLink": permaLink}]
-        
-            # {
-            # "blogs.$.comments.replies":
-            #     {
-            #     "userName": userName,
-            #     "replyBody": commentBody,
-            #     "permaLink": timestamp
-            #     }
-            
-            # }
-        
+        }
     )
 
 
@@ -141,30 +127,33 @@ def post(blogName, userName, title, postBody, tags, timestamp):
     cursor = db.blogs.find({"_id": blogName})
     permaLink = createLink(blogName, title)
     if len(list(cursor)) == 0:
-        print("inserting blog")
+        print(f'\n{userName} inserting blog {title} in {blogName} at {timestamp}')
         insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
     else:
-        print("updating blog")
+        print(f'\n{userName} inserting blog {title} in {blogName} at {timestamp}')
         updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
 
 def comment(blogName, permaLink, userName, commentBody, timestamp):
     cursor = db.blogs.find({"_id": blogName})
     if len(list(cursor)) == 0:
-        raise ValueError("No blogs found")
+        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+        documentsFound = len(list(cursor1.clone()))
+        if documentsFound == 0:
+                raise ValueError("No blogs or comments found to comment on")
    
     else:
-        cursor1 = db.blogs.find({"_id": blogName, "blogs.comments.permaLink": permaLink})
-        # for document in cursor:
-        #     print(document)
-        print(list(cursor1))
+        cursor2 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+        # # for document in cursor:
+        # #     print(document)
+        # print(list(cursor1))
 
-        documentsFound = len(list(cursor1.clone()))
+        documentsFound = len(list(cursor2.clone()))
         
         if documentsFound == 0:
-            print('inserting comment')
+            print(f'\n{userName} inserting comment in blog {blogName} at {timestamp}')
             insertComment(blogName, userName, commentBody, timestamp, permaLink)
         else:
-            print('inserting reply')
+            print(f'\n{userName} inserting reply to comment link {permaLink} in {blogName} at {timestamp}')
             insertReply(blogName, userName, commentBody, timestamp, permaLink)
 
 
@@ -177,6 +166,57 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
         # else:
         #     updateComment(userName, commentBody, timestamp)
 
+def deleteBlog(db, blogName, permaLink, userName, timestamp):
+    db.blogs.update_one(
+        {
+            "_id": blogName, 
+            "blogPosts.permaLink": permaLink
+        }, 
+        {
+            "$set":
+            {
+                "blogPosts.$.title": f"deleted by {userName}",
+                "blogPosts.$.timestamp": timestamp
+            }
+        }
+    )
+    
+def deleteComment(db, blogName, permaLink, userName, timestamp):
+    db.comments.update_one(
+        {
+            "_id": blogName, 
+            "blogDiscussion.newComment.timestamp": permaLink
+        }, 
+        {
+            "$set":
+            {
+                "blogDiscussion.$.newComment.commentBody": f"deleted by {userName}",
+                "blogDiscussion.$.newComment.timestamp": timestamp
+            }
+        }
+    )
+
+def delete(blogName, permaLink, userName, timestamp):
+    # cursor = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+    # for document in cursor:
+    #     userNameCommentDeleted = document["blogDiscussion"][0]["newComment"]
+    #     print(userNameCommentDeleted)
+    
+    cursor = db.blogs.find({"_id": blogName, "blogPosts.permaLink": permaLink})
+
+    postsFound = len(list(cursor.clone()))
+
+    if postsFound == 0:
+        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+        commentsFound = len(list(cursor1.clone()))
+        if commentsFound == 0:
+            raise ValueError("No blogs or comments found to delete")
+        else:
+            deleteComment(db, blogName, permaLink, userName, timestamp)
+            print(f'\n{userName} deleting comment at link {permaLink} in {blogName} at {timestamp}')
+    else:
+        deleteBlog(db, blogName, permaLink, userName, timestamp)
+        print(f'\n{userName} deleting blog at link {permaLink} in {blogName} at {timestamp}')
 
 if __name__ == "__main__":   
     # Get the database
@@ -185,6 +225,7 @@ if __name__ == "__main__":
 
     db.blogs.delete_many({})
     db.permaLinks.delete_many({})
+    db.comments.delete_many({})
 
 
     #add blogs to same blog name
@@ -195,12 +236,17 @@ if __name__ == "__main__":
     post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
 
     # #first comment on blog 
-    # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
     # # reply to comment on blog 
-    # comment("vel", "Nov 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
-    #comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
+    comment("vel", "Nov 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
+    comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
 
+    # delete comment
+    delete("vel",  "Nov 13, 2021", "qwer qwer", "June 19, 2022")
+
+    #delete post
+    delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", "July 25, 2022")
 
 
     # Bad Tests
@@ -208,7 +254,7 @@ if __name__ == "__main__":
     # no blog called "vl"
     #comment("vl", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
-    displayCollection(db)
+    #displayCollection(db)
 
 # "elit, a feugiat tellus",Walter Buckley,interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque,"noodles, seafood","Mar 6, 2021"
     
