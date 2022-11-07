@@ -143,9 +143,6 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
    
     else:
         cursor2 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
-        # # for document in cursor:
-        # #     print(document)
-        # print(list(cursor1))
 
         documentsFound = len(list(cursor2.clone()))
         
@@ -156,15 +153,6 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
             print(f'\n{userName} inserting reply to comment link {permaLink} in {blogName} at {timestamp}')
             insertReply(blogName, userName, commentBody, timestamp, permaLink)
 
-
-        # if len(list(cursor)) == 0:
-        # permaLink = datetime.datetime.now
-        # updateComment(userName, commentBody, timestamp, permaLink)
-        # cursor.blogs.find({{"_id": blogName, "blogs.comments": permaLink}})
-        # if len(list(cursor)) == 0: 
-        #     raise ValueError("No ")
-        # else:
-        #     updateComment(userName, commentBody, timestamp)
 
 def deleteBlog(db, blogName, permaLink, userName, timestamp):
     db.blogs.update_one(
@@ -197,11 +185,6 @@ def deleteComment(db, blogName, permaLink, userName, timestamp):
     )
 
 def delete(blogName, permaLink, userName, timestamp):
-    # cursor = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
-    # for document in cursor:
-    #     userNameCommentDeleted = document["blogDiscussion"][0]["newComment"]
-    #     print(userNameCommentDeleted)
-    
     cursor = db.blogs.find({"_id": blogName, "blogPosts.permaLink": permaLink})
 
     postsFound = len(list(cursor.clone()))
