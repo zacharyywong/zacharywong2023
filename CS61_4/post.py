@@ -17,6 +17,8 @@ def get_database():
     
     db = client.lab4
     return db
+
+
 def displayCollection(db):
     cursor = db.blogs.find({})
     for document in cursor:
