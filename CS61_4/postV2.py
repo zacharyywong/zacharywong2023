@@ -36,6 +36,10 @@ def createLink(blogName, title):
 def insertOrderDisplay(orderDisplayList, newTimeStamp, oldTimeStamp):
 
     if oldTimeStamp == None:
+        for i in range(len(orderDisplayList)):
+            if orderDisplayList[i] > newTimeStamp:
+                orderDisplayList.insert(i-1, newTimeStamp)
+                return orderDisplayList
         orderDisplayList.append(newTimeStamp)
         return orderDisplayList
 
@@ -336,39 +340,39 @@ if __name__ == "__main__":
     db = get_database()
 
 
-    # db.blogs.delete_many({})
-    # db.permaLinks.delete_many({})
-    # db.comments.delete_many({})
+    db.blogs.delete_many({})
+    db.permaLinks.delete_many({})
+    db.comments.delete_many({})
 
 
     #add blogs to same blog name
-    # post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", "Jul 20, 2021")
-    # post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", "Dec 24, 2021")
+    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,5,5))
+    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime.datetime(2021, 12, 24))
 
-    # add another blog name 
-    #post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", "Sep 3, 2021")
+    #add another blog name 
+    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
 
-    # first comment on blog 
-    # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
-
-    # # reply to comment on blog 
-    # comment("vel", "Nov 13, 2021", "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", "Dec 20, 2021")
-    # comment("vel", "Dec 20, 2021", "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", "Jan 2, 2022")
-    # comment("vel", "Nov 13, 2021", "1234 1234", "blahblahblah", "August 10, 2022")
+    #first comment on blog 
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", datetime.datetime(2021,11,13))
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", datetime.datetime(2022, 9,1))
+    # reply to comment on blog 
+    comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", datetime.datetime(2021,12,20))
+    comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", datetime.datetime(2022,1,2))
+    comment("vel", datetime.datetime(2021,11,13), "1234 1234", "blahblahblah", datetime.datetime(2022,8,10))
     
-    # #
-    #comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", "September 1, 2022")
+    #
+    
 
-    # comment("vel", "Jan 2, 2022", "-=-=-=-=-=", "987654", "September 10, 2022")
+    comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "987654", datetime.datetime(2022,9,10))
 
-    # # delete comment
+    # delete comment
 
-    # delete("vel",  "Nov 13, 2021", "qwer qwer", "June 19, 2022")
+    delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
 
-    # #delete post
-    # delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", "July 25, 2022")
+    #delete post
+    delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", datetime.datetime(2022,7,25))
 
-    # #show blog
+    #show blog
 
     show("vel")
 
