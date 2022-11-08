@@ -4,6 +4,8 @@ from bson import ObjectId
 import json
 from pprint import pprint
 import re
+from operator import itemgetter
+
 import datetime
 import textwrap
 
@@ -26,8 +28,8 @@ def addIndent(str, indentMultiplier):
 
 def displayCollection(db):
     cursor = db.blogs.find({})
-    for document in cursor:
-        pprint(document)
+    # for document in cursor:
+    #     pprint(document)
 
 def createLink(blogName, title):
     permaLink  = blogName+'.'+re.sub('[^0-9a-zA-Z]+', '_', title)
@@ -116,12 +118,10 @@ def insertComment(blogName, userName, commentBody, timestamp, permaLink):
             [
                 {
                     "originalPostLink": permaLink,
-                    "newComment":
-                    {
-                        "userName": userName,
-                        "commentBody": commentBody,
-                        "timestamp": timestamp
-                    }
+                    "userName": userName,
+                    "commentBody": commentBody,
+                    "timestamp": timestamp
+                    
                 }
             
             ]
@@ -139,12 +139,10 @@ def insertReply(blogName, userName, commentBody, timestamp, permaLink):
                 "blogDiscussion":
                 {
                 "originalPostLink": permaLink,
-                "newComment":
-                    {
-                        "userName": userName,
-                        "commentBody": commentBody,
-                        "timestamp": timestamp
-                    }
+                "userName": userName,
+                "commentBody": commentBody,
+                "timestamp": timestamp
+                    
                 }
             }
         }
@@ -164,7 +162,7 @@ def post(blogName, userName, title, postBody, tags, timestamp):
 def comment(blogName, permaLink, userName, commentBody, timestamp):
     cursor = db.blogs.find({"_id": blogName})
     if len(list(cursor)) == 0:
-        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.timestamp": permaLink})
         documentsFound = len(list(cursor1.clone()))
         if documentsFound == 0:
                 raise ValueError("No blogs or comments found to comment on")
@@ -201,13 +199,13 @@ def deleteComment(db, blogName, permaLink, userName, timestamp):
     db.comments.update_one(
         {
             "blogName": blogName, 
-            "blogDiscussion.newComment.timestamp": permaLink
+            "blogDiscussion.timestamp": permaLink
         }, 
         {
             "$set":
             {
-                "blogDiscussion.$.newComment.commentBody": f"deleted by {userName}",
-                "blogDiscussion.$.newComment.deletedTimestamp": timestamp
+                "blogDiscussion.$.commentBody": f"deleted by {userName}",
+                "blogDiscussion.$.deletedTimestamp": timestamp
             }
         }
     )
@@ -218,7 +216,7 @@ def delete(blogName, permaLink, userName, timestamp):
     postsFound = len(list(cursor.clone()))
 
     if postsFound == 0:
-        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.newComment.timestamp": permaLink})
+        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.timestamp": permaLink})
         commentsFound = len(list(cursor1.clone()))
         if commentsFound == 0:
             raise ValueError("No blogs or comments found to delete")
@@ -229,21 +227,15 @@ def delete(blogName, permaLink, userName, timestamp):
         deleteBlog(db, blogName, permaLink, userName, timestamp)
         print(f'\n{userName} deleting blog at link {permaLink} in {blogName} at {timestamp}')
 
-def showPost(blog, discussionsDisplay, i, indentMultiplierBlogName, indentMultiplierPostBody, orderDisplayList):
-    post = blog['blogPosts'][i]
+def showPost(post, discussionsDisplay, indentMultiplierBlogName, indentMultiplierPostBody):
     title = post['title']
     userName = post['userName']
     tags = post['tags']
     timestamp = post['timestamp']
     permaLink = post['permaLink']
     postBody = post['postBody']
-    i += 1
 
-    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, None)
-
-    order = orderDisplayList.index(timestamp)
-
-    discussionsDisplay.insert(order, [addIndent(f"title: {title}", indentMultiplierBlogName), 
+    discussionsDisplay.append([addIndent(f"title: {title}", indentMultiplierBlogName), 
                 addIndent(f"userName:{userName}", indentMultiplierBlogName), 
                 addIndent(f"tags: {tags}", indentMultiplierBlogName), 
                 addIndent(f"timestamp: {timestamp}", indentMultiplierBlogName), 
@@ -251,66 +243,63 @@ def showPost(blog, discussionsDisplay, i, indentMultiplierBlogName, indentMultip
                 addIndent(f"postBody: ", indentMultiplierBlogName), 
                 addIndent(f"{postBody}", indentMultiplierPostBody), 
                 addIndent(f"----", indentMultiplierPostBody)])
-    return discussionsDisplay, orderDisplayList
+    return discussionsDisplay
 
-def showOriginalComment(comment, discussionsDisplay, indentMultiplierBlogComment, indentMultiplierBlogCommentBody, indentDictionary, orderDisplayList):
-    newComment = comment['newComment']
-    userName = newComment['userName']
-    commentBody = newComment['commentBody']
-    timestamp = newComment['timestamp']
+def showOriginalComment(comment, discussionsDisplay, indentMultiplierBlogComment, indentMultiplierBlogCommentBody, indentDictionary):
+    userName = comment['userName']
+    commentBody = comment['commentBody']
+    timestamp = comment['timestamp']
 
-    orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, None) 
-    order = orderDisplayList.index(timestamp)
-
-    discussionsDisplay.insert(order, [addIndent(f"userName: {userName}", indentMultiplierBlogComment), 
+    discussionsDisplay.append([addIndent(f"userName: {userName}", indentMultiplierBlogComment), 
                 addIndent(f"timestamp: {timestamp}", indentMultiplierBlogComment), 
                 addIndent(f"commentBody: ", indentMultiplierBlogComment), 
                 addIndent(f"{commentBody}", indentMultiplierBlogCommentBody), 
                 addIndent(f"----", indentMultiplierBlogCommentBody)])
     indentDictionary[timestamp] = indentMultiplierBlogComment
+    # print(f"original comment timestamp: {timestamp} by {userName}")
 
-    return discussionsDisplay, indentDictionary, orderDisplayList
+    return discussionsDisplay, indentDictionary
 
-def showReplies(comments, i, discussionsDisplay, indentDictionary, orderDisplayList):
-    replyOriginalPostLink = comments[i]['originalPostLink']
+def showReplies(reply, replies, discussionsDisplay, indentDictionary):
+    replyOriginalPostLink = reply['originalPostLink']
     
-    for j in range(len(comments)):
-        isRepliedComment = comments[j]['newComment']
+    for j in range(len(replies)):
+        isRepliedComment = replies[j]
         if isRepliedComment['timestamp'] == replyOriginalPostLink:
-            # indentMultiplierBlogReply += 1
-            thingtoComment = comments[i]['newComment']
-
-            userName = thingtoComment['userName']
-            commentBody = thingtoComment['commentBody']
-            timestamp = thingtoComment['timestamp']
+            userName = reply['userName']
+            commentBody = reply['commentBody']
+            timestamp = reply['timestamp']
             
             indentMultiplier = indentDictionary[isRepliedComment['timestamp']] + 1
-            orderDisplayList = insertOrderDisplay(orderDisplayList, timestamp, isRepliedComment['timestamp'])
-            order = orderDisplayList.index(timestamp)
-            discussionsDisplay.insert(order, [addIndent(f'userName: {userName}', indentMultiplier),  
+            discussionsDisplay.append([addIndent(f'userName: {userName}', indentMultiplier),  
                         addIndent(f"timestamp: {timestamp}", indentMultiplier),
                          addIndent(f"commentBody: ", indentMultiplier), 
                          addIndent(f"{commentBody}", indentMultiplier+1), 
                          addIndent(f"----", indentMultiplier + 1)])
             
             indentDictionary[timestamp] = indentMultiplier
-            # print(f"\nthing to comment: {thingtoComment}")
-            # print(f"\nnew comment commented under {beingRepliedComment}")
-    return discussionsDisplay, indentDictionary, orderDisplayList
+    return discussionsDisplay, indentDictionary
 
-def showDiscussion(blogName, blog, i, discussionsDisplay, indentMultiplierBlogComment,indentMultiplierBlogCommentBody, orderDisplayList):
-    blogLink = blog['blogPosts'][i]['permaLink']
+def showDiscussion(blogName, post, discussionsDisplay, indentMultiplierBlogComment,indentMultiplierBlogCommentBody):
+    blogLink = post['permaLink']
     cursor = db.comments.find({"_id": blogName, "blogDiscussion.originalPostLink": blogLink})
     indentDictionary = {}
+    originalComments = []
+    replies = []
     for discussionThread in cursor:
-        comments = discussionThread["blogDiscussion"]
-        for i in range(len(comments)):
-            if comments[i]['originalPostLink'] == blogLink:
-                discussionsDisplay, indentDictionary, orderDisplayList = showOriginalComment(comments[i], discussionsDisplay, indentMultiplierBlogComment, indentMultiplierBlogCommentBody, indentDictionary, orderDisplayList)
+        commentsOrdered = sorted(discussionThread['blogDiscussion'], key = itemgetter('timestamp'), reverse=True)
+        for comment in commentsOrdered:
+            if comment['originalPostLink'] == blogLink:
+                originalComments.append(comment)
             else:
-                discussionsDisplay, indentDictionary, orderDisplayList = showReplies(comments, i, discussionsDisplay, indentDictionary, orderDisplayList)
-    print(indentDictionary)
-    return discussionsDisplay, orderDisplayList
+                replies.append(comment)
+        for originalComment in originalComments: 
+            discussionsDisplay, indentDictionary = showOriginalComment(originalComment, discussionsDisplay, indentMultiplierBlogComment, indentMultiplierBlogCommentBody, indentDictionary)
+            for reply in replies:
+                discussionsDisplay, indentDictionary = showReplies(reply, commentsOrdered, discussionsDisplay, indentDictionary)
+
+    # print(indentDictionary)
+    return discussionsDisplay
 
 def show(blogName):
     indentMultiplierBlogName = 0
@@ -321,19 +310,14 @@ def show(blogName):
     discussionsDisplay = []
     blogNameDisplay = []
     result = []
-    orderDisplayList = []
     cursor = db.blogs.find({"_id": blogName})
     blogNameDisplay.append([f'In {blogName}\n'])
     for blog in cursor: 
-        cursor1 = db.blogs.aggregate([{"$match": {"_id": blogName}}, {"$project": {"numPosts": {"$size": "$blogPosts"}}}])
+        blogPostsOrdered = sorted(blog['blogPosts'], key = itemgetter('timestamp'), reverse=True)
+    for post in blogPostsOrdered:
+        discussionsDisplay = showPost(post, discussionsDisplay, indentMultiplierBlogName, indentMultiplierPostBody)
+        showDiscussion(blogName, post, discussionsDisplay, indentMultiplierBlogComment,indentMultiplierBlogCommentBody)
 
-        for document in cursor1:
-            numPosts = document['numPosts']
-
-        for i in range(numPosts):
-            discussionsDisplay, orderDisplayList = showPost(blog, discussionsDisplay, i, indentMultiplierBlogName, indentMultiplierPostBody, orderDisplayList)
-            showDiscussion(blogName, blog, i, discussionsDisplay, indentMultiplierBlogComment,indentMultiplierBlogCommentBody, orderDisplayList)
-    
     for line in blogNameDisplay:
         result.append(line)
     
@@ -350,8 +334,6 @@ def show(blogName):
 if __name__ == "__main__":   
     # Get the database
     db = get_database()
-
-
     db.blogs.delete_many({})
     db.permaLinks.delete_many({})
     db.comments.delete_many({})
@@ -360,39 +342,30 @@ if __name__ == "__main__":
     #add blogs to same blog name
     post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,5,5))
     post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime.datetime(2021, 12, 24))
-
-    #add another blog name 
     post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
 
-    #first comment on blog 
     comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", datetime.datetime(2021,11,13))
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", datetime.datetime(2022, 9,1))
-    
-    # reply to comment on blog 
+    #comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "aiuvsnjkdkcaknjkn", datetime.datetime(2022, 9,1))
     comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque", datetime.datetime(2021,12,20))
-    comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", datetime.datetime(2022,1,2))
-    comment("vel", datetime.datetime(2021,11,13), "1234 1234", "blahblahblah", datetime.datetime(2022,8,10))
-    
-    #
-    
-
-    comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "987654", datetime.datetime(2022,9,10))
-
-    comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "QWERRWEGFV", datetime.datetime(2022,11,10))
-    comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "0987654321", datetime.datetime(2022, 10,1))
+    # comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "asdfasdfasdfasdfasdfasfdasdffsdafdasdfasdf", datetime.datetime(2022,1,2))
+    # comment("vel", datetime.datetime(2021,11,13), "1234 1234", "blahblahblah", datetime.datetime(2022,8,10))
+    # comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "987654", datetime.datetime(2022,9,10))
+    # comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "QWERRWEGFV", datetime.datetime(2022,11,10))
+    # comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "0987654321", datetime.datetime(2022, 10,1))
 
     post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime.datetime(2022,1,20))
 
+    show("vel")
 
-    # delete comment
-    delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
+    # # delete comment
+    # delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
 
-    #delete post
-    delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", datetime.datetime(2022,7,25))
+    # #delete post
+    # delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", datetime.datetime(2022,7,25))
 
     #show blog
 
-    show("vel")
+    #show("vel")
 
     # Bad Tests
 
