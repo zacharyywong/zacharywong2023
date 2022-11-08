@@ -317,19 +317,6 @@ def showDiscussion(blogName, blogPostsOrdered, discussionsDisplay, commentsDispl
     originalComments = []
     replies = []
     for discussionThread in cursor:
-        # commentsOrdered = sorted(discussionThread['blogDiscussion'], key = itemgetter('permaLink'), reverse=True)
-        # for post in blogPostsOrdered:
-        #     blogLink = post['permaLink']
-        #     cursor = db.comments.find({"_id": blogName, "blogDiscussion.originalPostLink": blogLink})
-        # for comment in commentsOrdered:
-        #     if isinstance(comment['originalPostLink'], str):
-        #         originalComments.append(comment)
-        #     else:
-        #         replies.append(comment)
-
-        # for originalComment in originalComments: 
-        #     discussionsDisplay, indentDictionary, commentsDisplayOrder = showOriginalComment(originalComment, discussionsDisplay, indentMultiplierBlogComment, indentMultiplierBlogCommentBody, indentDictionary, commentsDisplayOrder)
-        
         repliesOrderedAsc = sorted(discussionThread['blogDiscussion'], key = itemgetter('permaLink'), reverse=False)
         for reply in repliesOrderedAsc:
             discussionsDisplay, indentDictionary, commentsDisplayOrder = showReplies(reply, commentsDisplayOrder, discussionsDisplay, indentDictionary)
