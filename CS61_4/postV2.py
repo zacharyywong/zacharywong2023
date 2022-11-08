@@ -153,10 +153,10 @@ def post(blogName, userName, title, postBody, tags, timestamp):
     cursor = db.blogs.find({"_id": blogName})
     permaLink = createLink(blogName, title)
     if len(list(cursor)) == 0:
-        print(f'\n{userName} inserting blog {title} in {blogName} at {timestamp}')
+        print(f'{userName} inserting blog {title} in {blogName} at {timestamp}')
         insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
     else:
-        print(f'\n{userName} inserting blog {title} in {blogName} at {timestamp}')
+        print(f'{userName} inserting blog {title} in {blogName} at {timestamp}')
         updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
 
 def comment(blogName, permaLink, userName, commentBody, timestamp):
@@ -173,10 +173,10 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
         documentsFound = len(list(cursor2.clone()))
         
         if documentsFound == 0:
-            print(f'\n{userName} inserting comment in blog {blogName} at {timestamp}')
+            print(f'{userName} inserting comment in blog {blogName} at {timestamp}')
             insertComment(blogName, userName, commentBody, timestamp, permaLink)
         else:
-            print(f'\n{userName} inserting reply to comment link {permaLink} in {blogName} at {timestamp}')
+            print(f'{userName} inserting reply to comment link {permaLink} in {blogName} at {timestamp}')
             insertReply(blogName, userName, commentBody, timestamp, permaLink)
 
 
@@ -222,10 +222,10 @@ def delete(blogName, permaLink, userName, timestamp):
             raise ValueError("No blogs or comments found to delete")
         else:
             deleteComment(db, blogName, permaLink, userName, timestamp)
-            print(f'\n{userName} deleting comment at link {permaLink} in {blogName} at {timestamp}')
+            print(f'{userName} deleting comment at link {permaLink} in {blogName} at {timestamp}')
     else:
         deleteBlog(db, blogName, permaLink, userName, timestamp)
-        print(f'\n{userName} deleting blog at link {permaLink} in {blogName} at {timestamp}')
+        print(f'{userName} deleting blog at link {permaLink} in {blogName} at {timestamp}')
 
 def showPost(post, discussionsDisplay, commentsDisplayOrder, indentMultiplierBlogName, indentMultiplierPostBody, indentDictionary):
     title = post['title']
@@ -338,7 +338,7 @@ def show(blogName):
 
     result = []
     cursor = db.blogs.find({"_id": blogName})
-    blogNameDisplay.append([f'In {blogName}\n'])
+    blogNameDisplay.append([f'\nIn {blogName}\n'])
     for line in blogNameDisplay:
         result.append(line)
 
@@ -390,8 +390,12 @@ if __name__ == "__main__":
     comment("vel", datetime.datetime(2022, 9,1), "bbbbbbbbb", "reply under 098098 comment", datetime.datetime(2022, 11,1))
 
 
-
     comment("vel", "vel.tttt", "husky", "comment under vel.tttt post in vel", datetime.datetime(2022,2,20))
+
+    post("vel", "Clare Guerrero", "urna justo faucibus", "massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices", "bananas, monkeys", datetime.datetime(2022, 2, 15))
+    comment("vel", "vel.urna_justo_faucibus", "Keefe Levine", "comment under vel.urna post", datetime.datetime(2022, 3, 1))
+    comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
+    comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus", datetime.datetime(2022, 1, 1))
     show("vel")
     # # delete comment
     # delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
