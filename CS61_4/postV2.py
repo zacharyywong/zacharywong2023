@@ -264,7 +264,7 @@ def showPost(post, discussionsDisplay, commentsDisplayOrder, indentMultiplierBlo
     postBody = post['postBody']
 
     discussionsDisplay.append([addIndent(f"title: {title}", indentMultiplierBlogName), 
-                addIndent(f"userName:{userName}", indentMultiplierBlogName), 
+                addIndent(f"userName: {userName}", indentMultiplierBlogName), 
                 addIndent(f"tags: {tags}", indentMultiplierBlogName), 
                 addIndent(f"timestamp: {timestamp}", indentMultiplierBlogName), 
                 addIndent(f"permaLink: {permaLink}", indentMultiplierBlogName),
@@ -398,7 +398,7 @@ def testBlogEngine(db):
 
 
     #add blogs to same blog name
-    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,5,5))
+    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,3,9))
     post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime.datetime(2021, 12, 24))
     post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
     post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime.datetime(2022,1,20))
@@ -421,6 +421,7 @@ def testBlogEngine(db):
     comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
     comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "comment under vel.urna post", datetime.datetime(2022, 1, 1))
     
+    comment("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "Derek Phelps", "a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed", datetime.datetime(2021,11,13))
 
     # delete post and comment
     delete("vel",  "vel.urna_justo_faucibus", "qwer qwer", datetime.datetime(2022,6,9))
@@ -428,7 +429,7 @@ def testBlogEngine(db):
 if __name__ == "__main__":   
     # Get the database
     db = get_database()
-    #testBlogEngine(db)
+    testBlogEngine(db)
     show("vel")
 
 
