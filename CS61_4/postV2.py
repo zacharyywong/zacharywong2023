@@ -6,8 +6,10 @@ from pprint import pprint
 import re
 from operator import itemgetter
 
-import datetime
+from datetime import datetime
 import textwrap
+
+
 
 
 def get_database():
@@ -180,7 +182,7 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
             insertReply(blogName, userName, commentBody, timestamp, permaLink)
 
 
-def deleteBlog(db, blogName, permaLink, userName, timestamp):
+def deleteBlog(blogName, permaLink, userName, timestamp):
     db.blogs.update_one(
         {
             "_id": blogName, 
@@ -189,22 +191,22 @@ def deleteBlog(db, blogName, permaLink, userName, timestamp):
         {
             "$set":
             {
-                "blogPosts.$.postBody": f"deleted by {userName}",
+                "blogPosts.$.postBody": f"deleted by {userName} at {timestamp}",
                 "blogPosts.$.deletedTimestamp": timestamp
             }
         }
     )
     
-def deleteComment(db, blogName, permaLink, userName, timestamp):
+def deleteComment(blogName, permaLink, userName, timestamp):
     db.comments.update_one(
         {
-            "blogName": blogName, 
+            "_id": blogName, 
             "blogDiscussion.permaLink": permaLink
         }, 
-        {
+        {   
             "$set":
             {
-                "blogDiscussion.$.commentBody": f"deleted by {userName}",
+                "blogDiscussion.$.commentBody": f"deleted by {userName} at {timestamp}",
                 "blogDiscussion.$.deletedTimestamp": timestamp
             }
         }
@@ -221,10 +223,10 @@ def delete(blogName, permaLink, userName, timestamp):
         if commentsFound == 0:
             raise ValueError("No blogs or comments found to delete")
         else:
-            deleteComment(db, blogName, permaLink, userName, timestamp)
+            deleteComment(blogName, permaLink, userName, timestamp)
             print(f'{userName} deleting comment at link {permaLink} in {blogName} at {timestamp}')
     else:
-        deleteBlog(db, blogName, permaLink, userName, timestamp)
+        deleteBlog(blogName, permaLink, userName, timestamp)
         print(f'{userName} deleting blog at link {permaLink} in {blogName} at {timestamp}')
 
 def showPost(post, discussionsDisplay, commentsDisplayOrder, indentMultiplierBlogName, indentMultiplierPostBody, indentDictionary):
@@ -374,32 +376,39 @@ if __name__ == "__main__":
 
 
     #add blogs to same blog name
-    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,5,5))
-    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime.datetime(2021, 12, 24))
-    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
-    post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime.datetime(2022,1,20))
+    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime(2021,5,5))
+    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime(2021, 12, 24))
+    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime(2021,3,9))
+    post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime(2022,1,20))
     
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "comment under vel.ante post", datetime.datetime(2021,11,13))
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "comment under vel.ante post", datetime.datetime(2022, 9,1))
-    comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "reply under Illana Frye comment", datetime.datetime(2021,12,20))
-    comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "reply under Walter Buckley comment", datetime.datetime(2022,1,2))
-    comment("vel", datetime.datetime(2021,11,13), "1234 1234", "reply under Illana Frye comment", datetime.datetime(2022,8,10))
-    comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "reply under asdf asdf comment", datetime.datetime(2022,9,10))
-    comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "reply under Illana Frye comment", datetime.datetime(2022,11,10))
-    comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "reply under 098098 comment", datetime.datetime(2022, 10,1))
-    comment("vel", datetime.datetime(2022, 9,1), "bbbbbbbbb", "reply under 098098 comment", datetime.datetime(2022, 11,1))
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "comment under vel.ante post", datetime(2021,11,13))
+    # # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "comment under vel.ante post", datetime.datetime(2022, 9,1))
+    # # comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "reply under Illana Frye comment", datetime.datetime(2021,12,20))
+    # # comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "reply under Walter Buckley comment", datetime.datetime(2022,1,2))
+    # # comment("vel", datetime.datetime(2021,11,13), "1234 1234", "reply under Illana Frye comment", datetime.datetime(2022,8,10))
+    # # comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "reply under asdf asdf comment", datetime.datetime(2022,9,10))
+    # # comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "reply under Illana Frye comment", datetime.datetime(2022,11,10))
+    # # comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "reply under 098098 comment", datetime.datetime(2022, 10,1))
+    # # comment("vel", datetime.datetime(2022, 9,1), "bbbbbbbbb", "reply under 098098 comment", datetime.datetime(2022, 11,1))
 
 
-    comment("vel", "vel.tttt", "husky", "comment under vel.tttt post in vel", datetime.datetime(2022,2,20))
+    # # comment("vel", "vel.tttt", "husky", "comment under vel.tttt post in vel", datetime.datetime(2022,2,20))
 
-    post("vel", "Clare Guerrero", "urna justo faucibus", "massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices", "bananas, monkeys", datetime.datetime(2022, 2, 15))
-    comment("vel", "vel.urna_justo_faucibus", "Keefe Levine", "comment under vel.urna post", datetime.datetime(2022, 3, 1))
-    comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
-    comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus", datetime.datetime(2022, 1, 1))
-    show("vel")
+    # # post("vel", "Clare Guerrero", "urna justo faucibus", "massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices", "bananas, monkeys", datetime.datetime(2022, 2, 15))
+    # # comment("vel", "vel.urna_justo_faucibus", "Keefe Levine", "comment under vel.urna post", datetime.datetime(2022, 3, 1))
+    # # comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
+    # # comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "comment under vel.urna post", datetime.datetime(2022, 1, 1))
     
+
     # # delete comment
-    # delete("vel",  datetime.datetime(2021,11,13), "qwer qwer", datetime.datetime(2022,6,9))
+    # delete("vel",  "vel.ante_dictum_cursus_Nunc_mauris", "qwer qwer", datetime.datetime(2022,6,9))
+    delete("vel",  datetime(2021,11,13), "Kirk Mckay", datetime(2022,1,9))
+
+    show("vel")
+
+    # cursor = db.blogs.find({"_id": "vel", "timestamp": datetime.datetime(2021,3,9, 0, 0)})
+    # for document in cursor:
+    #     print(document)
 
     # #delete post
     # delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", datetime.datetime(2022,7,25))
