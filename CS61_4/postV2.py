@@ -6,7 +6,7 @@ from pprint import pprint
 import re
 from operator import itemgetter
 
-from datetime import datetime
+import datetime
 import textwrap
 
 
@@ -58,15 +58,36 @@ def insertOrderDisplay(orderDisplayList, newTimeStamp, oldTimeStamp):
     orderDisplayList.append(newTimeStamp)
     return orderDisplayList
 
-def insertPermaLinkSchema(permaLink):
-    db.permaLinks.insert_one(
-        {
-        "links":
-            {
-                "permaLink": permaLink
-            }
-        }
-    )
+def checkPostTitleTimeStamp(blogName, title, timestamp):
+    cursor = db.blogs.find(
+        {"_id": blogName, 
+        "$or": [
+            {"blogPosts.title": title}, 
+            {"blogPosts.timestamp": timestamp}
+            ]
+            })
+    if len(list(cursor.clone())) == 0:
+        return True
+    else:
+        return False
+
+def checkCommentTimeStamp(blogName, timestamp): 
+    cursor = db.comments.find(
+        {"_id": blogName, "blogDiscussion.permaLink": timestamp})
+
+    if len(list(cursor.clone())) == 0:
+        return True
+    else:
+        return False
+# def insertPermaLinkSchema(permaLink):
+#     db.permaLinks.insert_one(
+#         {
+#         "links":
+#             {
+#                 "permaLink": permaLink
+#             }
+#         }
+#     )
 
 def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
     db.blogs.insert_one(
@@ -86,7 +107,6 @@ def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
         }
     )
 
-    insertPermaLinkSchema(permaLink)
 
 
 
@@ -109,7 +129,6 @@ def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
             }
         }
     )
-    insertPermaLinkSchema(permaLink)
 
 
 def insertComment(blogName, userName, commentBody, timestamp, permaLink):
@@ -154,12 +173,17 @@ def insertReply(blogName, userName, commentBody, timestamp, permaLink):
 def post(blogName, userName, title, postBody, tags, timestamp):
     cursor = db.blogs.find({"_id": blogName})
     permaLink = createLink(blogName, title)
-    if len(list(cursor)) == 0:
-        print(f'{userName} inserting blog {title} in {blogName} at {timestamp}')
+    if len(list(cursor.clone())) == 0:
         insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
-    else:
+    elif checkPostTitleTimeStamp(blogName, title, timestamp) == True:
         print(f'{userName} inserting blog {title} in {blogName} at {timestamp}')
         updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
+    else:
+        raise ValueError(f"either post '{title}' already published in '{blogName}' or your post has the same timestamp ('{timestamp}') as another post")
+        
+    
+
+    
 
 def comment(blogName, permaLink, userName, commentBody, timestamp):
     cursor = db.blogs.find({"_id": blogName})
@@ -168,18 +192,20 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
         documentsFound = len(list(cursor1.clone()))
         if documentsFound == 0:
                 raise ValueError("No blogs or comments found to comment on")
-   
-    else:
+    
+    elif checkCommentTimeStamp(blogName, timestamp):
         cursor2 = db.comments.find({"_id": blogName})
-
         documentsFound = len(list(cursor2.clone()))
-        
         if documentsFound == 0:
             print(f'{userName} inserting comment in blog {blogName} at {timestamp}')
             insertComment(blogName, userName, commentBody, timestamp, permaLink)
         else:
             print(f'{userName} inserting reply to comment link {permaLink} in {blogName} at {timestamp}')
             insertReply(blogName, userName, commentBody, timestamp, permaLink)
+
+    else:
+        raise ValueError(f"Can't comment at the same time as another comment at '{timestamp}'")
+        
 
 
 def deleteBlog(blogName, permaLink, userName, timestamp):
@@ -366,63 +392,61 @@ def show(blogName):
     
     
 
-
-if __name__ == "__main__":   
-    # Get the database
-    db = get_database()
+def testBlogEngine(db):
     db.blogs.delete_many({})
-    db.permaLinks.delete_many({})
     db.comments.delete_many({})
 
 
     #add blogs to same blog name
-    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime(2021,5,5))
-    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime(2021, 12, 24))
-    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime(2021,3,9))
-    post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime(2022,1,20))
+    post("ridiculusmus", "Medge Burnett", "eu neque pellentesque massa lobortis", "rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit", "sandwiches, desserts, noodles, seafood", datetime.datetime(2021,5,5))
+    post("ridiculusmus", "Cruz Hoover", "pharetra, felis eget varius ultrices", "Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.", "Cras, stews", datetime.datetime(2021, 12, 24))
+    post("vel", "Xavier Carr", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
+    post("vel", "idol", "tttt", "dddd", "octopus, fish", datetime.datetime(2022,1,20))
     
-    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "comment under vel.ante post", datetime(2021,11,13))
-    # # comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "comment under vel.ante post", datetime.datetime(2022, 9,1))
-    # # comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "reply under Illana Frye comment", datetime.datetime(2021,12,20))
-    # # comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "reply under Walter Buckley comment", datetime.datetime(2022,1,2))
-    # # comment("vel", datetime.datetime(2021,11,13), "1234 1234", "reply under Illana Frye comment", datetime.datetime(2022,8,10))
-    # # comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "reply under asdf asdf comment", datetime.datetime(2022,9,10))
-    # # comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "reply under Illana Frye comment", datetime.datetime(2022,11,10))
-    # # comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "reply under 098098 comment", datetime.datetime(2022, 10,1))
-    # # comment("vel", datetime.datetime(2022, 9,1), "bbbbbbbbb", "reply under 098098 comment", datetime.datetime(2022, 11,1))
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "comment under vel.ante post", datetime.datetime(2021,11,13))
+    comment("vel", "vel.ante_dictum_cursus_Nunc_mauris", "098098", "comment under vel.ante post", datetime.datetime(2022, 9,1))
+    comment("vel", datetime.datetime(2021,11,13), "Walter Buckley", "reply under Illana Frye comment", datetime.datetime(2021,12,20))
+    comment("vel", datetime.datetime(2021,12,20), "asdf asdf", "reply under Walter Buckley comment", datetime.datetime(2022,1,2))
+    comment("vel", datetime.datetime(2021,11,13), "1234 1234", "reply under Illana Frye comment", datetime.datetime(2022,8,10))
+    comment("vel", datetime.datetime(2022,1,2), "-=-=-=-=-=", "reply under asdf asdf comment", datetime.datetime(2022,9,10))
+    comment("vel", datetime.datetime(2021,11,13), "zxcv,mn", "reply under Illana Frye comment", datetime.datetime(2022,11,10))
+    comment("vel", datetime.datetime(2022, 9,1), "aaaaaaaa", "reply under 098098 comment", datetime.datetime(2022, 10,1))
+    comment("vel", datetime.datetime(2022, 9,1), "bbbbbbbbb", "reply under 098098 comment", datetime.datetime(2022, 11,1))
 
 
-    # # comment("vel", "vel.tttt", "husky", "comment under vel.tttt post in vel", datetime.datetime(2022,2,20))
+    comment("vel", "vel.tttt", "husky", "comment under vel.tttt post in vel", datetime.datetime(2022,2,20))
 
-    # # post("vel", "Clare Guerrero", "urna justo faucibus", "massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices", "bananas, monkeys", datetime.datetime(2022, 2, 15))
-    # # comment("vel", "vel.urna_justo_faucibus", "Keefe Levine", "comment under vel.urna post", datetime.datetime(2022, 3, 1))
-    # # comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
-    # # comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "comment under vel.urna post", datetime.datetime(2022, 1, 1))
+    post("vel", "Clare Guerrero", "urna justo faucibus", "massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices", "bananas, monkeys", datetime.datetime(2022, 2, 15))
+    comment("vel", "vel.urna_justo_faucibus", "Keefe Levine", "comment under vel.urna post", datetime.datetime(2022, 3, 1))
+    comment("vel", datetime.datetime(2022, 3, 1), "Quamar Bullock", "reply under Keefe Levine comment", datetime.datetime(2022, 3, 21))
+    comment("vel", "vel.urna_justo_faucibus", "Delilah Cox", "comment under vel.urna post", datetime.datetime(2022, 1, 1))
     
 
-    # # delete comment
-    # delete("vel",  "vel.ante_dictum_cursus_Nunc_mauris", "qwer qwer", datetime.datetime(2022,6,9))
-    delete("vel",  datetime(2021,11,13), "Kirk Mckay", datetime(2022,1,9))
-
+    # delete post and comment
+    delete("vel",  "vel.urna_justo_faucibus", "qwer qwer", datetime.datetime(2022,6,9))
+    delete("vel",  datetime.datetime(2022,3,21), "Kirk Mckay", datetime.datetime(2022,5,9))
+if __name__ == "__main__":   
+    # Get the database
+    db = get_database()
+    #testBlogEngine(db)
     show("vel")
 
-    # cursor = db.blogs.find({"_id": "vel", "timestamp": datetime.datetime(2021,3,9, 0, 0)})
-    # for document in cursor:
-    #     print(document)
 
-    # #delete post
-    # delete("ridiculusmus", "ridiculusmus.eu_neque_pellentesque_massa_lobortis", "zxcv zxcv", datetime.datetime(2022,7,25))
+    # Tests for Invalid Actions/Inputs
 
-    #show blog
-
-    #show("vel")
-
-    # Bad Tests
-
-    # no blog called "vl"
+    # no blog to comment on called "vl"
     #comment("vl", "vel.ante_dictum_cursus_Nunc_mauris", "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
-    #displayCollection(db)
+    # no comment found to reply on
+    # comment("vl", datetime.datetime(1, 1, 1), "Illana Frye", "Nullam scelerisque,et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida.", "Nov 13, 2021")
 
-# "elit, a feugiat tellus",Walter Buckley,interdum ligula eu enim. Etiam,posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque,"noodles, seafood","Mar 6, 2021"
+    # cannot post a post with same title as another post
+    # post("vel", "Timothy Ty", "ante dictum cursus. Nunc mauris", "orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc", "noodles, sandwiches", datetime.datetime(2021,3,9))
+
+    # post with the same timestamp as another cannot be published
+    # post("vel", "Frank Gerber", "Suspendisse commodo", "tincidunt nibh. Phasellus nulla. Integer vulputate, risus a", "frozen yogurt, salmon", datetime.datetime(2021,3,9))
+
+    # comment with the same timestamp as another cannot be published
+    # comment("vel", datetime.datetime(2021, 11, 13), "Alyssa Shu", "Quisque ac tincidunt nibh. Phasellus nulla. Integer vulputate, risus a", datetime.datetime(2022,3,1))
+
     
