@@ -389,8 +389,6 @@ def show(blogName):
     for display in result: 
         for line in display:
             print(line)
-    
-    
 
 def testBlogEngine(db):
     db.blogs.delete_many({})
