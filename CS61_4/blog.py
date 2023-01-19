@@ -60,7 +60,7 @@ def insertOrderDisplay(orderDisplayList, newTimeStamp, oldTimeStamp):
 
 def checkPostTitleTimeStamp(blogName, title, timestamp):
     cursor = db.blogs.find(
-        {"_id": blogName, 
+        {"blogName": blogName, 
         "$or": [
             {"blogPosts.title": title}, 
             {"blogPosts.timestamp": timestamp}
@@ -73,7 +73,7 @@ def checkPostTitleTimeStamp(blogName, title, timestamp):
 
 def checkCommentTimeStamp(blogName, timestamp): 
     cursor = db.comments.find(
-        {"_id": blogName, "blogDiscussion.permaLink": timestamp})
+        {"blogName": blogName, "blogDiscussion.permaLink": timestamp})
 
     if len(list(cursor.clone())) == 0:
         return True
@@ -92,7 +92,7 @@ def checkCommentTimeStamp(blogName, timestamp):
 def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
     db.blogs.insert_one(
         {
-            "_id": blogName,
+            "blogName": blogName,
             "blogPosts": 
             [
                 {
@@ -112,7 +112,7 @@ def insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
 
 def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
     db.blogs.update_one(
-        {"_id": blogName},
+        {"blogName": blogName},
         {
         "$addToSet": 
             {
@@ -134,7 +134,7 @@ def updateBlog(blogName, userName, title, postBody, tags, timestamp, permaLink):
 def insertComment(blogName, userName, commentBody, timestamp, permaLink):
     db.comments.insert_one(
         {
-            "_id": blogName, 
+            "blogName": blogName, 
             "blogDiscussion":
             [
                 {
@@ -152,7 +152,7 @@ def insertComment(blogName, userName, commentBody, timestamp, permaLink):
 def insertReply(blogName, userName, commentBody, timestamp, permaLink):
     db.comments.update_one(
         {
-            "_id": blogName
+            "blogName": blogName
         }, 
         {
         "$push":
@@ -171,7 +171,7 @@ def insertReply(blogName, userName, commentBody, timestamp, permaLink):
 
 
 def post(blogName, userName, title, postBody, tags, timestamp):
-    cursor = db.blogs.find({"_id": blogName})
+    cursor = db.blogs.find({"blogName": blogName})
     permaLink = createLink(blogName, title)
     if len(list(cursor.clone())) == 0:
         insertBlog(blogName, userName, title, postBody, tags, timestamp, permaLink)
@@ -186,15 +186,15 @@ def post(blogName, userName, title, postBody, tags, timestamp):
     
 
 def comment(blogName, permaLink, userName, commentBody, timestamp):
-    cursor = db.blogs.find({"_id": blogName})
+    cursor = db.blogs.find({"blogName": blogName})
     if len(list(cursor)) == 0:
-        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.permaLink": permaLink})
+        cursor1 = db.comments.find({"blogName": blogName, "blogDiscussion.permaLink": permaLink})
         documentsFound = len(list(cursor1.clone()))
         if documentsFound == 0:
                 raise ValueError("No blogs or comments found to comment on")
     
     elif checkCommentTimeStamp(blogName, timestamp):
-        cursor2 = db.comments.find({"_id": blogName})
+        cursor2 = db.comments.find({"blogName": blogName})
         documentsFound = len(list(cursor2.clone()))
         if documentsFound == 0:
             print(f'{userName} inserting comment in blog {blogName} at {timestamp}')
@@ -211,7 +211,7 @@ def comment(blogName, permaLink, userName, commentBody, timestamp):
 def deleteBlog(blogName, permaLink, userName, timestamp):
     db.blogs.update_one(
         {
-            "_id": blogName, 
+            "blogName": blogName, 
             "blogPosts.permaLink": permaLink
         }, 
         {
@@ -226,7 +226,7 @@ def deleteBlog(blogName, permaLink, userName, timestamp):
 def deleteComment(blogName, permaLink, userName, timestamp):
     db.comments.update_one(
         {
-            "_id": blogName, 
+            "blogName": blogName, 
             "blogDiscussion.permaLink": permaLink
         }, 
         {   
@@ -239,12 +239,12 @@ def deleteComment(blogName, permaLink, userName, timestamp):
     )
 
 def delete(blogName, permaLink, userName, timestamp):
-    cursor = db.blogs.find({"_id": blogName, "blogPosts.permaLink": permaLink})
+    cursor = db.blogs.find({"blogName": blogName, "blogPosts.permaLink": permaLink})
 
     postsFound = len(list(cursor.clone()))
 
     if postsFound == 0:
-        cursor1 = db.comments.find({"_id": blogName, "blogDiscussion.permaLink": permaLink})
+        cursor1 = db.comments.find({"blogName": blogName, "blogDiscussion.permaLink": permaLink})
         commentsFound = len(list(cursor1.clone()))
         if commentsFound == 0:
             raise ValueError("No blogs or comments found to delete")
@@ -341,7 +341,7 @@ def showReplies(reply, commentsDisplayOrder, discussionsDisplay, indentDictionar
     return discussionsDisplay, indentDictionary, commentsDisplayOrder
 
 def showDiscussion(blogName, blogPostsOrdered, discussionsDisplay, commentsDisplayOrder, indentMultiplierBlogComment,indentMultiplierBlogCommentBody, indentDictionary):
-    cursor = db.comments.find({"_id": blogName})
+    cursor = db.comments.find({"blogName": blogName})
     originalComments = []
     replies = []
     for discussionThread in cursor:
@@ -365,7 +365,7 @@ def show(blogName):
     indentDictionary = {}
 
     result = []
-    cursor = db.blogs.find({"_id": blogName})
+    cursor = db.blogs.find({"blogName": blogName})
     blogNameDisplay.append([f'\nIn {blogName}\n'])
     for line in blogNameDisplay:
         result.append(line)

@@ -25,9 +25,9 @@ def question2(db):
 
 def question3(db):
     total = db.zipcodes.count_documents({"state":{"$in":['CT', 'RI', 'MA', 'VT', 'NH', 'ME']}})
-    return total
+    #return total
 
-    print("Question 3: " + str(total)+ '\n')
+    print(total)
 
 
 def question4(db):
@@ -43,16 +43,34 @@ def question4(db):
        
     ])
     for document in cursor:
-        return document['_id']['state'], document['totalPop']
+        print (document['_id']['state'], document['totalPop'])
         #print(document['_id']['state'], document['totalPop'])
         #print("Question 4: " + str(document)+ '\n')
 
 def question5(db):
-    cursor = db.zipcodes.find({}, {"_id": 1}).sort("pop", 1).limit(1)
+    cursor = db.zipcodes.find({}, {"pop": 1}).sort("pop", 1).limit(1)
+    for document in cursor: 
+        minPop = document['pop']
+
+    cursor1 = db.zipcodes.aggregate([
+        {
+            "$match":
+            {
+                "pop": minPop
+            }
+        }, 
+        {
+            "$project":
+            {
+                "_id": 1, 
+                "city": 1, 
+                "pop": 1
+            }
+        }
+    ])
     
-    for document in cursor:
-        return document
-       #print("Question 5: " + str(document)+ '\n')
+    for document in cursor1:
+       print(document)
 
 #where latitude is closest to 0 or smallest
 # can't be negative 
@@ -83,40 +101,55 @@ def question6(db):
         }
     ])
     for document in cursor:
-        return document['_id']
+        print("Question 6: " + str(document['_id']))
         #print("Question 6: " + str(document['_id'])+ '\n')
 
 def question7(db):
+    result = []
     cursor = db.zipcodes.aggregate([
         {
-            "$project": 
+            "$group":
             {
-                 "stateSubStr": 
-                 {
-                    "$substr": ["$state", 0, 1]
-                },
-                "state": 1,
-                "pop": 1
-            }
+                "_id": "$state", 
+                "sumPop": {"$sum": "$pop"}
+                
+            }, 
         },
 
-        {
-            "$match": {"stateSubStr": {"$eq": "M"}}
-        },
-
-        {
-            "$group": {"_id": "$stateSubStr", "avgPop": {"$avg": "$pop"}}
+       {
+           "$project":
+           {
+                "stateSubStr":
+                {
+                   "$substr": ["$_id", 0, 1]
+               },
+               "sumPop": 1,
+           }
+       },
+ 
+       {
+           "$match": {"stateSubStr": {"$eq": "M"}}
+       }, 
+       {
+            "$group":
+            {
+                "_id": "$stateSubStr", 
+                "avgPop": {"$avg": "$sumPop"}
+                
+            }, 
         }
-    ])
+       
+   ])
+
     for document in cursor:
-        return document 
-        #print("Question 7: " + str(document)+ '\n')
+        print(f"Question 7: {document['avgPop']}")
+    return result
 
 def question8(db):
     cursor = db.zipcodes.find({"pop": {"$gt": 50000}}, {"_id": 1, "pop": 1})
     for document in cursor:
-        return document
-        print("Question 8: " + str(document))
+        #return document
+        print(document['_id'])
 
 def question9(db):
     cursor = db.zipcodes.aggregate([
@@ -131,7 +164,7 @@ def question9(db):
         {
             "$group": 
             {
-                "_id": {"city": "$city", "state": "$state"},
+                "_id": {"city": "$city"},
                 "count": {"$count": {}}
             }
         },
@@ -144,31 +177,27 @@ def question9(db):
         }, 
         
         {
-            "$limit": 5
+            "$limit": 1
         }
     
     ])
 
     for document in cursor:
-        return document
-        print("Question 9: " + str(document)+ '\n')
+        print(document["_id"])
 
 
 def Part2Num1(db):
     cursor = db.zipcodes.aggregate([
         {
-            "$project":
-            {
-                "pop": 1, 
-                "city": 1,
-                "state": 1
-            }
-        },
-
-        {
             "$match": 
             {
                 "state": {"$eq": "LA"}
+            }
+        },
+        {
+            "$project":
+            {
+                "pop": 1
             }
         },
         {
@@ -177,8 +206,7 @@ def Part2Num1(db):
     ])
 
     for document in cursor:
-        return document
-        print(str(document))
+        print(document["_id"])
 
 def Part2Num2(db):
     cursor = db.zipcodes.aggregate([
@@ -209,16 +237,36 @@ def Part2Num2(db):
     ])
 
     for document in cursor:
-        return document
-        #print("Part2Num2: " + str(document)+ '\n')
+        #return document
+        print("Part2Num2: " + str(document)+ '\n')
 
 
 def Part2Num3(db): 
-#     db.cardAmounts.drop();
-#     for (transaction = 0; transaction < 100; transaction++){
-# var r = {'amount': Math.random()*100+1}
-# db.cardAmounts.insertOne(r);}
-# db.cardAmounts.find({});
+    db.cardAmounts.drop();
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    
+    
+    for (transaction = 0; transaction < 100; transaction++){
+        cardNumber = new String();
+        let month = 0;
+        let year = 0;
+        for (let i = 0; i < 12; i++){
+            cardNumber += characters.charAt(Math.floor(Math.random() * characters.length));
+        };
+
+        month = 1 + Math.floor(Math.random()* 12)
+        year = 2000 + Math.floor(Math.random() * 21)
+        var r = { 
+                "cardNo": cardNumber,
+                "expDate": {"mm": month, "yy": year},
+                'amount': (Math.random()*10000).toFixed(2),
+                "secCode": Math.round(Math.random()* 100)/1
+                };   
+        
+        db.cardAmounts.insertOne(r);}
+
+        db.cardAmounts.find({});
+
     pass
 
 def Part2Num4(db): 
@@ -232,9 +280,8 @@ def Part2Num4(db):
 # )
     pass
 
-# exclude alaska and hawaii
-# smallest latitude + ((largest latitude - smallest latittude) / 2)
-# smallest longitude + ((largest longitude - smallest longitude) / 2)
+
+# finds smallest or largest latitude or longitude in zipcodes
 def findLocation(db, locIndex, smallLarge):
 
     cursor = db.zipcodes.aggregate([
@@ -286,12 +333,17 @@ def findLocation(db, locIndex, smallLarge):
     for document in cursor:
        return document
 
+# finds zip code nearest to a coordinate point
 def findZip(db, middleLatitude, middleLongitude):
     db.zipcodes.create_index([("loc", GEO2D)])
     cursor = db.zipcodes.find({"loc": {"$near": [middleLongitude, middleLatitude]}}, {"plusFour": 0}).limit(1)
     for document in cursor:
        print("\nNearest Zipcode To Central Coordinates: " + str(document)+ '\n')
        
+
+# exclude alaska and hawaii
+# smallest latitude + ((largest latitude - smallest latittude) / 2)
+# smallest longitude + ((largest longitude - smallest longitude) / 2)
 def extraCredit(db):
 
     longitude = 0
