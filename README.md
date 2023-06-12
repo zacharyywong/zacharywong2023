@@ -1,11 +1,14 @@
 # zacharywong2023
 
-Here are 3 projects included in my portfolio. 
+Here are 3 projects included in my portfolio. The first is my thesis paper completed for my culminating experience as an Economics major at Dartmouth. I completed these 2 projects outside of class in my spare time: they each required me to apply programming abilities with data analytics and econometrics concepts to analyze more ambiguous problems with looser specifications.
 
-**GreenWaves_in_SF_Analysis_Python_STATA**: Given 24 hours, performed/visualized causal analysis using 3 public time series datasets to identify high-return investments that effectively increased the number of bicyclists in San Francisco
+**Econ Thesis Paper (10 Weeks - 6/2023): STATA**
+- This paper investigates whether higher multinational hotel concentrations negatively impact the sales of independent, domestic hotels within a country. I use Ordinary Least Squares with country/year fixed effects as my identification strategy. Overall, this study finds that foreign hotel concentration causes a decrease in domestic hotel sales, both when defining a particular hotel market as a whole country and after restricting the hotel market to the country’s capital city. Furthermore, I do not find significant evidence that a primary driver of these results is due to domestic hotels’ lack of easy access to communication-related technologies. 
+**GreenWaves in SF Analysis (24 Hour Challenge - 3/2022): Python/STATA**
+- Performed/visualized causal analysis using 3 public time series datasets to identify high-return investments that
+effectively increased the number of bicyclists in San Francisco
+**Shazam ETL Pipeline (72 Hour Challenge - 1/2022): Python**
+- Built/automated an end-to-end ETL pipeline to increase revenue/optimize resources for recording labels by surfacing
+important songs/artists from Shazam
 
-**Shazam_ETL_Pipeline_Python**: Given 48-72 hours, built/automated an end-to-end ETL pipeline to increase revenue/optimize resources for recording labels by surfacing important songs/artists
 
-The first two projects required me to apply programming abilities with data analytics and econometrics concepts to analyze more ambiguous problems with looser specifications. I completed these 2 projects outside of class in my spare time.
-
-The last project required me to write code that avoids race conditions when retrieving companies from a shared list and writing their data to shared Pandas DataFrames.
